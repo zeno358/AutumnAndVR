@@ -9,7 +9,7 @@ public class Rift : MonoBehaviour {
 
 	float height; //高度
 
-	const float ascend_value = 0.25f; // 一回の上昇で 何M 上昇するか
+	const float ascend_value = 1f; // 一回の上昇で 何M 上昇するか
 	const int ascend_cost = 5; // 何ポイントで１上昇するか？
 	int energy = 0; // 集まったエネルギー
 
