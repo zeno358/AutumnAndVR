@@ -1,30 +1,44 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 /// ゲーム全体の変数を管理
 /// </summary>
 public class GameManager : MonoBehaviour {
-	
+
 	/// <summary>
-	/// プレイヤー情報
+	/// 現在の参加プレイヤーの合計カウント
 	/// </summary>
-	struct Player{
-		int count; // 踏んだ回数
-	};
+	int curCount;
 
-	Player player1;
-	Player player2;
+	[SerializeField]
+	Rift rift;
+	/// <summary>
+	/// 参加プレイヤー
+	/// </summary>
+	public static List<Crew> crews = new List<Crew>();
 
-
-
-	// Use this for initialization
-	void Start () {
-	
+	void Start()
+	{
+		curCount = 0;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+	void Update () 
+	{
+		PassPlayersCount();
+	}
+
+	/// <summary>
+	/// プレイヤーのカウントをリフトに渡す
+	/// </summary>
+	void PassPlayersCount()
+	{
+		int num = 0;
+		foreach(Crew c in crews){
+			num += c.PassCount();
+		}
+
+		rift.AddEnergy(num);
 	}
 }
