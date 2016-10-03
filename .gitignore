@@ -5,9 +5,8 @@
 [Bb]uild/
 UnityGenerated/
 AssetBundles/
-#ProjectSettings/*.asset   # 2015 0627 oya
+#ProjectSettings/*.asset
 *.apk
-sengoku_windows_Data/
 
 # ----[ Visual Studio / MonoDevelop generated ]------- #
   
