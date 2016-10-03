@@ -38,6 +38,12 @@ public class Crew : MonoBehaviour {
 			Debug.Log(gameObject.name + "のカウント[ 現在 " + restCount.ToString()  + " 累計 " + totalCount.ToString()  + " ]");
 		}
 	}
+	public void AddCount() {
+		totalCount++;
+		restCount++;
+		Debug.Log(gameObject.name + "のカウント[ 現在 " + restCount.ToString()  + " 累計 " + totalCount.ToString()  + " ]");
+	}
+
 
 	/// <summary>
 	/// 所持カウントを渡し、所持分は0にする

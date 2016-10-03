@@ -23,6 +23,9 @@ public class Pedometer : MonoBehaviour {
 	/// </summary>
 	float curveOriginPos;
 
+	[SerializeField]
+	Crew master;
+
 	// Use this for initialization
 	void Start () {
 		value = 0;
@@ -40,7 +43,7 @@ public class Pedometer : MonoBehaviour {
 		float offset = PrevPosY - posY;
 
 		// 折り返しを検出
-		if( offset > 0 != PrevPosY > 0 ){
+		if( offset > 0 != prevOffset > 0 ){
 			if (Mathf.Abs (curveOriginPos - posY) > 0.02f) {
 				AddValue ();
 			}
@@ -55,7 +58,10 @@ public class Pedometer : MonoBehaviour {
 
 	void AddValue()
 	{
+		if (master != null) {
+			master.AddCount ();
+		}
 		value++;
-		Debug.Log ( gameObject.name + " : AddValue( " + value.ToString () + " ) " );
+		//Debug.Log ( gameObject.name + " : AddValue( " + value.ToString () + " ) " );
 	}
 }
