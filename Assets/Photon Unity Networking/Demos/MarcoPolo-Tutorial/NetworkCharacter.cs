@@ -4,6 +4,15 @@ public class NetworkCharacter : Photon.MonoBehaviour
 {
     private Vector3 correctPlayerPos = Vector3.zero; // We lerp towards this
     private Quaternion correctPlayerRot = Quaternion.identity; // We lerp towards this
+
+	void Awake()
+	{
+		if (photonView.isMine) {
+			GetComponent<ThirdPersonCamera>().enabled = true;
+			GetComponent<MonsterFire>().enabled = true;
+		}
+	}
+
     // Update is called once per frame
     void Update()
     {
@@ -35,4 +44,10 @@ public class NetworkCharacter : Photon.MonoBehaviour
             myC._characterState = (CharacterState)stream.ReceiveNext();
         }
     }
+
+	[PunRPC]
+	void Destroy()
+	{
+		PhotonNetwork.Destroy(gameObject);
+	}
 }
