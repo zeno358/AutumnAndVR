@@ -18,6 +18,11 @@ public class CrewMatchmaker : Photon.PunBehaviour
 	[SerializeField]
 	Transform playerPos2;
 
+	[SerializeField]
+	Crew myCrew;
+
+	[SerializeField]
+	Crew Partner;
     // Use this for initialization
     public void Start()
     {
@@ -43,14 +48,7 @@ public class CrewMatchmaker : Photon.PunBehaviour
 
 		PhotonNetwork.JoinOrCreateRoom(roomName,  options, lobby);
 
-		/*
-		if( !PhotonNetwork.JoinRoom( roomName ) ){
-			Debug.Log("To join room failed");
-			PhotonNetwork.CreateRoom( roomName );
-		}
-	*/
         // when AutoJoinLobby is off, this method gets called when PUN finished the connection (instead of OnJoinedLobby())
-    //    PhotonNetwork.JoinRandomRoom();
     }
 
     public void OnPhotonRandomJoinFailed()
@@ -63,24 +61,20 @@ public class CrewMatchmaker : Photon.PunBehaviour
 
     public override void OnJoinedRoom()
     {
-		Debug.LogError(gameObject.name + "OnJoinedRoom");
-
-	//	PhotonNetwork.room.name = roomName;
-
-    //    GameObject monster = PhotonNetwork.Instantiate("monsterprefab", Vector3.zero, Quaternion.identity, 0);
-    //    monster.GetComponent<myThirdPersonController>().isControllable = true;
-    //    myPhotonView = monster.GetComponent<PhotonView>();
+		Debug.Log(gameObject.name + "OnJoinedRoom");
 
 		// 先に部屋に入った（または部屋を作った）プレイヤーはポジション１に、後から部屋二入ったプレイヤーはポジション２に配置したい
 		if( PhotonNetwork.room.playerCount < PhotonNetwork.room.maxPlayers ){
 			Debug.Log("ポジション１にセット あなたはプレイヤー１");
 			myPhotonView = playerPos1.GetComponent<PhotonView>();
+			myCrew.transform.SetParent(playerPos1);
 		}else{
 			Debug.Log("ポジション２にセット あなたはプレイヤー２");
 			myPhotonView = playerPos2.GetComponent<PhotonView>();
+			myCrew.transform.SetParent(playerPos2);
 		}
-
-		// myPhotonView = playerPos1.GetComponent<PhotonView>();
+		myCrew.transform.localPosition = Vector3.zero;
+		myCrew.transform.localRotation = Quaternion.identity;
     }
 
     public void OnGUI()
