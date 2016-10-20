@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour {
 	int curCount;
 
 	[SerializeField]
-	Rift rift;
+	Muscle muscle;
 	/// <summary>
 	/// 参加プレイヤー
 	/// </summary>
@@ -39,6 +39,6 @@ public class GameManager : MonoBehaviour {
 			num += c.PassCount();
 		}
 
-		rift.AddEnergy(num);
+		muscle.AddEnergy(num);
 	}
 }

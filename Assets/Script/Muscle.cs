@@ -3,9 +3,10 @@ using System.Collections;
 using DG.Tweening;
 
 /// <summary>
-/// 上昇する物体
+/// 上昇する筋肉
 /// </summary>
-public class Rift : MonoBehaviour {
+public class Muscle : MonoBehaviour 
+{
 
 	float height; //高度
 
@@ -13,7 +14,7 @@ public class Rift : MonoBehaviour {
 	const int ascend_cost = 5; // 何ポイントで１上昇するか？
 	int energy = 0; // 集まったエネルギー
 
-	public static Rift rift;
+	public static Muscle rift;
 
 	void Start()
 	{
@@ -42,5 +43,13 @@ public class Rift : MonoBehaviour {
 			Ascend();
 			energy -= ascend_cost;
 		}
+	}
+
+	/// <summary>
+	/// うめく
+	/// </summary>
+	private void Roar()
+	{
+		// うめき声を再生
 	}
 }
