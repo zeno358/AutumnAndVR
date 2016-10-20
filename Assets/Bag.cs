@@ -18,7 +18,7 @@ public class Bag : MonoBehaviour {
 
 	void OnTriggerEnter(Collider col)
 	{
-		if( col.tag.Equals("chasenut") )
+		if( col.tag.Equals("Chestnut") )
 		{
 			Debug.Log("栗をキャッチ");
 			if( master != null )
