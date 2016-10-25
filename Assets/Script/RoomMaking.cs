@@ -35,12 +35,7 @@ public class RoomMaking : Photon.MonoBehaviour
 		//	魔法の呪文
 		PhotonNetwork.ConnectUsingSettings ("0.1");
 	}
-
-	// Update is called once per frame
-	void Update () {
-
-	}
-
+		
 	//  ランダムでルームを選び入る
 	void OnJoinedLobby(){
 		PhotonNetwork.JoinRandomRoom();
@@ -63,11 +58,11 @@ public class RoomMaking : Photon.MonoBehaviour
 		GameObject player = PhotonNetwork.Instantiate("NetworkCube", this.transform.position, this.transform.rotation, 0);
 		//  自分が生成したPlayerを移動可能にする
 		myPlayer = player.GetComponent<PlayerMove>();
-		myPlayer.enabled = true;
+		//myPlayer.enabled = true;
 
-		Debug.Log("自分か？ = " + myPlayer.photonView.isMine );
 
 		// 自分が何番目にルームに入ったプレイヤーかどうかでIDを設定
+		print( myPlayer.photonView.ownerId.ToString() );
 		myPlayer.id = PhotonNetwork.room.playerCount;
 		Debug.Log("あなたのIDは [" + myPlayer.id.ToString() +" ]" );
 
@@ -84,27 +79,40 @@ public class RoomMaking : Photon.MonoBehaviour
 		while( PhotonNetwork.room.playerCount < playerNumNeeded )
 		{
 			Debug.Log("プレイヤーの参加を待っています... 現在のプレイヤー数 : " + PhotonNetwork.room.playerCount.ToString() + "/" + playerNumNeeded.ToString() );
-			yield return new WaitForSeconds(2f);
+			yield return new WaitForSeconds(3f);
 		}
 
 		Debug.Log("プレイヤーが集まりました");
 
-		SetPlayerPosition();
+		// プレイヤーのポジションをセット
+		SetPlayerTransform();
+
+		myPlayer.initizlized = true;
+
+		//myPlayer.Init();
+
+		// カゴを持たせる
+		myPlayer.EnalbeBag();
 
 	}
 
 	/// <summary>
-	/// プレイヤーのポジションを設定する
+	/// プレイヤーのトランスフォームを設定する
 	/// </summary>
-	private void SetPlayerPosition()
+	private void SetPlayerTransform()
 	{
 		if( myPlayer.id == 1 )
 		{
-			myPlayer.transform.position = playerPos1.position;
+			myPlayer.transform.SetParent(playerPos1);
 		}else
 		{
-			myPlayer.transform.position = playerPos2.position;
+			myPlayer.transform.SetParent(playerPos2);
 		}
+
+		myPlayer.transform.localPosition = Vector3.zero;
+		myPlayer.transform.localRotation = Quaternion.identity;
+
+		myPlayer.transform.parent = null;
 	}
 }
 
