@@ -30,14 +30,32 @@ public class RoomMaking : Photon.MonoBehaviour
 	[SerializeField]
 	Transform playerPos2;
 
-	// Use this for initialization
-	void Start () {
-		//	魔法の呪文
-		PhotonNetwork.ConnectUsingSettings ("0.1");
+	/// <summary>
+	/// シングルモード
+	/// </summary>
+	public bool singleMode = false;
+	public static bool _singleMode;
+
+	void Awake()
+	{
+		_singleMode = singleMode;
 	}
-		
+
+	void Start ()
+	{
+		// 魔法の呪文
+		PhotonNetwork.ConnectUsingSettings ("0.1");
+
+		if( singleMode )
+		{
+		//	PhotonNetwork.offlineMode = true;
+			playerNumNeeded = 1;
+		}
+	}
+
 	//  ランダムでルームを選び入る
-	void OnJoinedLobby(){
+	void OnJoinedLobby()
+	{
 		PhotonNetwork.JoinRandomRoom();
 	}
 
@@ -46,14 +64,15 @@ public class RoomMaking : Photon.MonoBehaviour
 		//  部屋に入れなかったので自分で作る
 
 		RoomOptions options = new RoomOptions();
-		options.MaxPlayers = 2;
+		options.MaxPlayers = (byte)playerNumNeeded;
 		TypedLobby lobby = new TypedLobby();
 
 		PhotonNetwork.CreateRoom (roomName, options, lobby);
 	}
 
 	//  ルームに入れた時に呼ばれる（自分の作ったルームでも）
-	void OnJoinedRoom(){
+	void OnJoinedRoom()
+	{
 		//  ルームに入っている全員の画面にPlayerを生成する
 		GameObject player = PhotonNetwork.Instantiate("NetworkCube", this.transform.position, this.transform.rotation, 0);
 		//  自分が生成したPlayerを移動可能にする
@@ -72,7 +91,6 @@ public class RoomMaking : Photon.MonoBehaviour
 	/// <summary>
 	/// プレイヤーの参加を待ってゲームを開始する
 	/// </summary>
-	/// <returns>The players and start game.</returns>
 	IEnumerator WaitPlayersAndStartGame()
 	{
 		// プレイヤーの参加を待つ
@@ -89,11 +107,8 @@ public class RoomMaking : Photon.MonoBehaviour
 
 		myPlayer.initizlized = true;
 
-		//myPlayer.Init();
-
 		// カゴを持たせる
 		myPlayer.EnalbeBag();
-
 	}
 
 	/// <summary>

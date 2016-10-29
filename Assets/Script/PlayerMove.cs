@@ -59,8 +59,6 @@ public class PlayerMove : Photon.MonoBehaviour {
 
 	static List<PlayerMove> players;
 
-
-	//PhotonView myPhotonView;
 		
 	// Use this for initialization
 	void Start () {
@@ -69,19 +67,17 @@ public class PlayerMove : Photon.MonoBehaviour {
 			players = new List<PlayerMove>();
 		}
 		players.Add(this);
-	}
-	/*
-	public PhotonView photonView
-	{
-		get{
-			return myPhotonView;
+
+		if( RoomMaking._singleMode )
+		{
+			SetBagPositionForSinglePlayer(transform);
 		}
 	}
-*/
+
 	// Update is called once per frame
 	void Update () 
 	{
-		Debug.Log("自分か？ = " + photonView.isMine );
+		// Debug.Log("自分か？ = " + photonView.isMine );
 
 		if( !photonView.isMine || !initizlized )
 		{
@@ -103,9 +99,8 @@ public class PlayerMove : Photon.MonoBehaviour {
 			UpdateBagPosition();	
 		}
 
-
-	//	this.GetComponent<Rigidbody>().velocity = new Vector3( * speed, 0,  * speed);
 	}
+
 
 	public void SetMaterial( MatColor color )
 	{
@@ -129,8 +124,7 @@ public class PlayerMove : Photon.MonoBehaviour {
 	{
 		bag.SetActive(key);
 	}
-
-
+		
 	public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
 	{
 		Debug.Log("OnPhotonSerializeView");
@@ -148,16 +142,35 @@ public class PlayerMove : Photon.MonoBehaviour {
 		}
 	}
 
+	/// <summary>
+	/// カゴの位置を更新する
+	/// ２人プレイの時は２人の間のポジション
+	/// １人プレイの時は何もしない
+	/// </summary>
 	private void UpdateBagPosition()
 	{
-		Vector3 pos = Vector3.zero;
+		if( RoomMaking._singleMode )
+		{
+			return;
+		}
+
+		Vector3 bagPos = Vector3.zero;
 
 		for( int i=0 ; i<players.Count ; i++)
 		{
-			pos += players[i].hand.position;
+			bagPos += players[i].hand.position;
 		}
-		pos /= players.Count;
+		bagPos /= players.Count;
 
-		bag.transform.position = pos;
+		bag.transform.position = bagPos;
+	}
+
+	/// <summary>
+	/// シングルプレイヤー用にカゴの位置をセット
+	/// </summary>
+	private void SetBagPositionForSinglePlayer(Transform transform )
+	{
+		bag.transform.SetParent( transform );
+		bag.transform.localPosition = Vector3.forward * 2.5f;
 	}
 }
