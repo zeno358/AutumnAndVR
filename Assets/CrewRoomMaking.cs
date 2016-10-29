@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CrewRoomMaking : Photon.MonoBehaviour 
+public class RoomMaking : Photon.MonoBehaviour 
 {
 	/// <summary>
 	/// ルーム名
@@ -16,7 +16,7 @@ public class CrewRoomMaking : Photon.MonoBehaviour
 	/// <summary>
 	/// 自分が管理するプレイヤー
 	/// </summary>
-	PlayerMove myPlayer;
+	CrewMove myPlayer;
 
 	/// <summary>
 	/// プレイヤー１の位置 
@@ -48,7 +48,7 @@ public class CrewRoomMaking : Photon.MonoBehaviour
 
 		if( singleMode )
 		{
-		//	PhotonNetwork.offlineMode = true;
+			//	PhotonNetwork.offlineMode = true;
 			playerNumNeeded = 1;
 		}
 	}
@@ -74,10 +74,10 @@ public class CrewRoomMaking : Photon.MonoBehaviour
 	void OnJoinedRoom()
 	{
 		//  ルームに入っている全員の画面にPlayerを生成する
-	//	GameObject player = PhotonNetwork.Instantiate("NetworkCube", this.transform.position, this.transform.rotation, 0);
+		//	GameObject player = PhotonNetwork.Instantiate("NetworkCube", this.transform.position, this.transform.rotation, 0);
 		GameObject player = PhotonNetwork.Instantiate("NetworkCrew", this.transform.position, this.transform.rotation, 0);
 		//  自分が生成したPlayerを移動可能にする
-		myPlayer = player.GetComponent<PlayerMove>();
+		myPlayer = player.GetComponent<CrewMove>();
 		//myPlayer.enabled = true;
 
 
@@ -106,7 +106,7 @@ public class CrewRoomMaking : Photon.MonoBehaviour
 		// プレイヤーのポジションをセット
 		SetPlayerTransform();
 
-		myPlayer.initizlized = true;
+		myPlayer.initialized = true;
 
 		// カゴを持たせる
 		myPlayer.EnalbeBag();

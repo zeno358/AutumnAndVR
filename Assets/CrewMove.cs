@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class PlayerMove : Photon.MonoBehaviour {
+public class CrewMove : Photon.MonoBehaviour {
 
 	public float speed = 10.0f;
 
@@ -14,7 +14,15 @@ public class PlayerMove : Photon.MonoBehaviour {
 	/// <summary>
 	/// 初期化されたか？
 	/// </summary>
-	public bool initizlized = false;
+	private bool _initialized;
+	public bool initialized{
+		get{
+			return _initialized;
+		}
+		set{
+			_initialized = value;
+		}
+	}
 
 	/// <summary>
 	/// 手
@@ -33,14 +41,14 @@ public class PlayerMove : Photon.MonoBehaviour {
 	/// </summary>
 	public int id = -1;
 
-	static List<PlayerMove> players;
+	static List<CrewMove> players;
 
-		
+
 	// Use this for initialization
 	void Start () {
 		if( players == null )
 		{
-			players = new List<PlayerMove>();
+			players = new List<CrewMove>();
 		}
 		players.Add(this);
 
@@ -55,42 +63,16 @@ public class PlayerMove : Photon.MonoBehaviour {
 	{
 		// Debug.Log("自分か？ = " + photonView.isMine );
 
-		if( !photonView.isMine || !initizlized )
+		if( !photonView.isMine || !initialized )
 		{
 			return;
 		}
-
-		var moveX = Input.GetAxisRaw("Horizontal") * speed * Time.deltaTime;
-		var moveZ = Input.GetAxisRaw("Vertical") * speed * Time.deltaTime;
-
-		bool handControl = Input.GetKey(KeyCode.Space);
-
-		if( !handControl ){ hand.transform.localPosition = Vector3.zero; }
-
-		Transform target = handControl ? hand : transform;
-		target.Translate(moveX, 0, moveZ);
 
 		if( bag != null )
 		{
 			UpdateBagPosition();	
 		}
 
-	}
-
-
-	public void SetMaterial( MatColor color )
-	{
-		var mat = GetComponent<MeshRenderer>().material;
-
-		switch( color )
-		{
-		case MatColor.R:
-			mat.color = Color.red;
-			break;
-		case MatColor.B:
-			mat.color = Color.blue;
-			break;
-		}
 	}
 
 	/// <summary>
@@ -100,7 +82,7 @@ public class PlayerMove : Photon.MonoBehaviour {
 	{
 		bag.SetActive(key);
 	}
-		
+
 	public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
 	{
 		Debug.Log("OnPhotonSerializeView");

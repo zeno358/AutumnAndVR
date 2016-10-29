@@ -5,7 +5,7 @@ using System.Collections.Generic;
 /// <summary>
 /// ゲーム全体の変数を管理
 /// </summary>
-public class GameManager : MonoBehaviour {
+public class AutumnVRGameManager : MonoBehaviour {
 
 	/// <summary>
 	/// 現在の参加プレイヤーの合計カウント

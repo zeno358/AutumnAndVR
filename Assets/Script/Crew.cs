@@ -46,7 +46,7 @@ public class Crew : Photon.MonoBehaviour {
 	private Crew partner = null;
 
 	void Start(){
-		GameManager.crews.Add( this );
+		AutumnVRGameManager.crews.Add( this );
 	}
 
 	// Update is called once per frame
