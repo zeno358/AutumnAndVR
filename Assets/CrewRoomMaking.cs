@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class RoomMaking : Photon.MonoBehaviour 
+public class CrewRoomMaking : Photon.MonoBehaviour 
 {
 	/// <summary>
 	/// ルーム名

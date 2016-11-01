@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CrewRoomMaking : Photon.MonoBehaviour 
+public class RoomMaking : Photon.MonoBehaviour 
 {
 	/// <summary>
 	/// ルーム名
@@ -74,8 +74,7 @@ public class CrewRoomMaking : Photon.MonoBehaviour
 	void OnJoinedRoom()
 	{
 		//  ルームに入っている全員の画面にPlayerを生成する
-	//	GameObject player = PhotonNetwork.Instantiate("NetworkCube", this.transform.position, this.transform.rotation, 0);
-		GameObject player = PhotonNetwork.Instantiate("NetworkCrew", this.transform.position, this.transform.rotation, 0);
+		GameObject player = PhotonNetwork.Instantiate("NetworkCube", this.transform.position, this.transform.rotation, 0);
 		//  自分が生成したPlayerを移動可能にする
 		myPlayer = player.GetComponent<PlayerMove>();
 		//myPlayer.enabled = true;
