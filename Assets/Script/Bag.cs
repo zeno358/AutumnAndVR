@@ -12,11 +12,6 @@ public class Bag : MonoBehaviour {
 	public GameObject[] models;
 
 	/// <summary>
-	/// カゴを持っているプレイヤー
-	/// </summary>
-	public Crew master;
-
-	/// <summary>
 	/// 栗を取ったとみなす範囲
 	/// </summary>
 	float catchRange = 1f;
@@ -34,7 +29,7 @@ public class Bag : MonoBehaviour {
 			Chestnut c = Chestnut.cList[i];
 
 			// すでに取られた栗はスキップ
-			if( c.caught ) continue;
+			if( c.harvested ) continue;
 
 			// 栗との距離
 			dist =  Mathf.Abs( (transform.position - c.transform.position).magnitude );
@@ -42,7 +37,7 @@ public class Bag : MonoBehaviour {
 			if( dist <= catchRange )
 			{
 				AddScore();
-				c.caught = true;
+				c.Harvest();
 			}
 		}
 	}
@@ -51,10 +46,7 @@ public class Bag : MonoBehaviour {
 	void AddScore()
 	{
 		Debug.Log("栗をキャッチ");
-		if( master != null )
-		{
-		master.AddCount();
-		}
+		AutumnVRGameManager.count++;
 	}
 
 	/// <summary>

@@ -29,9 +29,17 @@ public class Chestnut : MonoBehaviour {
 	float timer = 0;
 
 	/// <summary>
-	/// ゲットされた状態か？
+	/// 収穫済みか？
 	/// </summary>
-	public bool caught = false;
+	public bool harvested{
+		get;
+		private set;
+	}
+
+	/// <summary>
+	/// モデル
+	/// </summary>
+	public GameObject model;
 
 	void Awake()
 	{
@@ -66,14 +74,26 @@ public class Chestnut : MonoBehaviour {
 	{
 	}
 
+	/// <summary>
+	/// 残り寿命を更新
+	/// </summary>
 	void UpdateLifeTimer()
 	{
 		timer += Time.deltaTime;
 		if( timer >= lifeTime )
 		{
-			caught = true;
+			harvested = true;
 			Destroy(gameObject);
 			//PhotonView.Destroy( GameObject );
 		}
+	}
+
+	/// <summary>
+	/// 収穫される
+	/// </summary>
+	public void Harvest()
+	{
+		harvested = true;
+		model.SetActive(false);
 	}
 }

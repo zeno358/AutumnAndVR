@@ -6,11 +6,6 @@ public class CrewMove : Photon.MonoBehaviour {
 
 	public float speed = 10.0f;
 
-	public enum MatColor{
-		R,
-		B,
-	}
-
 	/// <summary>
 	/// 初期化されたか？
 	/// </summary>

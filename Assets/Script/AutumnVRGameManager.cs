@@ -10,7 +10,9 @@ public class AutumnVRGameManager : MonoBehaviour {
 	/// <summary>
 	/// 現在の参加プレイヤーの合計カウント
 	/// </summary>
-	int curCount;
+	public int totalCount;
+	public static int count;
+
 
 	[SerializeField]
 	Muscle muscle;
@@ -21,12 +23,19 @@ public class AutumnVRGameManager : MonoBehaviour {
 
 	void Start()
 	{
-		curCount = 0;
+		count = 0;
 	}
 
 	void Update () 
 	{
-		PassPlayersCount();
+	//	PassPlayersCount();
+		PassCount();
+	}
+
+	void PassCount()
+	{
+		muscle.AddEnergy(count);
+		count = 0;
 	}
 
 	/// <summary>
@@ -41,4 +50,8 @@ public class AutumnVRGameManager : MonoBehaviour {
 
 		muscle.AddEnergy(num);
 	}
+
+	// ゲームオーバーしてタイトル画面
+
+	// ゲームクリアしてスコア表示
 }

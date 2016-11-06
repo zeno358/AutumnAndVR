@@ -127,7 +127,7 @@ public class CrewRoomMaking : Photon.MonoBehaviour
 		myPlayer.transform.localPosition = Vector3.zero;
 		myPlayer.transform.localRotation = Quaternion.identity;
 
-		myPlayer.transform.parent = null;
+		//myPlayer.transform.parent = null;
 	}
 }
 
