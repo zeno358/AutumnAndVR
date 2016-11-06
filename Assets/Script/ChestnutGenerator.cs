@@ -9,13 +9,13 @@ public class ChestnutGenerator : MonoBehaviour {
 	/// <summary>
 	/// 生成頻度
 	/// </summary>
-	float interval = 1f;
+	public float interval = 1f;
 	float timer = 0;
 
 	/// <summary>
 	/// 生成位置の誤差
 	/// </summary>
-	float diffRange = 5f;
+	public float diffRange = 3f;
 
 	/// <summary>
 	/// イガグリ

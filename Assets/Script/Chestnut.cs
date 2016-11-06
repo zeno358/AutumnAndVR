@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 /// イガグリ
@@ -7,9 +8,14 @@ using System.Collections;
 public class Chestnut : MonoBehaviour {
 
 	/// <summary>
+	/// イガグリリスト
+	/// </summary>
+	public static List<Chestnut> cList;
+
+	/// <summary>
 	/// 落下スピード
 	/// </summary>
-	float fallingSpeed = 1f;
+	float fallingSpeed = 0.5f;
 
 	/// <summary>
 	/// 回転スピード
@@ -21,6 +27,21 @@ public class Chestnut : MonoBehaviour {
 	/// </summary>
 	float lifeTime = 5f;
 	float timer = 0;
+
+	/// <summary>
+	/// ゲットされた状態か？
+	/// </summary>
+	public bool caught = false;
+
+	void Awake()
+	{
+		if( cList == null)
+		{
+			cList = new List<Chestnut>();
+		}
+
+		cList.Add(this);
+	}
 
 	// Update is called once per frame
 	void Update () 
@@ -50,6 +71,7 @@ public class Chestnut : MonoBehaviour {
 		timer += Time.deltaTime;
 		if( timer >= lifeTime )
 		{
+			caught = true;
 			Destroy(gameObject);
 			//PhotonView.Destroy( GameObject );
 		}

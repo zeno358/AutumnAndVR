@@ -52,9 +52,9 @@ public class CrewMove : Photon.MonoBehaviour {
 		}
 		players.Add(this);
 
-		if( RoomMaking._singleMode )
+		if( CrewRoomMaking._singleMode )
 		{
-			SetBagPositionForSinglePlayer(transform);
+			SetBagPositionForSinglePlayer(hand);
 		}
 	}
 
@@ -68,11 +68,24 @@ public class CrewMove : Photon.MonoBehaviour {
 			return;
 		}
 
+		TemporalMovementForNotVR();
+
 		if( bag != null )
 		{
 			UpdateBagPosition();	
 		}
 
+	}
+
+	/// <summary>
+	/// 非VR環境でテスト用の操作
+	/// </summary>
+	void TemporalMovementForNotVR()
+	{
+		var moveX = Input.GetAxisRaw("Horizontal") * speed * Time.deltaTime;
+		var moveZ = Input.GetAxisRaw("Vertical") * speed * Time.deltaTime;
+
+		hand.Translate(moveX, 0, moveZ);
 	}
 
 	/// <summary>
@@ -107,7 +120,7 @@ public class CrewMove : Photon.MonoBehaviour {
 	/// </summary>
 	private void UpdateBagPosition()
 	{
-		if( RoomMaking._singleMode )
+		if( CrewRoomMaking._singleMode )
 		{
 			return;
 		}

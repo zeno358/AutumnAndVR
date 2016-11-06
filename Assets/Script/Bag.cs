@@ -16,15 +16,44 @@ public class Bag : MonoBehaviour {
 	/// </summary>
 	public Crew master;
 
-	void OnTriggerEnter(Collider col)
+	/// <summary>
+	/// 栗を取ったとみなす範囲
+	/// </summary>
+	float catchRange = 1f;
+
+	void Update()
 	{
-		if( col.tag.Equals("Chestnut") )
+		CheckChestnut();
+	}
+
+	void CheckChestnut()
+	{
+		float dist; 
+		for(int i=0 ; i < Chestnut.cList.Count ; i++)
 		{
-			Debug.Log("栗をキャッチ");
-			if( master != null )
+			Chestnut c = Chestnut.cList[i];
+
+			// すでに取られた栗はスキップ
+			if( c.caught ) continue;
+
+			// 栗との距離
+			dist =  Mathf.Abs( (transform.position - c.transform.position).magnitude );
+
+			if( dist <= catchRange )
 			{
-				master.AddCount();
+				AddScore();
+				c.caught = true;
 			}
+		}
+	}
+
+
+	void AddScore()
+	{
+		Debug.Log("栗をキャッチ");
+		if( master != null )
+		{
+		master.AddCount();
 		}
 	}
 
