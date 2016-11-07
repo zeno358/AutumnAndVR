@@ -93,6 +93,11 @@ public class Chestnut : MonoBehaviour {
 	/// </summary>
 	public void Harvest()
 	{
+		if( AutumnVRGameManager.over )
+		{
+			return;
+		}
+
 		harvested = true;
 		model.SetActive(false);
 	}

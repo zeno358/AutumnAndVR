@@ -16,6 +16,11 @@ public class Bag : MonoBehaviour {
 	/// </summary>
 	float catchRange = 1f;
 
+	/// <summary>
+	/// モデル差し替えの閾値
+	/// </summary>
+	int[] modelChangeThreshold = new int[3]{3, 8, 16};
+
 	void Update()
 	{
 		CheckChestnut();
@@ -41,35 +46,24 @@ public class Bag : MonoBehaviour {
 
 			if( dist <= catchRange )
 			{
-				AddScore();
+				Debug.Log("栗をキャッチ");
+				AutumnVRGameManager.AddCount();
 				c.Harvest();
+
+				// モデルの更新
+				SetModel();
 			}
 		}
-	}
-
-
-	void AddScore()
-	{
-		Debug.Log("栗をキャッチ");
-		AutumnVRGameManager.count++;
 	}
 
 	/// <summary>
 	/// カゴのモデルを更新する
 	/// </summary>
-	public void SetModel(int visualIdx)
+	public void SetModel()
 	{
-		if( visualIdx >= models.Length )
+		for( int i=0 ; i < modelChangeThreshold.Length ; i++ )
 		{
-			Debug.Log("そんなものはない");
-			return;
-		}
-
-		//モデルを切り替え
-		for( int i=0 ; i < models.Length ; i++)
-		{
-			GameObject g = models[i];
-			g.SetActive( i == visualIdx );
+			models[i].SetActive( AutumnVRGameManager.totalCount >= modelChangeThreshold[i] );
 		}
 	}
 }

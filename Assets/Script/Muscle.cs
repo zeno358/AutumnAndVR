@@ -11,13 +11,13 @@ public class Muscle : MonoBehaviour
 	float height; //高度
 
 	const float ascend_value = 1f; // 一回の上昇で 何M 上昇するか
-	const int ascend_cost = 1; // 何ポイントで１上昇するか？
+	const int ascend_cost = 1; // 何ポイントで１回上昇するか？
 	int energy = 0; // 集まったエネルギー
 
 	public static Muscle rift;
 
 	[SerializeField]
-	AudioSource audio;
+	AudioSource myAudio;
 
 	[SerializeField]
 	AudioClip[] se;
@@ -75,6 +75,6 @@ public class Muscle : MonoBehaviour
 		}
 
 		// うめき声を再生
-		audio.PlayOneShot( se[(int)pat] );
+		myAudio.PlayOneShot( se[(int)pat] );
 	}
 }

@@ -10,13 +10,23 @@ public class AutumnVRGameManager : MonoBehaviour {
 	/// <summary>
 	/// 現在の参加プレイヤーの合計カウント
 	/// </summary>
-	public int totalCount;
-	public static int count;
+	public static int totalCount;
+
+	/// <summary>
+	/// 現在のカウント
+	/// 筋肉が上昇すると現象する
+	/// </summary>
+	static int count;
 
 	/// <summary>
 	/// ゴールとみなす高度
 	/// </summary>
-	public static float goalHeight = 15f;
+	public static float goalHeight = 30f;
+
+	/// <summary>
+	/// ゲーム終了か？
+	/// </summary>
+	public static bool over = false;
 
 	[SerializeField]
 	Muscle muscle;
@@ -34,6 +44,12 @@ public class AutumnVRGameManager : MonoBehaviour {
 	{
 	//	PassPlayersCount();
 		PassCount();
+	}
+
+	public static void AddCount()
+	{
+		count++;
+		totalCount++;
 	}
 
 	void PassCount()
