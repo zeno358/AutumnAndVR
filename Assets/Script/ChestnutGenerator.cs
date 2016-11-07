@@ -23,7 +23,13 @@ public class ChestnutGenerator : MonoBehaviour {
 	public GameObject Chestnut;
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () 
+	{
+		if( AutumnVRGameManager.over )
+		{
+			return;
+		}
+
 		if( CheckTimer() )
 		{
 			Generate();

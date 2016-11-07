@@ -11,10 +11,20 @@ public class Muscle : MonoBehaviour
 	float height; //高度
 
 	const float ascend_value = 1f; // 一回の上昇で 何M 上昇するか
-	const int ascend_cost = 5; // 何ポイントで１上昇するか？
+	const int ascend_cost = 1; // 何ポイントで１上昇するか？
 	int energy = 0; // 集まったエネルギー
 
 	public static Muscle rift;
+
+	[SerializeField]
+	AudioSource audio;
+
+	[SerializeField]
+	AudioClip[] se;
+
+	enum VoicePat{
+		Delight,
+	}
 
 	void Start()
 	{
@@ -31,6 +41,14 @@ public class Muscle : MonoBehaviour
 		transform.DOMoveY( height, 0.5f);
 
 		Debug.Log(height.ToString() + "まで上昇");
+
+		if( height >= AutumnVRGameManager.goalHeight )
+		{
+			Debug.LogError("ゴール！！");
+		}
+
+		// 歓喜のうめき声
+		Roar(VoicePat.Delight);
 	}
 
 	/// <summary>
@@ -48,8 +66,15 @@ public class Muscle : MonoBehaviour
 	/// <summary>
 	/// うめく
 	/// </summary>
-	private void Roar()
+	/// <param name="pat">ボイスタイプ</param>
+	private void Roar(VoicePat pat)
 	{
+		if( se.Length <= (int)pat )
+		{
+			return;
+		}
+
 		// うめき声を再生
+		audio.PlayOneShot( se[(int)pat] );
 	}
 }

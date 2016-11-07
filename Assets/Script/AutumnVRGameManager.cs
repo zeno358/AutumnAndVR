@@ -13,6 +13,10 @@ public class AutumnVRGameManager : MonoBehaviour {
 	public int totalCount;
 	public static int count;
 
+	/// <summary>
+	/// ゴールとみなす高度
+	/// </summary>
+	public static float goalHeight = 15f;
 
 	[SerializeField]
 	Muscle muscle;
