@@ -15,7 +15,7 @@ public class ChestnutGenerator : MonoBehaviour {
 	/// <summary>
 	/// 生成位置の誤差
 	/// </summary>
-	public float diffRange = 3f;
+	public Vector2 diffRange;
 
 	/// <summary>
 	/// イガグリ
@@ -59,7 +59,7 @@ public class ChestnutGenerator : MonoBehaviour {
 		var g = Instantiate(Chestnut);
 
 		//　生成位置を決定
-		Vector3 pos = new Vector3(transform.position.x + Random.Range( -diffRange, diffRange ), transform.position.y, transform.position.z + Random.Range( -diffRange, diffRange ));
+		Vector3 pos = new Vector3(transform.position.x + Random.Range( -diffRange.x, diffRange.x ), transform.position.y, transform.position.z + Random.Range( -diffRange.y, diffRange.y ));
 		g.transform.position = pos;
 	}
 }

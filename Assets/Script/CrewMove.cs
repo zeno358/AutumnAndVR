@@ -137,6 +137,6 @@ public class CrewMove : Photon.MonoBehaviour {
 	private void SetBagPositionForSinglePlayer(Transform transform )
 	{
 		bag.transform.SetParent( transform );
-		bag.transform.localPosition = Vector3.forward * 2.5f;
+		bag.transform.localPosition = Vector3.forward * 1.5f;
 	}
 }

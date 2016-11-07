@@ -15,7 +15,7 @@ public class Chestnut : MonoBehaviour {
 	/// <summary>
 	/// 落下スピード
 	/// </summary>
-	float fallingSpeed = 0.5f;
+	float fallingSpeed = 0.15f;
 
 	/// <summary>
 	/// 回転スピード
