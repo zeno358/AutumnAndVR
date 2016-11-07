@@ -31,6 +31,8 @@ public class Muscle : MonoBehaviour
 	[SerializeField]
 	private TextMesh clearText;
 
+	float stanTimer =0;
+
 	enum VoicePat{
 		Delight,	// 歓喜
 		Painful,	// 苦痛
@@ -46,6 +48,15 @@ public class Muscle : MonoBehaviour
 	{
 		// 栗とのあたり判定をチェック
 		CheckCollisionChestnut();
+
+		ReduceStanTimer ();
+	}
+
+	void ReduceStanTimer()
+	{
+		if (stanTimer >= 0) {
+			stanTimer -= Time.deltaTime;
+		}
 	}
 
 	/// <summary>
@@ -53,7 +64,7 @@ public class Muscle : MonoBehaviour
 	/// </summary>
 	void Ascend()
 	{
-		if (AutumnVRGameManager.over) {
+		if (AutumnVRGameManager.over || stanTimer > 0) {
 			return;
 		}
 
@@ -118,6 +129,9 @@ public class Muscle : MonoBehaviour
 			if( dist <= hitRange )
 			{
 				Debug.Log("栗が筋肉にヒット！");
+
+				stanTimer += 3f;
+
 				c.Harvest();
 				Roar();
 			}
