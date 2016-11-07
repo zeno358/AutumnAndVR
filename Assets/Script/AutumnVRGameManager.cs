@@ -21,7 +21,7 @@ public class AutumnVRGameManager : MonoBehaviour {
 	/// <summary>
 	/// ゴールとみなす高度
 	/// </summary>
-	public static float goalHeight = 30f;
+	public static float goalHeight = 120f;
 
 	/// <summary>
 	/// ゲーム終了か？
@@ -35,15 +35,19 @@ public class AutumnVRGameManager : MonoBehaviour {
 	/// </summary>
 	public static List<CrewMove> players;
 
+	public static float gameTimer;
+
 	void Start()
 	{
 		count = 0;
+		gameTimer = 0;
 	}
 
 	void Update () 
 	{
 		PassPlayersCount();
 	//	PassCount();
+		gameTimer += Time.deltaTime;
 	}
 
 	public static void AddCount()

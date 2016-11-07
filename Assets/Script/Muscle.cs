@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using DG.Tweening;
 
@@ -22,7 +23,13 @@ public class Muscle : MonoBehaviour
 	AudioSource myAudio;
 
 	[SerializeField]
-	AudioClip[] se;
+	AudioClip[] se_roar;
+
+	[SerializeField]
+	AudioClip se_clear;
+
+	[SerializeField]
+	private TextMesh clearText;
 
 	enum VoicePat{
 		Delight,	// 歓喜
@@ -46,6 +53,10 @@ public class Muscle : MonoBehaviour
 	/// </summary>
 	void Ascend()
 	{
+		if (AutumnVRGameManager.over) {
+			return;
+		}
+
 		height += ascend_value;
 		transform.DOMoveY( height, 0.5f);
 
@@ -54,10 +65,12 @@ public class Muscle : MonoBehaviour
 		if( height >= AutumnVRGameManager.goalHeight )
 		{
 			Debug.LogError("ゴール！！");
+			AutumnVRGameManager.over = true;
+			clearText.gameObject.SetActive (true);
+			clearText.text = "くりあたいむ\n" + ((int)AutumnVRGameManager.gameTimer).ToString () + "びょう";
+			myAudio.PlayOneShot (se_clear);
 		}
 
-		// 歓喜のうめき声
-		Roar();
 	}
 
 	/// <summary>
@@ -78,10 +91,10 @@ public class Muscle : MonoBehaviour
 	/// <param name="pat">ボイスタイプ</param>
 	private void Roar()
 	{
-		int key = Random.Range (0, se.Length - 1);
+		int key = Random.Range (0, se_roar.Length - 1);
 
 		// うめき声を再生
-		myAudio.PlayOneShot( se[key] );
+		myAudio.PlayOneShot( se_roar[key] );
 	}
 
 	void CheckCollisionChestnut()
