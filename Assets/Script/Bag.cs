@@ -21,6 +21,12 @@ public class Bag : MonoBehaviour {
 	/// </summary>
 	int[] modelChangeThreshold = new int[3]{10, 20, 40};
 
+	/// <summary>
+	/// 効果音
+	/// </summary>
+	[SerializeField]
+	AudioClip se;
+
 	int catchCount = 0;
 
 	void Update()
@@ -52,6 +58,9 @@ public class Bag : MonoBehaviour {
 				c.Harvest();
 
 				catchCount++;
+
+				// se
+				GetComponent<AudioSource>().Play();
 
 				// モデルの更新
 				SetModel();
