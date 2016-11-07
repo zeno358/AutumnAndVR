@@ -16,6 +16,11 @@ public class Muscle : MonoBehaviour
 
 	public static Muscle rift;
 
+	/// <summary>
+	/// 栗がぶつかったとみなす範囲
+	/// </summary>
+	float hitRange = 0.1f;
+
 	[SerializeField]
 	AudioSource myAudio;
 
@@ -23,13 +28,20 @@ public class Muscle : MonoBehaviour
 	AudioClip[] se;
 
 	enum VoicePat{
-		Delight,
+		Delight,	// 歓喜
+		Painful,	// 苦痛
 	}
 
 	void Start()
 	{
 		height = transform.position.y;
 		Debug.Log("スタート時点での高度は " + height.ToString() );
+	}
+
+	void Update()
+	{
+		// 栗とのあたり判定をチェック
+		CheckCollisionChestnut();
 	}
 
 	/// <summary>
@@ -76,5 +88,32 @@ public class Muscle : MonoBehaviour
 
 		// うめき声を再生
 		myAudio.PlayOneShot( se[(int)pat] );
+	}
+
+	void CheckCollisionChestnut()
+	{
+		if(Chestnut.cList == null)
+		{
+			return;
+		}
+
+		float dist; 
+		for(int i=0 ; i < Chestnut.cList.Count ; i++)
+		{
+			Chestnut c = Chestnut.cList[i];
+
+			// すでに取られた栗はスキップ
+			if( c.harvested ) continue;
+
+			// 栗との高度比較
+			dist =  Mathf.Abs( (transform.position.y - c.transform.position.y) );
+
+			if( dist <= hitRange )
+			{
+				Debug.Log("栗が筋肉にヒット！");
+				c.Harvest();
+				Roar(VoicePat.Painful);
+			}
+		}
 	}
 }
