@@ -36,6 +36,12 @@ public class CrewRoomMaking : Photon.MonoBehaviour
 	public bool singleMode = false;
 	public static bool _singleMode;
 
+	/// <summary>
+	/// シングルモード用おプレハブ
+	/// </summary>
+	[SerializeField]
+	GameObject NetworkCrewPrefab;
+
 	void Awake()
 	{
 		_singleMode = singleMode;
@@ -43,13 +49,14 @@ public class CrewRoomMaking : Photon.MonoBehaviour
 
 	void Start ()
 	{
-		// 魔法の呪文
-		PhotonNetwork.ConnectUsingSettings ("0.1");
-
 		if( singleMode )
 		{
-			//	PhotonNetwork.offlineMode = true;
-			playerNumNeeded = 1;
+			// PhotonNetwork.offlineMode = true;
+			SetupCrewForSingleMode();
+		}
+		else{
+			// 魔法の呪文
+			PhotonNetwork.ConnectUsingSettings ("0.1");
 		}
 	}
 
@@ -128,6 +135,27 @@ public class CrewRoomMaking : Photon.MonoBehaviour
 		myPlayer.transform.localRotation = Quaternion.identity;
 
 		//myPlayer.transform.parent = null;
+	}
+
+	private void SetupCrewForSingleMode()
+	{
+		//  ルームに入っている全員の画面にPlayerを生成する
+		GameObject player = Instantiate(NetworkCrewPrefab, this.transform.position, this.transform.rotation) as GameObject;
+		//  自分が生成したPlayerを移動可能にする
+		myPlayer = player.GetComponent<CrewMove>();
+		//myPlayer.enabled = true;
+
+		print( myPlayer.photonView.ownerId.ToString() );
+		myPlayer.id = 1;
+		Debug.Log("あなたのIDは [" + myPlayer.id.ToString() +" ]" );
+
+		// プレイヤーのポジションをセット
+		SetPlayerTransform();
+
+		myPlayer.initialized = true;
+
+		// カゴを持たせる
+		myPlayer.EnalbeBag();
 	}
 }
 

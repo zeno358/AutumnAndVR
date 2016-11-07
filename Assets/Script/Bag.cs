@@ -23,6 +23,11 @@ public class Bag : MonoBehaviour {
 
 	void CheckChestnut()
 	{
+		if(Chestnut.cList == null)
+		{
+			return;
+		}
+
 		float dist; 
 		for(int i=0 ; i < Chestnut.cList.Count ; i++)
 		{

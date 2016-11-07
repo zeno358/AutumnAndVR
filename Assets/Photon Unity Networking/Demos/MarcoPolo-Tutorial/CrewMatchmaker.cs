@@ -31,7 +31,6 @@ public class CrewMatchmaker : Photon.PunBehaviour
 
     public override void OnJoinedLobby()
     {
-
 		Debug.LogError(gameObject.name + "OnJoinedLobby");
 
 		PhotonNetwork.JoinRoom( roomName );
