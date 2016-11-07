@@ -36,16 +36,26 @@ public class CrewMove : Photon.MonoBehaviour {
 	/// </summary>
 	public int id = -1;
 
-	static List<CrewMove> players;
+	/// <summary>
+	/// ペダルを踏んだ回数累計
+	/// </summary>
+	int totalCount{ set; get;}
+
+	/// <summary>
+	/// 現在残っているカウント
+	/// </summary>
+	int restCount{set; get;}
+
+
 
 
 	// Use this for initialization
 	void Start () {
-		if( players == null )
+		if( AutumnVRGameManager.players == null )
 		{
-			players = new List<CrewMove>();
+			AutumnVRGameManager.players = new List<CrewMove>();
 		}
-		players.Add(this);
+		AutumnVRGameManager.players.Add(this);
 
 		if( CrewRoomMaking._singleMode )
 		{
@@ -122,13 +132,34 @@ public class CrewMove : Photon.MonoBehaviour {
 
 		Vector3 bagPos = Vector3.zero;
 
-		for( int i=0 ; i<players.Count ; i++)
+		for( int i=0 ; i<AutumnVRGameManager.players.Count ; i++)
 		{
-			bagPos += players[i].hand.position;
+			bagPos += AutumnVRGameManager.players[i].hand.position;
 		}
-		bagPos /= players.Count;
+		bagPos /= AutumnVRGameManager.players.Count;
 
 		bag.transform.position = bagPos;
+	}
+
+	/// <summary>
+	/// カウントを追加
+	/// </summary>
+	public void AddCount() {
+		totalCount++;
+		restCount++;
+		Debug.Log(gameObject.name + "のカウント[ 現在 " + restCount.ToString()  + " 累計 " + totalCount.ToString()  + " ]");
+	}
+
+
+	/// <summary>
+	/// 所持カウントを渡し、所持分は0にする
+	/// </summary>
+	/// <returns>The count.</returns>
+	public int PassCount()
+	{
+		int num = restCount;
+		restCount = 0;
+		return num;
 	}
 
 	/// <summary>

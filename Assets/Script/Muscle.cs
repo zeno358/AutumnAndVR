@@ -7,14 +7,11 @@ using DG.Tweening;
 /// </summary>
 public class Muscle : MonoBehaviour 
 {
-
 	float height; //高度
 
 	const float ascend_value = 1f; // 一回の上昇で 何M 上昇するか
 	const int ascend_cost = 1; // 何ポイントで１回上昇するか？
 	int energy = 0; // 集まったエネルギー
-
-	public static Muscle rift;
 
 	/// <summary>
 	/// 栗がぶつかったとみなす範囲
@@ -60,7 +57,7 @@ public class Muscle : MonoBehaviour
 		}
 
 		// 歓喜のうめき声
-		Roar(VoicePat.Delight);
+		Roar();
 	}
 
 	/// <summary>
@@ -79,15 +76,12 @@ public class Muscle : MonoBehaviour
 	/// うめく
 	/// </summary>
 	/// <param name="pat">ボイスタイプ</param>
-	private void Roar(VoicePat pat)
+	private void Roar()
 	{
-		if( se.Length <= (int)pat )
-		{
-			return;
-		}
+		int key = Random.Range (0, se.Length - 1);
 
 		// うめき声を再生
-		myAudio.PlayOneShot( se[(int)pat] );
+		myAudio.PlayOneShot( se[key] );
 	}
 
 	void CheckCollisionChestnut()
@@ -112,7 +106,7 @@ public class Muscle : MonoBehaviour
 			{
 				Debug.Log("栗が筋肉にヒット！");
 				c.Harvest();
-				Roar(VoicePat.Painful);
+				Roar();
 			}
 		}
 	}

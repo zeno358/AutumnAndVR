@@ -33,7 +33,7 @@ public class AutumnVRGameManager : MonoBehaviour {
 	/// <summary>
 	/// 参加プレイヤー
 	/// </summary>
-	public static List<Crew> crews = new List<Crew>();
+	public static List<CrewMove> players;
 
 	void Start()
 	{
@@ -42,8 +42,8 @@ public class AutumnVRGameManager : MonoBehaviour {
 
 	void Update () 
 	{
-	//	PassPlayersCount();
-		PassCount();
+		PassPlayersCount();
+	//	PassCount();
 	}
 
 	public static void AddCount()
@@ -64,7 +64,7 @@ public class AutumnVRGameManager : MonoBehaviour {
 	void PassPlayersCount()
 	{
 		int num = 0;
-		foreach(Crew c in crews){
+		foreach(CrewMove c in players){
 			num += c.PassCount();
 		}
 

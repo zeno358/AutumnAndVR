@@ -24,7 +24,7 @@ public class Pedometer : MonoBehaviour {
 	float curveOriginPos;
 
 	[SerializeField]
-	Crew master;
+	CrewMove master;
 
 	// Use this for initialization
 	void Start () {
@@ -62,6 +62,6 @@ public class Pedometer : MonoBehaviour {
 			master.AddCount ();
 		}
 		value++;
-		//Debug.Log ( gameObject.name + " : AddValue( " + value.ToString () + " ) " );
+		Debug.Log ( gameObject.name + " : AddValue( " + value.ToString () + " ) " );
 	}
 }
