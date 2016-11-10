@@ -35,6 +35,8 @@ public class Pedometer : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		CheckPosAndAddValue ();
+
+		GetTemporaryInput();
 	}
 
 	void CheckPosAndAddValue()
@@ -54,6 +56,14 @@ public class Pedometer : MonoBehaviour {
 
 		PrevPosY = posY;
 		prevOffset = offset;
+	}
+
+	void GetTemporaryInput()
+	{
+		if( Input.GetKey(KeyCode.Space) )
+		{
+			AddValue();
+		}
 	}
 
 	void AddValue()
