@@ -25,7 +25,7 @@ public class Chestnut : MonoBehaviour {
 	/// <summary>
 	/// 命の長さ秒
 	/// </summary>
-	float lifeTime = 5f;
+	float lifeTime = 10f;
 	float timer = 0;
 
 	/// <summary>
@@ -35,6 +35,13 @@ public class Chestnut : MonoBehaviour {
 		get;
 		private set;
 	}
+
+	public enum EffectType{
+		Good,
+		bad,
+	}
+
+	public GameObject[] effects;
 
 	/// <summary>
 	/// モデル
@@ -91,12 +98,24 @@ public class Chestnut : MonoBehaviour {
 	/// <summary>
 	/// 収穫される
 	/// </summary>
-	public void Harvest()
+	/// <param name="byBag">カゴによる収穫か？</param>
+	public void Harvest(bool byBag)
 	{
 		if( AutumnVRGameManager.over )
 		{
 			return;
 		}
+		GameObject effect;
+
+		if(byBag){
+			// 良いエフェクト
+			effect = Instantiate( effects[(int)EffectType.Good] );
+		}else{
+			// ダメージエフェクト
+			effect = Instantiate( effects[(int)EffectType.bad] );
+		}
+
+		effect.transform.position = transform.position;
 
 		harvested = true;
 		model.SetActive(false);

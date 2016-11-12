@@ -55,7 +55,7 @@ public class Bag : MonoBehaviour {
 			if( dist <= catchRange )
 			{
 				Debug.Log("栗をキャッチ");
-				c.Harvest();
+				c.Harvest(true);
 
 				catchCount++;
 

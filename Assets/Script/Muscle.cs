@@ -132,7 +132,7 @@ public class Muscle : MonoBehaviour
 
 				stanTimer += 3f;
 
-				c.Harvest();
+				c.Harvest(false);
 				Roar();
 			}
 		}
