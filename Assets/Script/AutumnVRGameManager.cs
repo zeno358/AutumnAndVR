@@ -30,11 +30,6 @@ public class AutumnVRGameManager : MonoBehaviour
 	public static float goalHeight = 120f;
 
 	/// <summary>
-	/// ゲーム終了か？
-	/// </summary>
-	public static bool EndOfGame = false;
-
-	/// <summary>
 	/// 筋肉
 	/// </summary>
 	[SerializeField]
@@ -51,24 +46,27 @@ public class AutumnVRGameManager : MonoBehaviour
 	public static float gameTimer;
 
 	/// <summary>
-	/// ゲームが開始されているか？
+	/// ゲームの最中か？
 	/// </summary>
 	public static bool running;
 
 	void Start()
 	{
+		RessetParametersAndLoadTitleScene();
+	}
+
+	/// <summary>
+	/// パラメータを初期化してタイトルシーンを読み込む
+	/// </summary>
+	static  void RessetParametersAndLoadTitleScene()
+	{
 		count = 0;
 		gameTimer = 0;
 
 		running = false;
-		LoadTitleScene();
-	}
-
-	void LoadTitleScene()
-	{
 		SceneManager.LoadSceneAsync("Title", LoadSceneMode.Additive);
 	}
-
+		
 	void Update () 
 	{
 		if(!running)
@@ -92,12 +90,12 @@ public class AutumnVRGameManager : MonoBehaviour
 
 		if( gameTimer >= timeLimitSec )
 		{
-			if(EndOfGame)
+			if(!running)
 			{
 				return;
 			}
-			EndOfGame = true;
-			ShowTimeOverExpression();
+			running = false;
+			StartCoroutine( ShowTimeOverExpression() );
 		}
 	}
 
@@ -125,22 +123,37 @@ public class AutumnVRGameManager : MonoBehaviour
 
 		muscle.AddEnergy(num);
 	}
-
-	// ゲームオーバーしてタイトル画面
-
+		
 	/// <summary>
 	/// タイムオーバー演出
 	/// </summary>
-	private void ShowTimeOverExpression()
+	private IEnumerator ShowTimeOverExpression()
 	{
-		Debug.LogError("時間切れ！");
+		int height = (int)Mathf.Floor( Muscle.height );
+		Debug.LogErrorFormat("時間切れ！あなたが到達した高度は{0}", height);
 
 		// マッチョが悲しそうなセリフ
 		muscle.Down();
+
 		// 時間切れの旨の到達高度を表示
+
+		yield return new WaitForSeconds(5f);
+
+		// タイトルに戻る
+		RessetParametersAndLoadTitleScene();
 	}
 
 
 	// ゲームクリアしてスコア表示
+	public static IEnumerator GameClear()
+	{
+		Debug.LogError("ゴール！！");
+		AutumnVRGameManager.running = false;
+
+		yield return new WaitForSeconds(5f);
+
+		// タイトルに戻る
+		RessetParametersAndLoadTitleScene();
+	}
 
 }

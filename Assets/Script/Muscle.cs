@@ -8,7 +8,7 @@ using DG.Tweening;
 /// </summary>
 public class Muscle : MonoBehaviour 
 {
-	float height; //高度
+	public static float height; //高度
 
 	const float ascend_value = 1f; // 一回の上昇で 何M 上昇するか
 	const int ascend_cost = 1; // 何ポイントで１回上昇するか？
@@ -33,6 +33,11 @@ public class Muscle : MonoBehaviour
 
 	[SerializeField]
 	private TextMesh clearText;
+
+	/// <summary>
+	/// 筋肉の初期位置
+	/// </summary>
+	public Transform originPos;
 
 	float stanTimer =0;
 
@@ -67,7 +72,7 @@ public class Muscle : MonoBehaviour
 	/// </summary>
 	void Ascend()
 	{
-		if (AutumnVRGameManager.EndOfGame || stanTimer > 0) {
+		if (!AutumnVRGameManager.running|| stanTimer > 0) {
 			return;
 		}
 
@@ -78,8 +83,8 @@ public class Muscle : MonoBehaviour
 
 		if( height >= AutumnVRGameManager.goalHeight )
 		{
-			Debug.LogError("ゴール！！");
-			AutumnVRGameManager.EndOfGame = true;
+			StartCoroutine( AutumnVRGameManager.GameClear());
+
 			clearText.gameObject.SetActive (true);
 			clearText.text = "くりあたいむ\n" + ((int)AutumnVRGameManager.gameTimer).ToString () + "びょう";
 			myAudio.PlayOneShot (se_clear);
@@ -147,5 +152,15 @@ public class Muscle : MonoBehaviour
 				Roar();
 			}
 		}
+	}
+
+	/// <summary>
+	/// 初期位置に戻す
+	/// </summary>
+	public void SetToOrigin()
+	{
+		transform.position = originPos.position;
+		height = transform.position.y;
+		energy = 0;
 	}
 }

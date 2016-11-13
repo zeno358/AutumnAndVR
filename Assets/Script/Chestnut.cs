@@ -101,7 +101,7 @@ public class Chestnut : MonoBehaviour {
 	/// <param name="byBag">カゴによる収穫か？</param>
 	public void Harvest(bool byBag)
 	{
-		if( AutumnVRGameManager.EndOfGame )
+		if( !AutumnVRGameManager.running )
 		{
 			return;
 		}
