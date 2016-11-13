@@ -25,7 +25,7 @@ public class ChestnutGenerator : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		if( AutumnVRGameManager.over )
+		if( AutumnVRGameManager.EndOfGame )
 		{
 			return;
 		}

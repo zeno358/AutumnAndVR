@@ -64,7 +64,7 @@ public class Muscle : MonoBehaviour
 	/// </summary>
 	void Ascend()
 	{
-		if (AutumnVRGameManager.over || stanTimer > 0) {
+		if (AutumnVRGameManager.EndOfGame || stanTimer > 0) {
 			return;
 		}
 
@@ -76,7 +76,7 @@ public class Muscle : MonoBehaviour
 		if( height >= AutumnVRGameManager.goalHeight )
 		{
 			Debug.LogError("ゴール！！");
-			AutumnVRGameManager.over = true;
+			AutumnVRGameManager.EndOfGame = true;
 			clearText.gameObject.SetActive (true);
 			clearText.text = "くりあたいむ\n" + ((int)AutumnVRGameManager.gameTimer).ToString () + "びょう";
 			myAudio.PlayOneShot (se_clear);
