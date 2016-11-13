@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -49,14 +50,32 @@ public class AutumnVRGameManager : MonoBehaviour
 	/// </summary>
 	public static float gameTimer;
 
+	/// <summary>
+	/// ゲームが開始されているか？
+	/// </summary>
+	public static bool running;
+
 	void Start()
 	{
 		count = 0;
 		gameTimer = 0;
+
+		running = false;
+		LoadTitleScene();
+	}
+
+	void LoadTitleScene()
+	{
+		SceneManager.LoadSceneAsync("Title", LoadSceneMode.Additive);
 	}
 
 	void Update () 
 	{
+		if(!running)
+		{
+			return;
+		}
+
 		PassPlayersCount();
 	//	PassCount();
 

@@ -68,6 +68,11 @@ public class CrewMove : Photon.MonoBehaviour {
 	{
 		// Debug.Log("自分か？ = " + photonView.isMine );
 
+		if(!AutumnVRGameManager.running)
+		{
+			return;
+		}
+
 		if( !CrewRoomMaking._singleMode && (!photonView.isMine || !initialized) )
 		{
 			return;
