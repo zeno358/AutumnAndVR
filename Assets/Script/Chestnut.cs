@@ -25,7 +25,7 @@ public class Chestnut : MonoBehaviour {
 	/// <summary>
 	/// 命の長さ秒
 	/// </summary>
-	float lifeTime = 10f;
+	public float lifeTime = 10f;
 	float timer = 0;
 
 	/// <summary>
