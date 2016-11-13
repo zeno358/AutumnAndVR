@@ -29,6 +29,9 @@ public class Muscle : MonoBehaviour
 	AudioClip se_clear;
 
 	[SerializeField]
+	AudioClip se_failed;
+
+	[SerializeField]
 	private TextMesh clearText;
 
 	float stanTimer =0;
@@ -97,7 +100,7 @@ public class Muscle : MonoBehaviour
 	}
 
 	/// <summary>
-	/// うめく
+	/// 苦痛のうめき声
 	/// </summary>
 	/// <param name="pat">ボイスタイプ</param>
 	private void Roar()
@@ -106,6 +109,14 @@ public class Muscle : MonoBehaviour
 
 		// うめき声を再生
 		myAudio.PlayOneShot( se_roar[key] );
+	}
+
+	/// <summary>
+	/// 失敗時の声
+	/// </summary>
+	public void Down()
+	{
+		myAudio.PlayOneShot( se_failed );
 	}
 
 	void CheckCollisionChestnut()

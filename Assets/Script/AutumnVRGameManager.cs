@@ -34,11 +34,6 @@ public class AutumnVRGameManager : MonoBehaviour
 	public static bool EndOfGame = false;
 
 	/// <summary>
-	/// 時間切れか？
-	/// </summary>
-	public static bool TimeOver = false;
-
-	/// <summary>
 	/// 筋肉
 	/// </summary>
 	[SerializeField]
@@ -78,7 +73,11 @@ public class AutumnVRGameManager : MonoBehaviour
 
 		if( gameTimer >= timeLimitSec )
 		{
-			TimeOver = EndOfGame = true;
+			if(EndOfGame)
+			{
+				return;
+			}
+			EndOfGame = true;
 			ShowTimeOverExpression();
 		}
 	}
@@ -118,7 +117,7 @@ public class AutumnVRGameManager : MonoBehaviour
 		Debug.LogError("時間切れ！");
 
 		// マッチョが悲しそうなセリフ
-
+		muscle.Down();
 		// 時間切れの旨の到達高度を表示
 	}
 
