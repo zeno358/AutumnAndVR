@@ -11,7 +11,7 @@ public class AutumnVRGameManager : MonoBehaviour
 	/// <summary>
 	/// 制限時間
 	/// </summary>
-	public static int timeLimitSec = 5;
+	public static int timeLimitSec = 120;
 
 	/// <summary>
 	/// 現在の参加プレイヤーの合計カウント
@@ -27,7 +27,7 @@ public class AutumnVRGameManager : MonoBehaviour
 	/// <summary>
 	/// ゴールとみなす高度
 	/// </summary>
-	public static int goalHeight = 100;
+	public static int goalHeight = 300;
 
 	/// <summary>
 	/// 筋肉
@@ -192,7 +192,10 @@ public class AutumnVRGameManager : MonoBehaviour
 	{
 		for (int i = Chestnut.cList.Count-1 ; i >= 0  ; i--) {
 			var c = Chestnut.cList [i];
-			Destroy( c.gameObject );
+			if (c != null) {
+				
+				Destroy (c.gameObject);
+			}
 		}
 		Chestnut.cList.Clear ();
 
@@ -227,7 +230,9 @@ public class AutumnVRGameManager : MonoBehaviour
 	{
 		for (int i = Chestnut.cList.Count-1 ; i >= 0  ; i--) {
 			var c = Chestnut.cList [i];
-			Destroy( c.gameObject );
+			if (c != null) {
+				Destroy (c.gameObject);
+			}
 		}
 		Chestnut.cList.Clear ();
 

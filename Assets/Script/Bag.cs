@@ -67,6 +67,10 @@ public class Bag : MonoBehaviour
 		{
 			Chestnut c = Chestnut.cList[i];
 
+			if (c == null) {
+				continue;
+			}
+
 			// すでに取られた栗はスキップ
 			if( c.harvested ) continue;
 

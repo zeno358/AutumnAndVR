@@ -177,10 +177,15 @@ public class Muscle : MonoBehaviour
 		{
 			Chestnut c = Chestnut.cList[i];
 
+			if (c == null) {
+				continue;
+			}
+
 			// すでに取られた栗はスキップ
 			if( c.harvested ) continue;
 
 			// 栗との高度比較
+
 			dist =  Mathf.Abs( (transform.position.y - c.transform.position.y) );
 
 			if( dist <= hitRange )
