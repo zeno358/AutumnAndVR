@@ -21,10 +21,13 @@ public class TitleScene : MonoBehaviour {
 	}
 
 	IEnumerator TryGetVrController(){
+		GameObject g;
 		do {
-			trackedObject = GameObject.Find("Controller (right)"). GetComponent<SteamVR_TrackedObject>();
+			g = GameObject.Find("Controller (right)");
 			yield return new WaitForSeconds(5);
-		} while(trackedObject == null);
+		} while(g == null);
+
+		trackedObject = g.GetComponent<SteamVR_TrackedObject>();
 	}
 
 	// Update is called once per frame
