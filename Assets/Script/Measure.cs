@@ -12,9 +12,9 @@ public class Measure : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		enablePrev = false;
 		mesh = GetComponent<TextMesh>();
 		r = GetComponent<MeshRenderer> ();
+		enablePrev = false;
 	}
 
 	// Update is called once per frame
@@ -27,7 +27,7 @@ public class Measure : MonoBehaviour {
 		if (!enablePrev && r.enabled && AutumnVRGameManager.running) {
 			FrameIn ();
 		}
-		enablePrev = enabled;
+		enablePrev = r.enabled;
 
 		// 到達したら黄色
 		mesh.color = Muscle.height >= transform.position.y ? Color.yellow : Color.red;
@@ -35,8 +35,8 @@ public class Measure : MonoBehaviour {
 
 	void FrameIn()
 	{
-		float target = transform.localPosition.x;
-		transform.localPosition = Vector3.right * 50f;
-		transform.DOLocalMoveX (target, 3f);
+		Vector3 target = transform.position;
+		transform.Translate(Vector3.right * 50f);
+		transform.DOMove (target, 1f).SetEase(Ease.OutBack);
 	}
 }
