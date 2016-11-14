@@ -34,6 +34,9 @@ public class Pedometer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (!AutumnVRGameManager.running) {
+			return;
+		}
 		CheckPosAndAddValue ();
 
 		GetTemporaryInput();

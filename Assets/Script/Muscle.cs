@@ -219,7 +219,6 @@ public class Muscle : MonoBehaviour
 	}
 
 	/// <summary>
-	/// 外部から
 	/// BGMを再生
 	/// </summary>
 	public void SetBGM(bool play)
