@@ -100,6 +100,13 @@ public class AutumnVRGameManager : MonoBehaviour
 		gameTimer = 0;
 
 		running = false;
+
+		GameObject b = GameObject.Find ("Bag");
+		if( b != null )
+		{
+			b.GetComponent<Bag>().InitModel();	
+		}
+
 		SceneManager.LoadSceneAsync("Title", LoadSceneMode.Additive);
 	}
 		

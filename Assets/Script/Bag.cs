@@ -40,11 +40,17 @@ public class Bag : MonoBehaviour
 
 	void Start()
 	{
+		InitModel ();
+	}
+
+	public void InitModel()
+	{
 		for( int i=0 ; i < modelChangeThreshold.Length ; i++ )
-		{
+		{	
 			models[i].SetActive( false );
 		}
 	}
+
 
 	void Update()
 	{
