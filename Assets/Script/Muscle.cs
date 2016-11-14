@@ -116,8 +116,6 @@ public class Muscle : MonoBehaviour
 
 			if( reachUnit > reachedHeightUnit )
 			{
-				Debug.LogError("高さ" + reachUnit.ToString() + "に達した！");
-
 				// ボイスと効果音再生
 				StartCoroutine( PlayReachingSe() );
 

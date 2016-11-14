@@ -87,13 +87,13 @@ public class AutumnVRGameManager : MonoBehaviour
 
 	void Start()
 	{
-		RessetParametersAndLoadTitleScene();
+		ResetParametersAndLoadTitleScene();
 	}
 
 	/// <summary>
 	/// パラメータを初期化してタイトルシーンを読み込む
 	/// </summary>
-	static  void RessetParametersAndLoadTitleScene()
+	public static void ResetParametersAndLoadTitleScene()
 	{
 		totalCount = 0;
 		count = 0;
@@ -211,7 +211,7 @@ public class AutumnVRGameManager : MonoBehaviour
 		yield return new WaitForSeconds(2.5f);
 
 		// タイトルに戻る
-		RessetParametersAndLoadTitleScene();
+		ResetParametersAndLoadTitleScene();
 	}
 	/// <summary>
 	/// ゲームクリア演出
@@ -235,10 +235,21 @@ public class AutumnVRGameManager : MonoBehaviour
 		// 筋肉ボイス
 		muscle.PlaySe(vo_clear);
 
-		yield return new WaitForSeconds(3.5f);
+		yield return WaitInput();
 
 		// タイトルに戻る
-		RessetParametersAndLoadTitleScene();
+		ResetParametersAndLoadTitleScene();
+	}
+
+	IEnumerator WaitInput()
+	{
+		do {
+			if(Input.anyKeyDown)
+			{
+				yield break;
+			}
+			yield return null;
+		} while(true);
 	}
 
 }

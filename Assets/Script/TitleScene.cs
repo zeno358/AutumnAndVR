@@ -4,7 +4,6 @@ using System.Collections;
 
 public class TitleScene : MonoBehaviour {
 
-
 	SteamVR_TrackedObject trackedObject;
 
 	void Start()
@@ -47,7 +46,6 @@ public class TitleScene : MonoBehaviour {
         if (device.GetPressDown(SteamVR_Controller.ButtonMask.Trigger)) {
 			GoToMainGame ();
         }
-
 	}
 
 	private void GoToMainGame(){
