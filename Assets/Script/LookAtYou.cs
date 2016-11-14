@@ -5,7 +5,7 @@ public class LookAtYou : MonoBehaviour {
 	
 	bool findTarget = false;
 
-	string targetName = "Bag";
+	GameObject bag;
 
 	// Use this for initialization
 	void Start () {
@@ -15,8 +15,15 @@ public class LookAtYou : MonoBehaviour {
 
 	IEnumerator FindTarget()
 	{
-		yield return null;
+		do{
+		bag = GameObject.Find ("Bag");
+
+		yield return new WaitForSeconds(1);
+		}while(bag == null);
+
+		findTarget = true;	
 	}
+
 	// Update is called once per frame
 	void Update () {
 		if(!findTarget)
@@ -24,6 +31,6 @@ public class LookAtYou : MonoBehaviour {
 			return;
 		}
 
-
+		transform.LookAt (bag.transform);
 	}
 }
