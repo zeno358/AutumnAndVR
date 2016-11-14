@@ -17,7 +17,12 @@ public class TitleScene : MonoBehaviour {
 	void Update () {
 		if(Input.anyKeyDown)
 		{
-			AutumnVRGameManager.running = true;
+			var g = GameObject.Find("MatchMaker").GetComponent<AutumnVRGameManager>();
+			if(g != null)
+			{
+				StartCoroutine( g.ShowGameStartExpression() );
+			}
+
 			SceneManager.UnloadScene("Title");
 		}
 	}

@@ -23,14 +23,14 @@ public class MeasureGenerator : MonoBehaviour {
 	public GameObject measure; 
 
 	// Use this for initialization
-	void Start () {
-
+	void Start () 
+	{
 		rootPos = transform.position;
 		GenerateMeasure();
 	}
 
 	/// <summary>
-	/// メモリを生成する
+	/// 目盛りを生成する
 	/// </summary>
 	private void GenerateMeasure()
 	{

@@ -22,15 +22,28 @@ public class Bag : MonoBehaviour {
 	int[] modelChangeThreshold = new int[3]{10, 20, 40};
 
 	/// <summary>
-	/// 効果音
+	/// キャッチ時効果音
 	/// </summary>
 	[SerializeField]
-	AudioClip se;
+	AudioClip se_catch;
+
+
+	/// <summary>
+	/// キャッチ時筋肉ボイス
+	/// </summary>
+	[SerializeField]
+	AudioClip vo_catch;
 
 	int catchCount = 0;
 
+	private Muscle muscle;
+
 	void Update()
 	{
+		if( muscle == null )
+		{
+			muscle = GameObject.Find("Muscle").GetComponent<Muscle>();
+		}
 		CheckChestnut();
 	}
 
@@ -59,8 +72,14 @@ public class Bag : MonoBehaviour {
 
 				catchCount++;
 
-				// se
-				GetComponent<AudioSource>().Play();
+				// 効果音
+				GetComponent<AudioSource>().PlayOneShot(se_catch);
+
+				// ボイス
+				if(muscle != null)
+				{
+					muscle.PlaySe(vo_catch);
+				}
 
 				// モデルの更新
 				SetModel();

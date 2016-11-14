@@ -21,7 +21,14 @@ public class ChestnutGenerator : MonoBehaviour {
 	/// イガグリ
 	/// </summary>
 	public GameObject Chestnut;
-	
+
+	AudioSource myAudio;
+
+	void Start()
+	{
+		myAudio = GetComponent<AudioSource>();
+	}
+
 	// Update is called once per frame
 	void Update () 
 	{
@@ -61,5 +68,8 @@ public class ChestnutGenerator : MonoBehaviour {
 		//　生成位置を決定
 		Vector3 pos = new Vector3(transform.position.x + Random.Range( -diffRange.x, diffRange.x ), transform.position.y, transform.position.z + Random.Range( -diffRange.y, diffRange.y ));
 		g.transform.position = pos;
+
+		// SEを再生
+		myAudio.Play();
 	}
 }

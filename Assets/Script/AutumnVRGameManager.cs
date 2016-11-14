@@ -36,6 +36,36 @@ public class AutumnVRGameManager : MonoBehaviour
 	Muscle muscle;
 
 	/// <summary>
+	/// 開始時の筋肉ボイス
+	/// </summary>
+	[SerializeField]
+	AudioClip vo_start;
+
+	/// <summary>
+	/// クリア時の効果音
+	/// </summary>
+	[SerializeField]
+	AudioClip se_clear;
+
+	/// <summary>
+	/// クリア時の筋肉ボイス
+	/// </summary>
+	[SerializeField]
+	AudioClip vo_clear;
+
+	/// <summary>
+	/// 失敗時の効果音
+	/// </summary>
+	[SerializeField]
+	AudioClip se_failed;
+
+	/// <summary>
+	/// 失敗時のボイス
+	/// </summary>
+	[SerializeField]
+	AudioClip vo_failed;
+
+	/// <summary>
 	/// 参加プレイヤー
 	/// </summary>
 	public static List<CrewMove> players;
@@ -49,6 +79,11 @@ public class AutumnVRGameManager : MonoBehaviour
 	/// ゲームの最中か？
 	/// </summary>
 	public static bool running;
+
+	/// <summary>
+	/// 高度到達演出が発生する頻度
+	/// </summary>
+	public static int measureExpTendency = 25;
 
 	void Start()
 	{
@@ -125,6 +160,23 @@ public class AutumnVRGameManager : MonoBehaviour
 	}
 		
 	/// <summary>
+	/// /ゲーム開始演出
+	/// </summary>
+	public IEnumerator ShowGameStartExpression()
+	{	
+		// 筋肉ボイス
+		muscle.PlaySe(vo_start);
+
+		yield return new WaitForSeconds(1f);
+
+		// 文字演出
+
+
+		// BGM再生
+		muscle.SetBGM(true);
+	}
+
+	/// <summary>
 	/// タイムオーバー演出
 	/// </summary>
 	private IEnumerator ShowTimeOverExpression()
@@ -132,25 +184,50 @@ public class AutumnVRGameManager : MonoBehaviour
 		int height = (int)Mathf.Floor( Muscle.height );
 		Debug.LogErrorFormat("時間切れ！あなたが到達した高度は{0}", height);
 
-		// マッチョが悲しそうなセリフ
-		muscle.Down();
+		// BGM停止
+		muscle.SetBGM(false);
 
-		// 時間切れの旨の到達高度を表示
+		// 効果音
+		muscle.PlaySe(se_failed);
 
-		yield return new WaitForSeconds(5f);
+		yield return new WaitForSeconds(1.5f);
+
+		// 文字演出
+
+		yield return new WaitForSeconds(2.0f);
+
+		// 筋肉ボイス
+		muscle.PlaySe(vo_failed);
+
+		yield return new WaitForSeconds(2.5f);
 
 		// タイトルに戻る
 		RessetParametersAndLoadTitleScene();
 	}
-
-
-	// ゲームクリアしてスコア表示
-	public static IEnumerator GameClear()
+	/// <summary>
+	/// ゲームクリア演出
+	/// </summary>
+	public IEnumerator ShowGameClearExpression()
 	{
 		Debug.LogError("ゴール！！");
 		AutumnVRGameManager.running = false;
 
-		yield return new WaitForSeconds(5f);
+		// BGM停止
+		muscle.SetBGM(false);
+
+		// 効果音
+		muscle.PlaySe(se_clear);
+
+		yield return new WaitForSeconds(1.5f);
+
+		// 文字演出
+
+		yield return new WaitForSeconds(1.5f);
+
+		// 筋肉ボイス
+		muscle.PlaySe(vo_clear);
+
+		yield return new WaitForSeconds(3.5f);
 
 		// タイトルに戻る
 		RessetParametersAndLoadTitleScene();

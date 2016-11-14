@@ -22,14 +22,29 @@ public class Muscle : MonoBehaviour
 	[SerializeField]
 	AudioSource myAudio;
 
+	/// <summary>
+	/// ダメージを食らったときのボイス
+	/// </summary>
 	[SerializeField]
 	AudioClip[] se_roar;
 
+	/// <summary>
+	/// ゲームクリア時のボイス
+	/// </summary>
 	[SerializeField]
 	AudioClip se_clear;
 
+	/// <summary>
+	/// 特定高度に達したときの効果音
+	/// </summary>
 	[SerializeField]
-	AudioClip se_failed;
+	AudioClip se_reachUnitHeight;
+
+	/// <summary>
+	/// 特定高度に達したときのボイス
+	/// </summary>
+	[SerializeField]
+	AudioClip vo_reachUnitHeight;
 
 	[SerializeField]
 	private TextMesh clearText;
@@ -40,6 +55,13 @@ public class Muscle : MonoBehaviour
 	public Transform originPos;
 
 	float stanTimer =0;
+
+	/// <summary>
+	/// 到達した高さの区切り
+	/// </summary>
+	private int reachedHeightUnit = 0;
+
+	public AutumnVRGameManager gm;
 
 	enum VoicePat{
 		Delight,	// 歓喜
@@ -83,11 +105,24 @@ public class Muscle : MonoBehaviour
 
 		if( height >= AutumnVRGameManager.goalHeight )
 		{
-			StartCoroutine( AutumnVRGameManager.GameClear());
+			StartCoroutine( gm.ShowGameClearExpression());
 
 			clearText.gameObject.SetActive (true);
 			clearText.text = "くりあたいむ\n" + ((int)AutumnVRGameManager.gameTimer).ToString () + "びょう";
-			myAudio.PlayOneShot (se_clear);
+		}
+		else
+		{
+			int reachUnit = (int)(height / AutumnVRGameManager.measureExpTendency);
+
+			if( reachUnit > reachedHeightUnit )
+			{
+				Debug.LogError("高さ" + reachUnit.ToString() + "に達した！");
+
+				// ボイスと効果音再生
+				StartCoroutine( PlayReachingSe() );
+
+				reachedHeightUnit = reachUnit;
+			}
 		}
 
 	}
@@ -117,12 +152,20 @@ public class Muscle : MonoBehaviour
 	}
 
 	/// <summary>
-	/// 失敗時の声
+	/// 特定の高さに達したときのSEを再生する
 	/// </summary>
-	public void Down()
+	IEnumerator PlayReachingSe()
 	{
-		myAudio.PlayOneShot( se_failed );
+		// SE
+		myAudio.PlayOneShot(se_reachUnitHeight);
+
+		// SEの長さ分待機
+		yield return new WaitForSeconds(1.5f);
+
+		// ボイス
+		myAudio.PlayOneShot(vo_reachUnitHeight);
 	}
+
 
 	void CheckCollisionChestnut()
 	{
@@ -162,5 +205,31 @@ public class Muscle : MonoBehaviour
 		transform.position = originPos.position;
 		height = transform.position.y;
 		energy = 0;
+	}
+
+
+	/// <summary>
+	/// 外部から
+	/// 効果音とボイスを再生
+	/// </summary>
+	public void PlaySe(AudioClip clip)
+	{
+		myAudio.PlayOneShot(clip);
+	}
+
+	/// <summary>
+	/// 外部から
+	/// BGMを再生
+	/// </summary>
+	public void SetBGM(bool play)
+	{
+		if(play)
+		{
+			myAudio.Play();
+		}
+		else
+		{
+			myAudio.DOFade(0, 5f);
+		}
 	}
 }
