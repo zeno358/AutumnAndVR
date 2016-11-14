@@ -35,7 +35,7 @@ public class MeasureGenerator : MonoBehaviour {
 	private void GenerateMeasure()
 	{
 		// 設置数を定義
-		int count = top / interval + 1;
+		int count = top / interval + 2;
 
 		for(int i=0 ; i < count ; i++)
 		{
@@ -43,6 +43,7 @@ public class MeasureGenerator : MonoBehaviour {
 			g.transform.SetParent(transform);
 			float h = (i == count-1) ? top : interval * i;
 			g.transform.localPosition = Vector3.up * h;
+			g.transform.localRotation = Quaternion.Euler(0,-90f,0);
 
 			var m = g.GetComponent<TextMesh>();
 			m.text = g.name = ((int)h).ToString() + "M";
