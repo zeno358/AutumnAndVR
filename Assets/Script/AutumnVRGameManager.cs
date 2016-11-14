@@ -20,7 +20,7 @@ public class AutumnVRGameManager : MonoBehaviour
 
 	/// <summary>
 	/// 現在のカウント
-	/// 筋肉が上昇すると現象する
+	/// 筋肉が上昇すると減少する
 	/// </summary>
 	static int count;
 
@@ -95,6 +95,7 @@ public class AutumnVRGameManager : MonoBehaviour
 	/// </summary>
 	static  void RessetParametersAndLoadTitleScene()
 	{
+		totalCount = 0;
 		count = 0;
 		gameTimer = 0;
 
@@ -162,7 +163,11 @@ public class AutumnVRGameManager : MonoBehaviour
 	/// <summary>
 	/// /ゲーム開始演出
 	/// </summary>
-	public IEnumerator ShowGameStartExpression()
+	public void ShowGameStartExpression()
+	{
+		StartCoroutine (_ShowGameStartExpression ());
+	}
+	private IEnumerator _ShowGameStartExpression()
 	{	
 		// 筋肉ボイス
 		muscle.PlaySe(vo_start);
@@ -171,9 +176,13 @@ public class AutumnVRGameManager : MonoBehaviour
 
 		// 文字演出
 
+		yield return new WaitForSeconds(1f);
+
 
 		// BGM再生
 		muscle.SetBGM(true);
+
+		running = true;
 	}
 
 	/// <summary>
@@ -221,7 +230,6 @@ public class AutumnVRGameManager : MonoBehaviour
 		yield return new WaitForSeconds(1.5f);
 
 		// 文字演出
-
 		yield return new WaitForSeconds(1.5f);
 
 		// 筋肉ボイス

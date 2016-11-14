@@ -94,7 +94,7 @@ public class Muscle : MonoBehaviour
 	/// </summary>
 	void Ascend()
 	{
-		if (!AutumnVRGameManager.running|| stanTimer > 0) {
+		if (!AutumnVRGameManager.running || stanTimer > 0) {
 			return;
 		}
 
@@ -205,6 +205,7 @@ public class Muscle : MonoBehaviour
 		transform.position = originPos.position;
 		height = transform.position.y;
 		energy = 0;
+		clearText.gameObject.SetActive (false);
 	}
 
 
@@ -229,7 +230,7 @@ public class Muscle : MonoBehaviour
 		}
 		else
 		{
-			myAudio.DOFade(0, 5f);
+			myAudio.Stop();
 		}
 	}
 }

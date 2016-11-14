@@ -20,7 +20,7 @@ public class TitleScene : MonoBehaviour {
 			var g = GameObject.Find("MatchMaker").GetComponent<AutumnVRGameManager>();
 			if(g != null)
 			{
-				StartCoroutine( g.ShowGameStartExpression() );
+				g.ShowGameStartExpression();
 			}
 
 			SceneManager.UnloadScene("Title");
