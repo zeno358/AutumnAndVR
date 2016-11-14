@@ -25,18 +25,26 @@ public class MeasureGenerator : MonoBehaviour {
 	private void GenerateMeasure()
 	{
 		// 設置数を定義
-		int count = AutumnVRGameManager.goalHeight / AutumnVRGameManager.measureExpInterval + 2;
+		int count = AutumnVRGameManager.goalHeight / AutumnVRGameManager.measureExpInterval;
+
+		count += AutumnVRGameManager.goalHeight / AutumnVRGameManager.measureExpInterval == 0 ?  1 : 2;
 
 		for(int i=0 ; i < count ; i++)
 		{
+			bool top = i == count - 1;
+
 			var g = Instantiate(measure);
 			g.transform.SetParent(transform);
-			float h = (i == count-1) ? AutumnVRGameManager.goalHeight : AutumnVRGameManager.measureExpInterval * i;
+			float h = (top) ? AutumnVRGameManager.goalHeight : AutumnVRGameManager.measureExpInterval * i;
 			g.transform.localPosition = Vector3.up * h;
 			g.transform.localRotation = Quaternion.Euler(0,-90f,0);
 
-			var m = g.GetComponent<TextMesh>();
-			m.text = g.name = ((int)h).ToString() + "M";
+			var m = g.GetComponent<Measure>();
+			string str = ((int)h).ToString() + "M";
+			g.name = str;
+			m.SetText (str); 
+			m.EnableFlag (top);
+
 		}
 	}
 }

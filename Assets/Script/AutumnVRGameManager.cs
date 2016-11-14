@@ -27,7 +27,7 @@ public class AutumnVRGameManager : MonoBehaviour
 	/// <summary>
 	/// ゴールとみなす高度
 	/// </summary>
-	public static int goalHeight = 200;
+	public static int goalHeight = 100;
 
 	/// <summary>
 	/// 筋肉
