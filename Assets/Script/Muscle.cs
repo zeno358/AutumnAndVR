@@ -216,6 +216,12 @@ public class Muscle : MonoBehaviour
 		myAudio.PlayOneShot(clip);
 	}
 
+	public void DisplayReachedHeight()
+	{
+		clearText.gameObject.SetActive (true);
+		clearText.text = "たいむおーばー\n\nとうたつこうど\n" + ((int)height).ToString () + "めーとる";
+	}
+
 	/// <summary>
 	/// BGMを再生
 	/// </summary>

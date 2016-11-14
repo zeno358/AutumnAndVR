@@ -11,7 +11,7 @@ public class AutumnVRGameManager : MonoBehaviour
 	/// <summary>
 	/// 制限時間
 	/// </summary>
-	public static int timeLimitSec = 120;
+	public static int timeLimitSec = 5;
 
 	/// <summary>
 	/// 現在の参加プレイヤーの合計カウント
@@ -190,6 +190,12 @@ public class AutumnVRGameManager : MonoBehaviour
 	/// </summary>
 	private IEnumerator ShowTimeOverExpression()
 	{
+		for (int i = Chestnut.cList.Count-1 ; i >= 0  ; i--) {
+			var c = Chestnut.cList [i];
+			Destroy( c.gameObject );
+		}
+		Chestnut.cList.Clear ();
+
 		int height = (int)Mathf.Floor( Muscle.height );
 		Debug.LogErrorFormat("時間切れ！あなたが到達した高度は{0}", height);
 
@@ -199,16 +205,17 @@ public class AutumnVRGameManager : MonoBehaviour
 		// 効果音
 		muscle.PlaySe(se_failed);
 
-		yield return new WaitForSeconds(1.5f);
-
-		// 文字演出
-
-		yield return new WaitForSeconds(2.0f);
-
 		// 筋肉ボイス
 		muscle.PlaySe(vo_failed);
 
-		yield return new WaitForSeconds(2.5f);
+		yield return new WaitForSeconds(1f);
+
+		// 文字演出
+		muscle.DisplayReachedHeight();
+
+		yield return new WaitForSeconds(5f);
+
+		yield return WaitInput();
 
 		// タイトルに戻る
 		ResetParametersAndLoadTitleScene();
@@ -218,6 +225,12 @@ public class AutumnVRGameManager : MonoBehaviour
 	/// </summary>
 	public IEnumerator ShowGameClearExpression()
 	{
+		for (int i = Chestnut.cList.Count-1 ; i >= 0  ; i--) {
+			var c = Chestnut.cList [i];
+			Destroy( c.gameObject );
+		}
+		Chestnut.cList.Clear ();
+
 		Debug.LogError("ゴール！！");
 		AutumnVRGameManager.running = false;
 
