@@ -112,7 +112,7 @@ public class Muscle : MonoBehaviour
 		}
 		else
 		{
-			int reachUnit = (int)(height / AutumnVRGameManager.measureExpTendency);
+			int reachUnit = (int)(height / AutumnVRGameManager.measureExpInterval);
 
 			if( reachUnit > reachedHeightUnit )
 			{

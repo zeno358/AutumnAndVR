@@ -10,16 +10,6 @@ public class MeasureGenerator : MonoBehaviour {
 	/// </summary>
 	private Vector3 rootPos;
 
-	/// <summary>
-	/// メジャーを設置する間隔
-	/// </summary>
-	public int interval;
-
-	/// <summary>
-	/// 最も高い高度
-	/// </summary>
-	public int top;
-
 	public GameObject measure; 
 
 	// Use this for initialization
@@ -35,13 +25,13 @@ public class MeasureGenerator : MonoBehaviour {
 	private void GenerateMeasure()
 	{
 		// 設置数を定義
-		int count = top / interval + 2;
+		int count = AutumnVRGameManager.goalHeight / AutumnVRGameManager.measureExpInterval + 2;
 
 		for(int i=0 ; i < count ; i++)
 		{
 			var g = Instantiate(measure);
 			g.transform.SetParent(transform);
-			float h = (i == count-1) ? top : interval * i;
+			float h = (i == count-1) ? AutumnVRGameManager.goalHeight : AutumnVRGameManager.measureExpInterval * i;
 			g.transform.localPosition = Vector3.up * h;
 			g.transform.localRotation = Quaternion.Euler(0,-90f,0);
 

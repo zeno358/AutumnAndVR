@@ -11,7 +11,7 @@ public class AutumnVRGameManager : MonoBehaviour
 	/// <summary>
 	/// 制限時間
 	/// </summary>
-	public static float timeLimitSec = 120f;
+	public static int timeLimitSec = 120;
 
 	/// <summary>
 	/// 現在の参加プレイヤーの合計カウント
@@ -27,7 +27,7 @@ public class AutumnVRGameManager : MonoBehaviour
 	/// <summary>
 	/// ゴールとみなす高度
 	/// </summary>
-	public static float goalHeight = 120f;
+	public static int goalHeight = 200;
 
 	/// <summary>
 	/// 筋肉
@@ -83,7 +83,7 @@ public class AutumnVRGameManager : MonoBehaviour
 	/// <summary>
 	/// 高度到達演出が発生する頻度
 	/// </summary>
-	public static int measureExpTendency = 25;
+	public static int measureExpInterval = 25;
 
 	void Start()
 	{

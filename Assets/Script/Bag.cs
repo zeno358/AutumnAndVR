@@ -4,8 +4,8 @@ using System.Collections;
 /// <summary>
 /// カゴ
 /// </summary>
-public class Bag : MonoBehaviour {
-
+public class Bag : MonoBehaviour 
+{
 	/// <summary>
 	/// カゴのモデルリスト
 	/// </summary>
@@ -37,6 +37,14 @@ public class Bag : MonoBehaviour {
 	int catchCount = 0;
 
 	private Muscle muscle;
+
+	void Start()
+	{
+		for( int i=0 ; i < modelChangeThreshold.Length ; i++ )
+		{
+			models[i].SetActive( false );
+		}
+	}
 
 	void Update()
 	{

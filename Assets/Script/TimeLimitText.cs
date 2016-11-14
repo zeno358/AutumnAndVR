@@ -21,6 +21,10 @@ public class TimeLimitText : MonoBehaviour
 		float diff = AutumnVRGameManager.timeLimitSec - AutumnVRGameManager.gameTimer;
 		int val = (int)Mathf.Floor(diff);
 
+		if (val < 30 && mesh.color != Color.red) {
+			mesh.color = Color.red;
+		}
+
 		if(val <= 0)
 		{
 			val = 0;
