@@ -121,6 +121,8 @@ public class AutumnVRGameManager : MonoBehaviour
 	//	PassCount();
 
 		UpdateGameTimer();
+
+		CheckInput();
 	}
 
 	/// <summary>
@@ -277,4 +279,20 @@ public class AutumnVRGameManager : MonoBehaviour
 		} while(true);
 	}
 
+	/// <summary>
+	/// 入力チェックを行う
+	/// 主にデバッグ用
+	/// </summary>
+	void CheckInput()
+	{
+		if( ( Input.GetKey( KeyCode.LeftControl ) 
+			|| Input.GetKey( KeyCode.RightControl ) 
+			|| Input.GetKey( KeyCode.LeftAlt ) 
+			|| Input.GetKey( KeyCode.RightAlt ) ) 
+			&& Input.GetKeyDown( KeyCode.Q ) )
+		{
+			// ctrl + Q で強制タイトル遷移
+			ResetParametersAndLoadTitleScene();
+		}
+	}
 }
