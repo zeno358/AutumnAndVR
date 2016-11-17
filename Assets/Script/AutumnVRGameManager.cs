@@ -8,6 +8,14 @@ using System.Collections.Generic;
 /// </summary>
 public class AutumnVRGameManager : MonoBehaviour 
 {
+	public static AutumnVRGameManager instance;
+
+	/// <summary>
+	/// シングルモード
+	/// </summary>
+	public bool singleMode = false;
+	public static bool _singleMode;
+
 	/// <summary>
 	/// 制限時間
 	/// </summary>
@@ -27,7 +35,7 @@ public class AutumnVRGameManager : MonoBehaviour
 	/// <summary>
 	/// ゴールとみなす高度
 	/// </summary>
-	public static int goalHeight = 300;
+	public static int goalHeight = 200;
 
 	/// <summary>
 	/// 筋肉
@@ -87,6 +95,10 @@ public class AutumnVRGameManager : MonoBehaviour
 
 	void Start()
 	{
+
+		instance = this;
+		_singleMode = singleMode;
+
 		ResetParametersAndLoadTitleScene();
 	}
 

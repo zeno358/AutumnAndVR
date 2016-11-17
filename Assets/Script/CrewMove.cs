@@ -19,6 +19,8 @@ public class CrewMove : Photon.MonoBehaviour {
 		}
 	}
 
+	public List<Camera> camera;
+
 	/// <summary>
 	/// 手
 	/// </summary>
@@ -51,13 +53,23 @@ public class CrewMove : Photon.MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+		// 相手プレイヤーのカメラを無効化
+		if( !photonView.isMine )
+		{
+			foreach(Camera c in camera)
+			{
+				c.enabled = false;
+			}
+		}
+
 		if( AutumnVRGameManager.players == null )
 		{
 			AutumnVRGameManager.players = new List<CrewMove>();
 		}
 		AutumnVRGameManager.players.Add(this);
 
-		if( CrewRoomMaking._singleMode )
+		if( AutumnVRGameManager._singleMode )
 		{
 			SetBagPositionForSinglePlayer(hand);
 		}
@@ -73,7 +85,7 @@ public class CrewMove : Photon.MonoBehaviour {
 			return;
 		}
 
-		if( !CrewRoomMaking._singleMode && (!photonView.isMine || !initialized) )
+		if( !AutumnVRGameManager._singleMode && (!photonView.isMine || !initialized) )
 		{
 			return;
 		}
@@ -130,7 +142,7 @@ public class CrewMove : Photon.MonoBehaviour {
 	/// </summary>
 	private void UpdateBagPosition()
 	{
-		if( CrewRoomMaking._singleMode )
+		if( AutumnVRGameManager._singleMode )
 		{
 			return;
 		}

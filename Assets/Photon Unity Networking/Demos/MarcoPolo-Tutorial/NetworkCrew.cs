@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class NetworkCrew : Photon.MonoBehaviour
 {
@@ -6,6 +7,21 @@ public class NetworkCrew : Photon.MonoBehaviour
     private Quaternion correctPlayerRot = Quaternion.identity; // We lerp towards this
 
 	string roomName = "autumnvr";
+
+	public List<Camera> camera;
+
+	void Awake ()
+	{
+		// 相手プレイヤーのカメラを無効化
+		if( !photonView.isMine )
+		{
+			foreach(Camera c in camera)
+			{
+				c.enabled = false;
+			}
+		}
+
+	}
 
 	void Start()
 	{
