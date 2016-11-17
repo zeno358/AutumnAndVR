@@ -86,7 +86,7 @@ public class TitleScene : Photon.MonoBehaviour {
 
 	private IEnumerator GoToMainGame()
 	{
-		if(starting)
+		if(starting || PhotonNetwork.room == null)
 		{
 			yield break;
 		}

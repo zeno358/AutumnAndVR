@@ -49,8 +49,8 @@ public class CrewSetter : Photon.MonoBehaviour
 
 		// 自分が何番目にルームに入ったプレイヤーかどうかでIDを設定
 		print( myPlayer.photonView.ownerId.ToString() );
-		myPlayer.id = PhotonNetwork.room.playerCount;
-		Debug.Log("あなたのIDは [" + myPlayer.id.ToString() +" ]" );
+		myPlayer.order = PhotonNetwork.room.playerCount;
+		Debug.Log("あなたは[" + myPlayer.order.ToString() +" ]番目のプレイヤー" );
 
 		StartCoroutine( WaitPlayersAndStartGame() );
 	}
@@ -69,6 +69,15 @@ public class CrewSetter : Photon.MonoBehaviour
 
 		Debug.Log("プレイヤーが集まりました");
 
+		while(true)
+		{
+			if( AutumnVRGameManager.players.Count >= CrewRoomMaking.playerNumNeeded)
+			{
+				break;
+			}
+
+			yield return null;
+		}
 		// プレイヤーのポジションをセット
 		SetPlayerTransform();
 
@@ -83,18 +92,33 @@ public class CrewSetter : Photon.MonoBehaviour
 	/// </summary>
 	private void SetPlayerTransform()
 	{
-		if( myPlayer.id == 1 )
+		for( int i=0 ; i<AutumnVRGameManager.players.Count ; i++)
 		{
-			myPlayer.transform.SetParent(playerPos1);
-		}else
-		{
-			myPlayer.transform.SetParent(playerPos2);
+			CrewMove p = AutumnVRGameManager.players[i];
+
+			;
+
+			switch(p.order)
+			{
+			case 1 :
+				p.transform.SetParent(playerPos1);
+
+				break;
+			case 2:
+				p.transform.SetParent(playerPos2);
+
+			break;
+				default:
+
+				p.order = myPlayer.order != 1 ? 1 : 2;
+				Debug.Log("プレイヤーの順番が想定外 : [ " + p.order.ToString() + " ]だったので[ " + p.order.ToString() + " ]に変更");	
+				p.transform.SetParent( p.order == 1 ? playerPos1 : playerPos2 );
+				break;
+			}
+
+			p.transform.localPosition = Vector3.zero;
+			p.transform.localRotation = Quaternion.identity;
 		}
-
-		myPlayer.transform.localPosition = Vector3.zero;
-		myPlayer.transform.localRotation = Quaternion.identity;
-
-		//myPlayer.transform.parent = null;
 	}
 
 	public void SetupCrewForSingleMode()
@@ -106,8 +130,8 @@ public class CrewSetter : Photon.MonoBehaviour
 		//myPlayer.enabled = true;
 
 		print( myPlayer.photonView.ownerId.ToString() );
-		myPlayer.id = 1;
-		Debug.Log("あなたのIDは [" + myPlayer.id.ToString() +" ]" );
+		myPlayer.order = 1;
+		Debug.Log("あなたのIDは [" + myPlayer.order.ToString() +" ]" );
 
 		// プレイヤーのポジションをセット
 		SetPlayerTransform();

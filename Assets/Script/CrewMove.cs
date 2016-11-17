@@ -36,7 +36,7 @@ public class CrewMove : Photon.MonoBehaviour {
 	/// <summary>
 	/// プレイヤーID
 	/// </summary>
-	public int id = -1;
+	public int order = -1;
 
 	/// <summary>
 	/// ペダルを踏んだ回数累計
@@ -48,15 +48,19 @@ public class CrewMove : Photon.MonoBehaviour {
 	/// </summary>
 	int restCount{set; get;}
 
-
-
+	public bool ready{get; private set;}
 
 	// Use this for initialization
 	void Start () {
 
-		// 相手プレイヤーのカメラを無効化
-		if( !photonView.isMine )
+
+		if( photonView.isMine )
 		{
+			// 自分だったらレディ
+			ready = true;
+		}
+		else{
+			// 相手プレイヤーだったらカメラを無効化
 			foreach(Camera c in camera)
 			{
 				c.enabled = false;
@@ -66,8 +70,11 @@ public class CrewMove : Photon.MonoBehaviour {
 		if( AutumnVRGameManager.players == null )
 		{
 			AutumnVRGameManager.players = new List<CrewMove>();
+			Debug.Log("プレイヤーリストを作成");
 		}
 		AutumnVRGameManager.players.Add(this);
+		Debug.Log("プレイヤーリストに自分を追加 人数 -> " + AutumnVRGameManager.players.Count.ToString());
+
 
 		if( AutumnVRGameManager._singleMode )
 		{
@@ -104,10 +111,19 @@ public class CrewMove : Photon.MonoBehaviour {
 	/// </summary>
 	void TemporalMovementForNotVR()
 	{
+		if( !photonView.isMine )
+		{
+			return;
+		}
+
+		bool handControl = Input.GetKey(KeyCode.Space);
+
 		var moveX = Input.GetAxisRaw("Horizontal") * speed * Time.deltaTime;
 		var moveZ = Input.GetAxisRaw("Vertical") * speed * Time.deltaTime;
 
-		hand.Translate(moveX, 0, moveZ);
+		Transform target = handControl ? hand : transform;
+
+		target.Translate(moveX, 0, moveZ);
 	}
 
 	/// <summary>
@@ -123,15 +139,19 @@ public class CrewMove : Photon.MonoBehaviour {
 		Debug.Log("OnPhotonSerializeView");
 		if (stream.isWriting)
 		{
-			// We own this player: send the others our data
+			// 送信
 			stream.SendNext(transform.position);
 			stream.SendNext(transform.rotation);
+
+			stream.SendNext(ready);
 		}
 		else
 		{
-			// Network player, receive data
+			// 受信
 			this.transform.position = (Vector3) stream.ReceiveNext();
 			this.transform.rotation = (Quaternion) stream.ReceiveNext();
+
+			this.ready = (bool)stream.ReceiveNext();
 		}
 	}
 

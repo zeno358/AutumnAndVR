@@ -197,7 +197,34 @@ public class AutumnVRGameManager : MonoBehaviour
 
 		// 文字演出
 
-		yield return new WaitForSeconds(1f);
+		// 全プレイヤーが準備できるまで待つ
+		while(true)
+		{
+			bool allReady = true;
+
+			if( players.Count < CrewRoomMaking.playerNumNeeded )
+			{
+				allReady = false;
+			}
+
+			for(int i=0 ; i < players.Count ; i++)
+			{
+				if( !players[i].ready )
+				{
+					allReady = false;
+					break;
+				}
+			}
+
+			if( allReady ) 
+			{
+				break;
+			}
+
+			Debug.Log("相手プレイヤーの準備を待っています");
+
+			yield return null;
+		}
 
 
 		// BGM再生
