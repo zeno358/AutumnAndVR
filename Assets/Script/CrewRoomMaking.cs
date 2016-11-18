@@ -13,7 +13,7 @@ public class CrewRoomMaking : Photon.MonoBehaviour
 	/// </summary>
 	public static int playerNumNeeded = 2;
 
-	CrewSetter crewSetter;
+	PhotonObjectSetter crewSetter;
 
 	public static bool completeJoinedRoom = false;
 		
@@ -21,7 +21,7 @@ public class CrewRoomMaking : Photon.MonoBehaviour
 	{
 		completeJoinedRoom = false;
 
-		crewSetter = GameObject.Find("GameManager").GetComponent<CrewSetter>();
+		crewSetter = GameObject.Find("GameManager").GetComponent<PhotonObjectSetter>();
 
 		if( AutumnVRGameManager.instance.singleMode )
 		{

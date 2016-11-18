@@ -2,12 +2,12 @@
 using System.Collections;
 
 /// <summary>
-/// プレイヤーを指定位置にセットする
+/// Photonで管理するものを指定位置にセットする
 /// </summary>
-public class CrewSetter : Photon.MonoBehaviour 
+public class PhotonObjectSetter : Photon.MonoBehaviour 
 {
 
-	public static CrewSetter instance;
+	public static PhotonObjectSetter instance;
 	/// <summary>
 	/// プレイヤー１の位置 
 	/// </summary>
@@ -26,10 +26,16 @@ public class CrewSetter : Photon.MonoBehaviour
 	CrewMove myPlayer;
 
 	/// <summary>
-	/// シングルモード用おプレハブ
+	/// シングルモード用プレハブ
 	/// </summary>
 	[SerializeField]
 	GameObject NetworkCrewPrefab;
+
+	/// <summary>
+	/// 筋肉
+	/// </summary>
+	[SerializeField]
+	Muscle muscle;
 
 	void Start()
 	{
@@ -37,15 +43,17 @@ public class CrewSetter : Photon.MonoBehaviour
 	}
 
 	/// <summary>
-	/// プレイヤーを配置する
+	/// 各オブジェクトを配置する
 	/// </summary>
-	public void SetCrew()
+	public void Init()
 	{
 		//  ルームに入っている全員の画面にPlayerを生成する
 		GameObject player = PhotonNetwork.Instantiate("NetworkCrew", this.transform.position, this.transform.rotation, 0);
 		//  自分が生成したPlayerを移動可能にする
 		myPlayer = player.GetComponent<CrewMove>();
 		//myPlayer.enabled = true;
+
+		muscle.Init();
 
 		// 自分が何番目にルームに入ったプレイヤーかどうかでIDを設定
 		print( myPlayer.photonView.ownerId.ToString() );
@@ -71,6 +79,15 @@ public class CrewSetter : Photon.MonoBehaviour
 
 		while(true)
 		{
+			if( AutumnVRGameManager.players == null )
+			{
+				Debug.Log("プレイヤーリストの生成を待機中..." );
+
+				yield return new WaitForSeconds(5);
+
+				continue;
+			}
+
 			if( AutumnVRGameManager.players.Count >= CrewRoomMaking.playerNumNeeded)
 			{
 				break;
@@ -96,7 +113,11 @@ public class CrewSetter : Photon.MonoBehaviour
 		{
 			CrewMove p = AutumnVRGameManager.players[i];
 
-			;
+			if( p == null )
+			{
+				Debug.Log("Playerがnull");
+				continue;
+			}
 
 			switch(p.order)
 			{

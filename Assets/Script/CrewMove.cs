@@ -180,6 +180,12 @@ public class CrewMove : Photon.MonoBehaviour {
 
 		for( int i=0 ; i<AutumnVRGameManager.players.Count ; i++)
 		{
+			if( AutumnVRGameManager.players[i] == null )
+			{
+				Debug.Log("プレイヤーがnull");
+				continue;
+			}
+
 			bagPos += AutumnVRGameManager.players[i].hand.position;
 		}
 		bagPos /= AutumnVRGameManager.players.Count;

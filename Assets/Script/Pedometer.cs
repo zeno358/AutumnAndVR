@@ -63,7 +63,7 @@ public class Pedometer : MonoBehaviour {
 
 	void GetTemporaryInput()
 	{
-		if( Input.GetKey(KeyCode.Space) )
+		if( Input.GetKey(KeyCode.U) )
 		{
 			AddValue();
 		}

@@ -28,12 +28,6 @@ public class ChestnutGenerator : Photon.MonoBehaviour {
 
 	void Start()
 	{
-		// ２個目あ生成しない
-		if( instance != null)
-		{
-			PhotonNetwork.Destroy(gameObject);
-		}
-
 		instance = this;
 
 		myAudio = GetComponent<AudioSource>();

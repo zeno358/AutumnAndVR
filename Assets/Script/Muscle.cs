@@ -72,7 +72,13 @@ public class Muscle : Photon.MonoBehaviour
 	{
 		height = transform.position.y;
 		Debug.Log("スタート時点での高度は " + height.ToString() );
+	}
 
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	public void Init()
+	{
 		// 栗生成器を生成
 		GameObject g = PhotonNetwork.Instantiate("ChestnutGenerator", transform.position + Vector3.up * 10, Quaternion.identity, 0);
 		g.transform.SetParent(transform);

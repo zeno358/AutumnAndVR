@@ -99,7 +99,7 @@ public class TitleScene : Photon.MonoBehaviour {
 			yield return null;
 		}
 
-		CrewSetter.instance.SetCrew();
+		PhotonObjectSetter.instance.Init();
 
 		var g = GameObject.Find("GameManager").GetComponent<AutumnVRGameManager>();
 		if(g != null)
