@@ -5,7 +5,7 @@ using System.Collections.Generic;
 /// <summary>
 /// イガグリ
 /// </summary>
-public class Chestnut : MonoBehaviour {
+public class Chestnut : Photon.MonoBehaviour {
 
 	/// <summary>
 	/// イガグリリスト
@@ -64,6 +64,19 @@ public class Chestnut : MonoBehaviour {
 		UpdatePosition();
 		UpdateRotation();
 		UpdateLifeTimer();
+	}
+
+
+	void OnPhotonSerializeView( PhotonStream s, PhotonMessageInfo i)
+	{
+		if(s.isWriting)
+		{
+			
+		}	
+		else
+		{
+			
+		}
 	}
 
 	/// <summary>

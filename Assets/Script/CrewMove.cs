@@ -34,6 +34,12 @@ public class CrewMove : Photon.MonoBehaviour {
 	GameObject bag;
 
 	/// <summary>
+	/// 顔のモデル
+	/// </summary>
+	[SerializeField]
+	GameObject faceModel;
+
+	/// <summary>
 	/// プレイヤーID
 	/// </summary>
 	public int order = -1;
@@ -58,6 +64,9 @@ public class CrewMove : Photon.MonoBehaviour {
 		{
 			// 自分だったらレディ
 			ready = true;
+
+			// 自分だったら顔のモデルを無効
+			faceModel.SetActive(false);
 		}
 		else{
 			// 相手プレイヤーだったらカメラを無効化

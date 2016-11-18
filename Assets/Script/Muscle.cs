@@ -6,7 +6,7 @@ using DG.Tweening;
 /// <summary>
 /// 上昇する筋肉
 /// </summary>
-public class Muscle : MonoBehaviour 
+public class Muscle : Photon.MonoBehaviour 
 {
 	public static float height; //高度
 
@@ -54,7 +54,7 @@ public class Muscle : MonoBehaviour
 	/// </summary>
 	public Transform originPos;
 
-	float stanTimer =0;
+	float joyTimer =0;
 
 	/// <summary>
 	/// 到達した高さの区切り
@@ -72,6 +72,22 @@ public class Muscle : MonoBehaviour
 	{
 		height = transform.position.y;
 		Debug.Log("スタート時点での高度は " + height.ToString() );
+
+		// 栗生成器を生成
+		GameObject g = PhotonNetwork.Instantiate("ChestnutGenerator", transform.position + Vector3.up * 10, Quaternion.identity, 0);
+		g.transform.SetParent(transform);
+	}
+
+	void OnPhotonSerializeView(PhotonStream s, PhotonMessageInfo i)
+	{
+		if( s.isWriting)
+		{
+			s.SendNext(height);
+		}
+		else
+		{
+			height = (float)s.ReceiveNext();
+		}
 	}
 
 	void Update()
@@ -79,13 +95,15 @@ public class Muscle : MonoBehaviour
 		// 栗とのあたり判定をチェック
 		CheckCollisionChestnut();
 
-		ReduceStanTimer ();
+		ReduceJoyTimer ();
+
+		CheckBGMPlay();
 	}
 
-	void ReduceStanTimer()
+	void ReduceJoyTimer()
 	{
-		if (stanTimer >= 0) {
-			stanTimer -= Time.deltaTime;
+		if (joyTimer >= 0) {
+			joyTimer -= Time.deltaTime;
 		}
 	}
 
@@ -94,11 +112,18 @@ public class Muscle : MonoBehaviour
 	/// </summary>
 	void Ascend()
 	{
-		if (!AutumnVRGameManager.running || stanTimer > 0) {
+		if (!AutumnVRGameManager.running) {
 			return;
 		}
 
+		float val = ascend_value;
+		if( joyTimer > 0 )
+		{
+			val *= 3f;
+		}
+
 		height += ascend_value;
+
 		transform.DOMoveY( height, 0.5f);
 
 		Debug.Log(height.ToString() + "まで上昇");
@@ -192,7 +217,7 @@ public class Muscle : MonoBehaviour
 			{
 				Debug.Log("栗が筋肉にヒット！");
 
-				stanTimer += 3f;
+				joyTimer += 1f;
 
 				c.Harvest(false);
 				Roar();
@@ -239,6 +264,17 @@ public class Muscle : MonoBehaviour
 		else
 		{
 			myAudio.Stop();
+		}
+	}
+
+	/// <summary>
+	/// ゲーム中でなければBGMを停止
+	/// </summary>
+	private void CheckBGMPlay()
+	{
+		if(myAudio.isPlaying && !AutumnVRGameManager.running)
+		{
+			SetBGM(false);
 		}
 	}
 }

@@ -4,7 +4,9 @@ using System.Collections;
 /// <summary>
 /// イガグリ生成装置
 /// </summary>
-public class ChestnutGenerator : MonoBehaviour {
+public class ChestnutGenerator : Photon.MonoBehaviour {
+
+	static ChestnutGenerator instance;
 
 	/// <summary>
 	/// 生成頻度
@@ -26,6 +28,14 @@ public class ChestnutGenerator : MonoBehaviour {
 
 	void Start()
 	{
+		// ２個目あ生成しない
+		if( instance != null)
+		{
+			PhotonNetwork.Destroy(gameObject);
+		}
+
+		instance = this;
+
 		myAudio = GetComponent<AudioSource>();
 	}
 
@@ -63,11 +73,12 @@ public class ChestnutGenerator : MonoBehaviour {
 	void Generate()
 	{
 		Debug.Log("栗を生成");
-		var g = Instantiate(Chestnut);
 
 		//　生成位置を決定
 		Vector3 pos = new Vector3(transform.position.x + Random.Range( -diffRange.x, diffRange.x ), transform.position.y, transform.position.z + Random.Range( -diffRange.y, diffRange.y ));
-		g.transform.position = pos;
+
+		// photn上に生成
+		PhotonNetwork.Instantiate("Chestnut", pos, Quaternion.identity, 0);
 
 		// SEを再生
 		myAudio.Play();
