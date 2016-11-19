@@ -59,7 +59,6 @@ public class CrewMove : Photon.MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-
 		if( photonView.isMine )
 		{
 			// 自分だったらレディ

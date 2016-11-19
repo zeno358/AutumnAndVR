@@ -130,9 +130,9 @@ public class PhotonObjectSetter : Photon.MonoBehaviour
 
 			break;
 				default:
-
+				int old = p.order;
 				p.order = myPlayer.order != 1 ? 1 : 2;
-				Debug.Log("プレイヤーの順番が想定外 : [ " + p.order.ToString() + " ]だったので[ " + p.order.ToString() + " ]に変更");	
+				Debug.Log("プレイヤーの順番が想定外 : [ " + old.ToString() + " ]だったので[ " + p.order.ToString() + " ]に変更");	
 				p.transform.SetParent( p.order == 1 ? playerPos1 : playerPos2 );
 				break;
 			}

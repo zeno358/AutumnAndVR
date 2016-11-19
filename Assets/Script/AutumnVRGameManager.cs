@@ -122,10 +122,11 @@ public class AutumnVRGameManager : MonoBehaviour
 		//生成済みプレイヤーを削除
 		if( players != null )
 		{
-		//	for(int i = players.Count-1 ; i >= 0 ; i --)
-		//	{
-		//		PhotonNetwork.Destroy( players[i].gameObject );
-		//	}
+			for(int i = players.Count-1 ; i >= 0 ; i --)
+			{
+				
+				PhotonNetwork.Destroy( players[i].gameObject );
+			}
 		}
 		SceneManager.LoadSceneAsync("Title", LoadSceneMode.Additive);
 	}
