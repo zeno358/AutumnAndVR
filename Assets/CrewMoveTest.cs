@@ -18,6 +18,8 @@ public class CrewMoveTest : Photon.MonoBehaviour {
 	[SerializeField]
 	List<GameObject> notNeededForMe;
 
+	int count;
+
 	// Use this for initialization
 	void Start () {
 		if( !photonView.isMine )
@@ -53,6 +55,13 @@ public class CrewMoveTest : Photon.MonoBehaviour {
 			return;
 		}
 
+		GetKeyBoardInput();
+
+	}
+
+	void GetKeyBoardInput()
+	{
+
 		bool handControl = Input.GetKey(KeyCode.Space);
 
 		var moveX = Input.GetAxisRaw("Horizontal") * speed * Time.deltaTime;
@@ -61,7 +70,26 @@ public class CrewMoveTest : Photon.MonoBehaviour {
 		Transform target = handControl ? hand : transform;
 
 		target.Translate(moveX, 0, moveZ);
+
+		if( Input.GetKeyDown(KeyCode.U) )
+		{
+			PhotonNetwork.RPC(photonView, "AddCount", PhotonTargets.All, false);
+		}
 	}
+
+	[PunRPC]
+	void AddCount()
+	{
+		count++;
+		Debug.Log( "クライアント" + PhotonNetwork.player.ID.ToString() + "上の オーナーID" + photonView.ownerId.ToString() + "のカウント=" + count.ToString());
+
+		int sum = 0;
+		TwoPlayerTest.crews.ForEach( c => sum += c.count );
+
+		Debug.Log( "全プレイヤーの合計カウント = " + sum.ToString());
+
+	}
+
 
 	public Vector3 handPos
 	{
