@@ -28,6 +28,11 @@ public class ChestnutGenerator : Photon.MonoBehaviour {
 
 	void Start()
 	{
+		if( !photonView.isMine )
+		{
+			Destroy( gameObject );
+		}
+
 		instance = this;
 
 		myAudio = GetComponent<AudioSource>();
@@ -37,6 +42,13 @@ public class ChestnutGenerator : Photon.MonoBehaviour {
 	void Update () 
 	{
 		if( !AutumnVRGameManager.running)
+		{
+		//	return;
+		}
+
+		if( PhotonNetwork.room.playerCount < 2 ){
+			return;
+		}else if( !PhotonNetwork.isMasterClient )
 		{
 			return;
 		}
@@ -66,8 +78,6 @@ public class ChestnutGenerator : Photon.MonoBehaviour {
 	/// </summary>
 	void Generate()
 	{
-		Debug.Log("栗を生成");
-
 		//　生成位置を決定
 		Vector3 pos = new Vector3(transform.position.x + Random.Range( -diffRange.x, diffRange.x ), transform.position.y, transform.position.z + Random.Range( -diffRange.y, diffRange.y ));
 

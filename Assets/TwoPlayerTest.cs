@@ -6,7 +6,8 @@ using System.Collections.Generic;
 /// 目標：
 /// 二人のプレイヤーをそれぞれ操作 <Clear!
 /// お互いの姿が正しく同期される <Clear!
-/// 箱をプレイヤーの腕の中点に配置する
+/// 箱をプレイヤーの腕の中点に配置する <Clear
+/// イガグリ生成機を１つセット
 /// </summary>
 
 public class TwoPlayerTest : Photon.MonoBehaviour 
@@ -27,6 +28,8 @@ public class TwoPlayerTest : Photon.MonoBehaviour
 	public static List<CrewMoveTest> crews = new List<CrewMoveTest>();
 
 	GameObject bag;
+
+	GameObject chestnutGenerator;
 
 	/// <summary>
 	/// ゲームを開始するのに必要なプレイヤー数
@@ -73,7 +76,7 @@ public class TwoPlayerTest : Photon.MonoBehaviour
 
 		if( PhotonNetwork.room != null )
 		{
-			Debug.Log("update ルームのプレイヤー数=" +  PhotonNetwork.room.playerCount.ToString() + " プレイヤーリスト長=" + crews.Count.ToString());
+		//	Debug.Log("update ルームのプレイヤー数=" +  PhotonNetwork.room.playerCount.ToString() + " プレイヤーリスト長=" + crews.Count.ToString());
 		}
 	}
 
@@ -115,6 +118,8 @@ public class TwoPlayerTest : Photon.MonoBehaviour
 		myCrew.transform.parent = null;
 
 		bag = PhotonNetwork.Instantiate("BagTest", Vector3.zero, Quaternion.identity, 0);
+		chestnutGenerator = PhotonNetwork.Instantiate("ChestnutGenerator", Vector3.up * 5f, Quaternion.identity, 0);
+
 	}
 
 	void UpdateBagPos()

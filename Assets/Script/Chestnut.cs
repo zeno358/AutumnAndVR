@@ -15,7 +15,8 @@ public class Chestnut : Photon.MonoBehaviour {
 	/// <summary>
 	/// 落下スピード
 	/// </summary>
-	float fallingSpeed = 0.15f;
+	//float fallingSpeed = 0.15f;
+	float fallingSpeed = 0.05f;
 
 	/// <summary>
 	/// 回転スピード
@@ -25,7 +26,7 @@ public class Chestnut : Photon.MonoBehaviour {
 	/// <summary>
 	/// 命の長さ秒
 	/// </summary>
-	public float lifeTime = 10f;
+	public float lifeTime = 5f;
 	float timer = 0;
 
 	/// <summary>
@@ -56,6 +57,9 @@ public class Chestnut : Photon.MonoBehaviour {
 		}
 
 		cList.Add(this);
+
+		Debug.Log("プレイヤーID" + photonView.ownerId.ToString() + "の栗を生成");
+
 	}
 
 	// Update is called once per frame
@@ -64,19 +68,6 @@ public class Chestnut : Photon.MonoBehaviour {
 		UpdatePosition();
 		UpdateRotation();
 		UpdateLifeTimer();
-	}
-
-
-	void OnPhotonSerializeView( PhotonStream s, PhotonMessageInfo i)
-	{
-		if(s.isWriting)
-		{
-			
-		}	
-		else
-		{
-			
-		}
 	}
 
 	/// <summary>
@@ -104,6 +95,7 @@ public class Chestnut : Photon.MonoBehaviour {
 		{
 			harvested = true;
 			Destroy(gameObject);
+			Debug.Log("プレイヤーID" + photonView.ownerId.ToString() + "の栗を削除");
 			//PhotonView.Destroy( GameObject );
 		}
 	}
