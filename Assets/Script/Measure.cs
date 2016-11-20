@@ -4,53 +4,42 @@ using DG.Tweening;
 
 public class Measure : MonoBehaviour {
 
-	TextMesh mesh;
+	public TextMesh textMesh;
 
-	MeshRenderer r;
+	public MeshRenderer meshRenderer;
 
 	bool enablePrev;
 
 	public void SetText(string value){
-		if (mesh == null) {
-			mesh = GetComponent<TextMesh>();
-		}
-		mesh.text = value;
+		textMesh.text = value;
 	}
 
-	SpriteRenderer f;
+	public SpriteRenderer flag;
+
 	// Use this for initialization
 	void Start () {
-		if (mesh == null) {
-			mesh = GetComponent<TextMesh>();
-		}	
-
-		r = GetComponent<MeshRenderer> ();
-
-		if (f == null) {
-			f = transform.GetChild (0).GetComponent<SpriteRenderer> ();
-		}	
-
+	//	meshRenderer = GetComponent<MeshRenderer> ();
 		enablePrev = false;
 	}
 
 	// Update is called once per frame
 	void Update () {
-		int unitVal = AutumnVRGameManager.measureExpInterval;
+		int unitVal = GameManagerTest.measureExpInterval;
 
 		// 近くだけ表示
-		r.enabled = MuscleTest.height > transform.position.y - unitVal && MuscleTest.height < transform.position.y + unitVal;
+		meshRenderer.enabled = MuscleTest.height > transform.position.y - unitVal && MuscleTest.height < transform.position.y + unitVal;
 
-		if (f.gameObject.activeInHierarchy) {
-			f.enabled = r.enabled;
+		if (flag.gameObject.activeInHierarchy) {
+			flag.enabled = meshRenderer.enabled;
 		}
 
-		if (!enablePrev && r.enabled && AutumnVRGameManager.running) {
+		if (!enablePrev && meshRenderer.enabled && GameManagerTest.running) {
 			FrameIn ();
 		}
-		enablePrev = r.enabled;
+		enablePrev = meshRenderer.enabled;
 
 		// 到達したら黄色
-		mesh.color = MuscleTest.height >= transform.position.y ? Color.yellow : Color.red;
+		textMesh.color = MuscleTest.height >= transform.position.y ? Color.yellow : Color.red;
 	}
 
 	void FrameIn()
@@ -62,10 +51,6 @@ public class Measure : MonoBehaviour {
 
 	public void EnableFlag(bool key)
 	{
-		if (f == null) {
-			f = transform.GetChild (0).GetComponent<SpriteRenderer> ();
-		}
-
-		f.gameObject.SetActive (key);
+		flag.gameObject.SetActive (key);
 	}
 }
