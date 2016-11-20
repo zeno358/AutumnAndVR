@@ -69,9 +69,7 @@ public class CrewMoveTest : Photon.MonoBehaviour {
 		var moveX = Input.GetAxisRaw("Horizontal") * speed * Time.deltaTime;
 		var moveZ = Input.GetAxisRaw("Vertical") * speed * Time.deltaTime;
 
-		Transform target = true ? hand : transform;
-
-		target.Translate(moveX, 0, moveZ);
+		hand.transform.Translate(moveX, 0, moveZ);
 
 		if( Input.GetKeyDown(KeyCode.U) )
 		{
@@ -84,6 +82,11 @@ public class CrewMoveTest : Photon.MonoBehaviour {
 	[PunRPC]
 	void AddCount()
 	{
+		if( !GameManagerTest.running )
+		{
+			Debug.Log("ゲームは終了済み。カウント追加は無効");
+		}
+
 		count++;
 		Debug.Log( "クライアント" + PhotonNetwork.player.ID.ToString() + "上の オーナーID" + photonView.ownerId.ToString() + "のカウント=" + count.ToString());
 

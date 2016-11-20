@@ -94,6 +94,10 @@ public class GameManagerTest : MonoBehaviour
 
 		running = true;
 
+		if (MuscleTest.instance != null) {
+			MuscleTest.instance.SetToOrigin ();
+		}
+
 		GameObject b = GameObject.Find ("Bag");
 		if( b != null )
 		{
@@ -142,6 +146,7 @@ public class GameManagerTest : MonoBehaviour
 				return;
 			}
 			running = false;
+
 			StartCoroutine( ShowTimeOverExpression() );
 		}
 	}
@@ -175,14 +180,16 @@ public class GameManagerTest : MonoBehaviour
 	/// </summary>
 	private IEnumerator ShowTimeOverExpression()
 	{
-		for (int i = Chestnut.cList.Count-1 ; i >= 0  ; i--) {
-			var c = Chestnut.cList [i];
-			if (c != null) {
+		if (Chestnut.cList != null) {
+			for (int i = Chestnut.cList.Count - 1; i >= 0; i--) {
+				var c = Chestnut.cList [i];
+				if (c != null) {
 
-			//	Destroy (c.gameObject);
+					Destroy (c.gameObject);
+				}
 			}
+			Chestnut.cList.Clear ();
 		}
-		Chestnut.cList.Clear ();
 
 		int height = (int)Mathf.Floor( Muscle.height );
 		Debug.LogErrorFormat("時間切れ！あなたが到達した高度は{0}", height);

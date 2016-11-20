@@ -8,6 +8,7 @@ using DG.Tweening;
 /// </summary>
 public class MuscleTest : Photon.MonoBehaviour 
 {
+	public static MuscleTest instance;
 	public static float height; //高度
 
 	const float ascend_value = 1f; // 一回の上昇で 何M 上昇するか
@@ -68,6 +69,8 @@ public class MuscleTest : Photon.MonoBehaviour
 
 	void Start()
 	{
+		instance = this;
+
 		height = transform.position.y;
 		Debug.Log("スタート時点での高度は " + height.ToString() );
 	}

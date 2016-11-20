@@ -17,13 +17,13 @@ public class TimeLimitText : MonoBehaviour
 	// Update is called once per frame
 	void Update () {
 
-		if (!AutumnVRGameManager.running) {
+		if (!GameManagerTest.running) {
 			mesh.text = "";
 			return;
 		}
 
 		//残り時間計算
-		float diff = AutumnVRGameManager.timeLimitSec - AutumnVRGameManager.gameTimer;
+		float diff = GameManagerTest._timeLimitSec - GameManagerTest.gameTimer;
 		int val = (int)Mathf.Floor(diff);
 
 		// 文字色更新

@@ -28,7 +28,9 @@ public class Measure : MonoBehaviour {
 
 		if (f == null) {
 			f = transform.GetChild (0).GetComponent<SpriteRenderer> ();
-		}		enablePrev = false;
+		}	
+
+		enablePrev = false;
 	}
 
 	// Update is called once per frame

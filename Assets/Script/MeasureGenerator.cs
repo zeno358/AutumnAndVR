@@ -25,9 +25,9 @@ public class MeasureGenerator : MonoBehaviour {
 	private void GenerateMeasure()
 	{
 		// 設置数を定義
-		int count = AutumnVRGameManager.goalHeight / AutumnVRGameManager.measureExpInterval;
+		int count = GameManagerTest._goalHeight / GameManagerTest.measureExpInterval;
 
-		count += AutumnVRGameManager.goalHeight / AutumnVRGameManager.measureExpInterval == 0 ?  1 : 2;
+		count += GameManagerTest._goalHeight / GameManagerTest.measureExpInterval == 0 ?  1 : 2;
 
 		for(int i=0 ; i < count ; i++)
 		{
@@ -35,7 +35,7 @@ public class MeasureGenerator : MonoBehaviour {
 
 			var g = Instantiate(measure);
 			g.transform.SetParent(transform);
-			float h = (top) ? AutumnVRGameManager.goalHeight : AutumnVRGameManager.measureExpInterval * i;
+			float h = (top) ? GameManagerTest._goalHeight : GameManagerTest.measureExpInterval * i;
 			g.transform.localPosition = Vector3.up * h;
 			g.transform.localRotation = Quaternion.Euler(0,-90f,0);
 
