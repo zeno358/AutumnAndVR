@@ -28,7 +28,7 @@ public class InfoText : Photon.MonoBehaviour {
 
 	public TextMesh mesh;
 
-	public MeshRenderer renderer;
+	public MeshRenderer textRenderer;
 
 	bool initialized = false;
 	// Use this for initialization
@@ -86,7 +86,7 @@ public class InfoText : Photon.MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () 
-	{	if(!initialized || GameManagerTest.running ){
+	{	if(!initialized ){
 			return;
 		}
 	
@@ -96,6 +96,12 @@ public class InfoText : Photon.MonoBehaviour {
 
 	void UpdateText()
 	{
+		if (GameManagerTest.running) {
+			textRenderer.enabled = false;
+			return;
+		}
+		textRenderer.enabled = true;
+
 		string str;
 
 		int playerNum = PhotonNetwork.room.playerCount;
