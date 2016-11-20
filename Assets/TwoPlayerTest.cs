@@ -99,17 +99,7 @@ public class TwoPlayerTest : Photon.MonoBehaviour
 	void SetCrew()
 	{
 		myCrew = PhotonNetwork.Instantiate("CrewMoveTest", Vector3.zero, Quaternion.identity, 0).GetComponent<CrewMoveTest>();
-		/*
-		int playerId = PhotonNetwork.player.ID;
-		Debug.LogError("playerID = " + playerId.ToString());
 
-		Transform t = playerId == 1 ? pos1 : pos2;
-
-		myCrew.transform.SetParent(t);
-		myCrew.transform.localPosition = Vector3.zero;
-		myCrew.transform.localRotation = Quaternion.identity;
-		myCrew.transform.parent = null;
-*/
 		bag = PhotonNetwork.Instantiate("BagTest", Vector3.zero, Quaternion.identity, 0);
 
 		if(PhotonNetwork.isMasterClient )
@@ -133,6 +123,8 @@ public class TwoPlayerTest : Photon.MonoBehaviour
 			bagPos += crews[i].handPos;
 		}
 		bagPos /= crews.Count;
+
+		bagPos += Vector3.down * 1f;
 
 		bag.transform.position = bagPos;
 	}

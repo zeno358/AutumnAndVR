@@ -12,7 +12,7 @@ public class BagTest : Photon.MonoBehaviour
 	/// <summary>
 	/// 栗を取ったとみなす範囲
 	/// </summary>
-	float catchRange = 1f;
+	float catchRange = 0.75f;
 
 	/// <summary>
 	/// モデル差し替えの閾値
@@ -31,13 +31,16 @@ public class BagTest : Photon.MonoBehaviour
 
 	int catchCount = 0;
 
-	private Muscle muscle;
+	private MuscleTest myMuscle;
+
 	// Use this for initialization
 	void Start () {
 		if(!photonView.isMine)
 		{
 			Destroy(gameObject);
 		}
+
+		myMuscle = GameObject.Find("Muscle").GetComponent<MuscleTest>();
 	}
 
 	public void InitModel()
@@ -51,10 +54,6 @@ public class BagTest : Photon.MonoBehaviour
 
 	void Update()
 	{
-		if( muscle == null )
-		{
-	//		muscle = GameObject.Find("Muscle").GetComponent<Muscle>();
-		}
 		CheckChestnut();
 	}
 
@@ -94,9 +93,9 @@ public class BagTest : Photon.MonoBehaviour
 				GetComponent<AudioSource>().PlayOneShot(se_catch);
 
 				// ボイス
-				if(muscle != null)
+				if(myMuscle != null)
 				{
-					muscle.PlaySe(vo_catch);
+					myMuscle.PlaySe(vo_catch);
 				}
 
 				// モデルの更新
