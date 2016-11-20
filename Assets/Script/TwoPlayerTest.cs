@@ -16,13 +16,9 @@ public class TwoPlayerTest : Photon.MonoBehaviour
 
 	public Transform pos2;
 
-	CrewMoveTest myCrew;
-
 	public static List<CrewMoveTest> crews = new List<CrewMoveTest>();
 
 	GameObject bag;
-
-	GameObject chestnutGenerator;
 
 	/// <summary>
 	/// ゲームを開始するのに必要なプレイヤー数
@@ -62,13 +58,13 @@ public class TwoPlayerTest : Photon.MonoBehaviour
 	//  ルームに入れた時に呼ばれる（自分の作ったルームでも）
 	void OnJoinedRoom()
 	{
-		myCrew = PhotonNetwork.Instantiate("CrewMoveTest", Vector3.zero, Quaternion.identity, 0).GetComponent<CrewMoveTest>();
+		PhotonNetwork.Instantiate("CrewMoveTest", Vector3.zero, Quaternion.identity, 0).GetComponent<CrewMoveTest>();
 
 		bag = PhotonNetwork.Instantiate("BagTest", Vector3.zero, Quaternion.identity, 0);
 
 		if(PhotonNetwork.isMasterClient )
 		{
-			chestnutGenerator = PhotonNetwork.Instantiate("ChestnutGenerator", Vector3.zero, Quaternion.identity, 0);
+			PhotonNetwork.Instantiate("ChestnutGenerator", Vector3.zero, Quaternion.identity, 0);
 		}
 	}
 

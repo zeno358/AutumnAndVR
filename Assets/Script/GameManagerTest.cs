@@ -69,6 +69,12 @@ public class GameManagerTest : MonoBehaviour
 	public static bool running;
 
 	/// <summary>
+	/// ゲーム開始処理中か？
+	/// </summary>
+	public static bool inStartingProcess;
+
+
+	/// <summary>
 	/// 高度到達演出が発生する頻度
 	/// </summary>
 	public static int measureExpInterval = 25;
@@ -92,7 +98,8 @@ public class GameManagerTest : MonoBehaviour
 	{
 		gameTimer = 0;
 
-		running = true;
+		running = false;
+		inStartingProcess = false;
 
 		if (MuscleTest.instance != null) {
 			MuscleTest.instance.SetToOrigin ();
@@ -103,24 +110,22 @@ public class GameManagerTest : MonoBehaviour
 		{
 			b.GetComponent<BagTest>().InitModel();	
 		}
-
-		//生成済みプレイヤーを削除
-		/*
-		if( players != null )
-		{
-			for(int i = players.Count-1 ; i >= 0 ; i --)
-			{
-
-				PhotonNetwork.Destroy( players[i].gameObject );
-			}
-		}
-		*/
-
+			
 		//SceneManager.LoadSceneAsync("Title", LoadSceneMode.Additive);
 	}
 
 	void Update () 
 	{
+		if( PhotonNetwork.room == null )
+		{
+			return;
+		}
+
+		if( !inStartingProcess )
+		{
+			CheckPlayersReady();
+		}
+
 		if(!running)
 		{
 			return;
@@ -151,14 +156,33 @@ public class GameManagerTest : MonoBehaviour
 		}
 	}
 
+	void CheckPlayersReady()
+	{
+		if( TwoPlayerTest.crews == null )
+		{
+			return;
+		}
+
+		for( int i=0 ; i< TwoPlayerTest.crews.Count ; i++ )
+		{
+			if ( !TwoPlayerTest.crews[i].ready )
+			{
+				return;
+			}
+		}
+
+		inStartingProcess = true;
+		ShowGameStartExpression();
+	}
+
 	/// <summary>
 	/// /ゲーム開始演出
 	/// </summary>
-	public void ShowGameStartExpression()
+	void ShowGameStartExpression()
 	{
 		StartCoroutine (_ShowGameStartExpression ());
 	}
-	private IEnumerator _ShowGameStartExpression()
+	IEnumerator _ShowGameStartExpression()
 	{	
 		// 筋肉ボイス
 		muscle.PlaySe(vo_start);

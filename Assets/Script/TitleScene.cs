@@ -104,7 +104,7 @@ public class TitleScene : Photon.MonoBehaviour {
 		var g = GameObject.Find("GameManager").GetComponent<GameManagerTest>();
 		if(g != null)
 		{
-			g.ShowGameStartExpression();
+		//	g.ShowGameStartExpression();
 		}
 
 		SceneManager.UnloadScene("Title");

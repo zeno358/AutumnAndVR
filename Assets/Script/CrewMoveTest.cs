@@ -10,6 +10,8 @@ public class CrewMoveTest : Photon.MonoBehaviour {
 
 	public AudioListener listener;
 
+	public bool ready { get; private set; }
+
 	/// <summary>
 	/// 自分自身のときに不要
 	/// </summary>
@@ -63,6 +65,8 @@ public class CrewMoveTest : Photon.MonoBehaviour {
 		transform.SetParent(t);
 		transform.localPosition = Vector3.zero;
 		transform.localRotation = Quaternion.identity;
+
+		ready = false;
 	}
 
 	// Update is called once per frame
