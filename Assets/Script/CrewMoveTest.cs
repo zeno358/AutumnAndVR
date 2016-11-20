@@ -6,7 +6,8 @@ public class CrewMoveTest : Photon.MonoBehaviour {
 
 	float speed = 2f;
 
-	public Transform hand;
+	public SteamVR_TrackedObject rightHand;
+	public Transform eye;
 
 	public AudioListener listener;
 
@@ -66,7 +67,7 @@ public class CrewMoveTest : Photon.MonoBehaviour {
 		transform.localPosition = Vector3.zero;
 		transform.localRotation = Quaternion.identity;
 
-		ready = false;
+		photonView.RPC ("SetReady", PhotonTargets.All, false);
 	}
 
 	// Update is called once per frame
@@ -77,17 +78,30 @@ public class CrewMoveTest : Photon.MonoBehaviour {
 			return;
 		}
 
-		GetKeyBoardInput();
+		GetInput();
 	}
 		
-	void GetKeyBoardInput()
+	void GetInput()
 	{
+		var device = SteamVR_Controller.Input((int) rightHand.index);
+
+		if (device.GetTouchDown(SteamVR_Controller.ButtonMask.Trigger)) {
+			photonView.RPC ("SetReady", PhotonTargets.All, true);
+		}
+		if (device.GetPressDown(SteamVR_Controller.ButtonMask.Trigger)) {
+			photonView.RPC ("SetReady", PhotonTargets.All, true);
+		}
+
+		////////////////
+		/// ↓はデバッグ用
+		//////////////// 
+
 		bool handControl = Input.GetKey(KeyCode.Space);
 
 		var moveX = Input.GetAxisRaw("Horizontal") * speed * Time.deltaTime;
 		var moveZ = Input.GetAxisRaw("Vertical") * speed * Time.deltaTime;
 
-		hand.transform.Translate(moveX, 0, moveZ);
+		rightHand.transform.Translate(moveX, 0, moveZ);
 
 		if( Input.GetKeyDown(KeyCode.U) )
 		{
@@ -122,10 +136,17 @@ public class CrewMoveTest : Photon.MonoBehaviour {
 
 	}
 
+	[PunRPC]
+	void SetReady(bool value)
+	{
+		Debug.Log ("PhotonViewID[ " + photonView.viewID.ToString () + " ]のreadyを" + value.ToString ());
+		ready = value;
+	}
+
 	public Vector3 handPos
 	{
 		get{
-			return hand.position;
+			return rightHand.transform.position;
 		}
 	}
 }

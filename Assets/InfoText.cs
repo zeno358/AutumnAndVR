@@ -65,19 +65,19 @@ public class InfoText : Photon.MonoBehaviour {
 			}
 		}
 
-		Transform target = null;
+		CrewMoveTest target = null;
 
 		foreach( CrewMoveTest c in TwoPlayerTest.crews)
 		{
 			if( c.photonView.isMine )
 			{
-				target = c.transform;
+				target = c;
 				break;
 			}	
 		}
 
 		// テキストなのでプレイヤーに背中を向ける
-		Vector3 dir = transform.position - target.transform.position;
+		Vector3 dir = transform.position - target.eye.transform.position;
 		Quaternion q = Quaternion.LookRotation( dir );
 		transform.rotation = q;
 
