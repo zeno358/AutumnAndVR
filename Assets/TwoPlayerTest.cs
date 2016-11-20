@@ -23,6 +23,9 @@ public class TwoPlayerTest : Photon.MonoBehaviour
 	[SerializeField]
 	Transform pos2;
 
+	[SerializeField]
+	Transform posGenerator;
+
 	CrewMoveTest myCrew;
 
 	public static List<CrewMoveTest> crews = new List<CrewMoveTest>();
@@ -121,7 +124,7 @@ public class TwoPlayerTest : Photon.MonoBehaviour
 
 		if(PhotonNetwork.isMasterClient )
 		{
-			chestnutGenerator = PhotonNetwork.Instantiate("ChestnutGenerator", Vector3.up * 5f, Quaternion.identity, 0);
+			chestnutGenerator = PhotonNetwork.Instantiate("ChestnutGenerator", posGenerator.position, Quaternion.identity, 0);
 		}
 	}
 
