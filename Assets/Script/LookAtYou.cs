@@ -12,13 +12,12 @@ public class LookAtYou : MonoBehaviour {
 		StartCoroutine(FindTarget());
 	}
 
-
 	IEnumerator FindTarget()
 	{
 		do{
-		bag = GameObject.Find ("Bag");
+			bag = GameObject.Find ("BagTest(Clone)");
 
-		yield return new WaitForSeconds(1);
+			yield return new WaitForSeconds(1);
 		}while(bag == null);
 
 		findTarget = true;	

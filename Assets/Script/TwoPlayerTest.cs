@@ -3,13 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
-/// 目標：
-/// 二人のプレイヤーをそれぞれ操作 <Clear!
-/// お互いの姿が正しく同期される <Clear!
-/// 箱をプレイヤーの腕の中点に配置する <Clear
-/// イガグリ生成機を１つセット
+/// ２人プレイ用にPhoton上で扱うもの全般を制御
 /// </summary>
-
 public class TwoPlayerTest : Photon.MonoBehaviour 
 {
 	/// <summary>
@@ -36,35 +31,11 @@ public class TwoPlayerTest : Photon.MonoBehaviour
 
 	void Start ()
 	{
-
 		PhotonNetwork.ConnectUsingSettings ("0.1");
 	}
 
 	void Update()
 	{
-		if(Input.GetKeyDown(KeyCode.K))
-		{
-			if (myCrew == null )
-			{
-				return;
-			}
-			Debug.Log("before : " + PhotonNetwork.room.playerCount.ToString());
-
-			PhotonNetwork.Destroy(myCrew.gameObject);
-
-			Debug.Log("after : " + PhotonNetwork.room.playerCount.ToString());
-
-			if( PhotonNetwork.room.playerCount < 2 && bag != null)
-			{
-				PhotonNetwork.Destroy(bag);
-			}
-		}
-
-		if(Input.GetKeyDown(KeyCode.P))
-		{
-			SetCrew();
-		}
-
 		if(  bag != null )
 		{
 			UpdateBagPos();
@@ -91,11 +62,6 @@ public class TwoPlayerTest : Photon.MonoBehaviour
 	//  ルームに入れた時に呼ばれる（自分の作ったルームでも）
 	void OnJoinedRoom()
 	{
-		SetCrew();
-	}
-
-	void SetCrew()
-	{
 		myCrew = PhotonNetwork.Instantiate("CrewMoveTest", Vector3.zero, Quaternion.identity, 0).GetComponent<CrewMoveTest>();
 
 		bag = PhotonNetwork.Instantiate("BagTest", Vector3.zero, Quaternion.identity, 0);
@@ -106,6 +72,9 @@ public class TwoPlayerTest : Photon.MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// かごの位置を更新
+	/// </summary>
 	void UpdateBagPos()
 	{
 		Vector3 bagPos = Vector3.zero;
