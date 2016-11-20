@@ -44,8 +44,6 @@ public class Pedometer : MonoBehaviour
 		float posY = transform.localPosition.y;
 		float offset = PrevPosY - posY;
 
-		Debug.LogWarning (posY);
-
 		// 折り返しを検出
 		if( offset > 0 != prevOffset > 0 ){
 			if (Mathf.Abs (curveOriginPos - posY) > 0.02f) {

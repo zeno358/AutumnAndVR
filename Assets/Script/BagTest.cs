@@ -92,6 +92,9 @@ public class BagTest : Photon.MonoBehaviour
 				// 効果音
 				GetComponent<AudioSource>().PlayOneShot(se_catch);
 
+				// 筋肉の喜び時間追加
+				myMuscle.joyTimer += 1f;
+
 				// ボイス
 				if(myMuscle != null)
 				{

@@ -49,7 +49,7 @@ public class MuscleTest : Photon.MonoBehaviour
 	/// </summary>
 	public Transform originPos;
 
-	float joyTimer =0;
+	public float joyTimer =0;
 
 	/// <summary>
 	/// 到達した高さの区切り
@@ -204,8 +204,6 @@ public class MuscleTest : Photon.MonoBehaviour
 			if( dist <= hitRange )
 			{
 				Debug.Log("栗が筋肉にヒット！");
-
-				joyTimer += 1f;
 
 				c.Harvest(false);
 			
