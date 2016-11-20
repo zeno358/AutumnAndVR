@@ -14,7 +14,7 @@ public class TitleScene : Photon.MonoBehaviour {
 	{
 		starting = false;
 
-		var m = GameObject.Find("Muscle").GetComponent<Muscle>();
+		var m = GameObject.Find("Muscle").GetComponent<MuscleTest>();
 		if(m != null)
 		{
 			m.SetToOrigin();
@@ -80,7 +80,7 @@ public class TitleScene : Photon.MonoBehaviour {
 			statusText.text = "ルームが作成されていません";
 		}
 		else{
-			statusText.text = "プレイヤーの参加を待機しています...。 プレイヤー数" + PhotonNetwork.room.playerCount.ToString() + "/" + CrewRoomMaking.playerNumNeeded.ToString();
+			statusText.text = "プレイヤーの参加を待機しています...。 プレイヤー数" + PhotonNetwork.room.playerCount.ToString() + "/" + TwoPlayerTest.playerNumNeeded.ToString();
 		}
 	}
 
@@ -93,15 +93,15 @@ public class TitleScene : Photon.MonoBehaviour {
 
 		starting = true;
 
-		while( PhotonNetwork.room.playerCount < CrewRoomMaking.playerNumNeeded )
+		while( PhotonNetwork.room.playerCount < TwoPlayerTest.playerNumNeeded )
 		{
 			Debug.LogError("プレイヤー参加待機中");
 			yield return null;
 		}
 
-		PhotonObjectSetter.instance.Init();
+		//PhotonObjectSetter.instance.Init();
 
-		var g = GameObject.Find("GameManager").GetComponent<AutumnVRGameManager>();
+		var g = GameObject.Find("GameManager").GetComponent<GameManagerTest>();
 		if(g != null)
 		{
 			g.ShowGameStartExpression();

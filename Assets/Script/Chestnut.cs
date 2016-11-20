@@ -122,7 +122,7 @@ public class Chestnut : Photon.MonoBehaviour {
 	[PunRPC]
 	public void Harvest(bool byBag)
 	{
-		if( !AutumnVRGameManager.running )
+		if( !GameManagerTest.running )
 		{
 		//	return;
 		}

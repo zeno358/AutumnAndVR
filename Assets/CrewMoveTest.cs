@@ -94,7 +94,7 @@ public class CrewMoveTest : Photon.MonoBehaviour {
 	}
 
 	[PunRPC]
-	void AddCount()
+	public void AddCount()
 	{
 		if( !GameManagerTest.running )
 		{

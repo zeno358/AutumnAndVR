@@ -34,8 +34,6 @@ public class TwoPlayerTest : Photon.MonoBehaviour
 	/// </summary>
 	public static int playerNumNeeded = 2;
 
-	PhotonObjectSetter crewSetter;
-
 	void Start ()
 	{
 

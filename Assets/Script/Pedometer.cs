@@ -24,7 +24,7 @@ public class Pedometer : MonoBehaviour {
 	float curveOriginPos;
 
 	[SerializeField]
-	CrewMove master;
+	CrewMoveTest master;
 
 	// Use this for initialization
 	void Start () {
@@ -34,7 +34,7 @@ public class Pedometer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (!AutumnVRGameManager.running) {
+		if (!GameManagerTest.running) {
 			return;
 		}
 		CheckPosAndAddValue ();
@@ -72,7 +72,9 @@ public class Pedometer : MonoBehaviour {
 	void AddValue()
 	{
 		if (master != null) {
-			master.AddCount ();
+			//master.AddCount ();
+			PhotonNetwork.RPC(master.photonView, "AddCount", PhotonTargets.All, false);
+
 		}
 		value++;
 		Debug.Log ( gameObject.name + " : AddValue( " + value.ToString () + " ) " );

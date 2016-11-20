@@ -101,7 +101,7 @@ public class GameManagerTest : MonoBehaviour
 		GameObject b = GameObject.Find ("Bag");
 		if( b != null )
 		{
-			b.GetComponent<Bag>().InitModel();	
+			b.GetComponent<BagTest>().InitModel();	
 		}
 
 		//生成済みプレイヤーを削除
@@ -191,7 +191,7 @@ public class GameManagerTest : MonoBehaviour
 			Chestnut.cList.Clear ();
 		}
 
-		int height = (int)Mathf.Floor( Muscle.height );
+		int height = (int)Mathf.Floor( MuscleTest.height );
 		Debug.LogErrorFormat("時間切れ！あなたが到達した高度は{0}", height);
 
 		// BGM停止

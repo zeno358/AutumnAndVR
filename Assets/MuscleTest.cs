@@ -261,7 +261,7 @@ public class MuscleTest : Photon.MonoBehaviour
 	/// </summary>
 	private void CheckBGMPlay()
 	{
-		if(myAudio.isPlaying && !AutumnVRGameManager.running)
+		if(myAudio.isPlaying && !GameManagerTest.running)
 		{
 			SetBGM(false);
 		}
