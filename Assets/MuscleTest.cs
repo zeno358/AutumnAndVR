@@ -78,28 +78,6 @@ public class MuscleTest : Photon.MonoBehaviour
 		Debug.Log("スタート時点での高度は " + height.ToString() );
 	}
 
-	/// <summary>
-	/// 初期化
-	/// </summary>
-	public void Init()
-	{
-		// 栗生成器を生成
-	//	GameObject g = PhotonNetwork.Instantiate("ChestnutGenerator", transform.position + Vector3.up * 10, Quaternion.identity, 0);
-	//	g.transform.SetParent(transform);
-	}
-
-	void OnPhotonSerializeView(PhotonStream s, PhotonMessageInfo i)
-	{
-		if( s.isWriting)
-		{
-			s.SendNext(height);
-		}
-		else
-		{
-			height = (float)s.ReceiveNext();
-		}
-	}
-
 	void Update()
 	{
 		// 栗とのあたり判定をチェック
@@ -152,7 +130,7 @@ public class MuscleTest : Photon.MonoBehaviour
 			if( reachUnit > reachedHeightUnit )
 			{
 				// ボイスと効果音再生
-		//		StartCoroutine( PlayReachingSe() );
+				StartCoroutine( PlayReachingSe() );
 
 				reachedHeightUnit = reachUnit;
 			}
@@ -183,7 +161,7 @@ public class MuscleTest : Photon.MonoBehaviour
 		int key = Random.Range (0, se_roar.Length - 1);
 
 		// うめき声を再生
-	//	myAudio.PlayOneShot( se_roar[key] );
+		myAudio.PlayOneShot( se_roar[key] );
 	}
 
 	/// <summary>
@@ -192,13 +170,13 @@ public class MuscleTest : Photon.MonoBehaviour
 	IEnumerator PlayReachingSe()
 	{
 		// SE
-	//	myAudio.PlayOneShot(se_reachUnitHeight);
+		myAudio.PlayOneShot(se_reachUnitHeight);
 
 		// SEの長さ分待機
 		yield return new WaitForSeconds(1.5f);
 
 		// ボイス
-	//	myAudio.PlayOneShot(vo_reachUnitHeight);
+		myAudio.PlayOneShot(vo_reachUnitHeight);
 	}
 
 	/// <summary>
@@ -224,7 +202,6 @@ public class MuscleTest : Photon.MonoBehaviour
 			if( c.harvested ) continue;
 
 			// 栗との高度比較
-
 			dist =  Mathf.Abs( (transform.position.y - c.transform.position.y) );
 
 			if( dist <= hitRange )
@@ -258,13 +235,13 @@ public class MuscleTest : Photon.MonoBehaviour
 	/// </summary>
 	public void PlaySe(AudioClip clip)
 	{
-	//	myAudio.PlayOneShot(clip);
+		myAudio.PlayOneShot(clip);
 	}
 
 	public void DisplayReachedHeight()
 	{
-	//	clearText.gameObject.SetActive (true);
-	//	clearText.text = "たいむおーばー\n\nとうたつこうど\n" + ((int)height).ToString () + "めーとる";
+		clearText.gameObject.SetActive (true);
+		clearText.text = "たいむおーばー\n\nとうたつこうど\n" + ((int)height).ToString () + "めーとる";
 	}
 
 	/// <summary>
@@ -274,11 +251,11 @@ public class MuscleTest : Photon.MonoBehaviour
 	{
 		if(play)
 		{
-		//	myAudio.Play();
+			myAudio.Play();
 		}
 		else
 		{
-		//	myAudio.Stop();
+			myAudio.Stop();
 		}
 	}
 
@@ -287,9 +264,9 @@ public class MuscleTest : Photon.MonoBehaviour
 	/// </summary>
 	private void CheckBGMPlay()
 	{
-	//	if(myAudio.isPlaying && !AutumnVRGameManager.running)
-	//	{
-	//		SetBGM(false);
-	//	}
+		if(myAudio.isPlaying && !AutumnVRGameManager.running)
+		{
+			SetBGM(false);
+		}
 	}
 }

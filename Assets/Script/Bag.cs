@@ -41,6 +41,9 @@ public class Bag : MonoBehaviour
 	void Start()
 	{
 		InitModel ();
+
+		Transform t = GameObject.Find("Muscle").transform;
+		transform.SetParent(t);
 	}
 
 	public void InitModel()

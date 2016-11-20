@@ -24,9 +24,6 @@ public class TwoPlayerTest : Photon.MonoBehaviour
 	Transform pos2;
 
 	[SerializeField]
-	Transform posGenerator;
-
-	[SerializeField]
 	MuscleTest muscle;
 
 	CrewMoveTest myCrew;
@@ -127,8 +124,7 @@ public class TwoPlayerTest : Photon.MonoBehaviour
 
 		if(PhotonNetwork.isMasterClient )
 		{
-			chestnutGenerator = PhotonNetwork.Instantiate("ChestnutGenerator", posGenerator.position, Quaternion.identity, 0);
-		//	chestnutGenerator.transform.SetParent(posGenerator);
+			chestnutGenerator = PhotonNetwork.Instantiate("ChestnutGenerator", Vector3.zero, Quaternion.identity, 0);
 		}
 	}
 

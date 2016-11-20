@@ -49,27 +49,10 @@ public class CrewMoveTest : Photon.MonoBehaviour {
 		transform.SetParent(t);
 		transform.localPosition = Vector3.zero;
 		transform.localRotation = Quaternion.identity;
-		// transform.parent = null;
-
-	//	offsetHeightFromMuscle = transform.position - myMuscle.transform.position;
-	}
-
-	void OnPhotonSerializeView(PhotonStream s, PhotonMessageInfo i)
-	{
-		if(s.isWriting)
-		{
-		//	s.SendNext(hand.transform.position);
-		}
-		else
-		{
-		//	hand.transform.position = (Vector3)s.ReceiveNext();
-		}
 	}
 
 	// Update is called once per frame
 	void Update () {
-
-		UpdatePosition();
 
 		if( !photonView.isMine )
 		{
@@ -78,15 +61,7 @@ public class CrewMoveTest : Photon.MonoBehaviour {
 
 		GetKeyBoardInput();
 	}
-
-	/// <summary>
-	/// 位置を筋肉から見た定位置に更新
-	/// </summary>
-	void UpdatePosition()
-	{
-	//	transform.position = myMuscle.transform.position + offsetHeightFromMuscle;
-	}
-
+		
 	void GetKeyBoardInput()
 	{
 		bool handControl = Input.GetKey(KeyCode.Space);
@@ -94,7 +69,7 @@ public class CrewMoveTest : Photon.MonoBehaviour {
 		var moveX = Input.GetAxisRaw("Horizontal") * speed * Time.deltaTime;
 		var moveZ = Input.GetAxisRaw("Vertical") * speed * Time.deltaTime;
 
-		Transform target = handControl ? hand : transform;
+		Transform target = true ? hand : transform;
 
 		target.Translate(moveX, 0, moveZ);
 
@@ -125,7 +100,6 @@ public class CrewMoveTest : Photon.MonoBehaviour {
 		Debug.Log( "全プレイヤーの合計カウント = " + sum.ToString());
 
 	}
-
 
 	public Vector3 handPos
 	{

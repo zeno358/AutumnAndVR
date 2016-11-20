@@ -34,6 +34,7 @@ public class ChestnutGenerator : Photon.MonoBehaviour {
 
 		Transform t = GameObject.Find("GeneratorPos").transform;
 		transform.SetParent(t);
+		transform.localPosition = Vector3.zero;
 	}
 
 	// Update is called once per frame
