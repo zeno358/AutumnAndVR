@@ -19,35 +19,29 @@ public class MuscleTest : Photon.MonoBehaviour
 	/// </summary>
 	float hitRange = 0.1f;
 
-	[SerializeField]
-	AudioSource myAudio;
+	public AudioSource myAudio;
 
 	/// <summary>
 	/// ダメージを食らったときのボイス
 	/// </summary>
-	[SerializeField]
-	AudioClip[] se_roar;
+	public AudioClip[] se_roar;
 
 	/// <summary>
 	/// ゲームクリア時のボイス
 	/// </summary>
-	[SerializeField]
-	AudioClip se_clear;
+	public AudioClip se_clear;
 
 	/// <summary>
 	/// 特定高度に達したときの効果音
 	/// </summary>
-	[SerializeField]
-	AudioClip se_reachUnitHeight;
+	public AudioClip se_reachUnitHeight;
 
 	/// <summary>
 	/// 特定高度に達したときのボイス
 	/// </summary>
-	[SerializeField]
-	AudioClip vo_reachUnitHeight;
+	public AudioClip vo_reachUnitHeight;
 
-	[SerializeField]
-	private TextMesh clearText;
+	public TextMesh clearText;
 
 	/// <summary>
 	/// 筋肉の初期位置
@@ -61,7 +55,7 @@ public class MuscleTest : Photon.MonoBehaviour
 	/// </summary>
 	private int reachedHeightUnit = 0;
 
-	public AutumnVRGameManager gm;
+	public GameManagerTest gm;
 
 	public Transform pos1;
 
@@ -85,7 +79,7 @@ public class MuscleTest : Photon.MonoBehaviour
 
 		ReduceJoyTimer ();
 
-		CheckBGMPlay();
+	//	CheckBGMPlay();
 	}
 
 	void ReduceJoyTimer()
@@ -118,7 +112,7 @@ public class MuscleTest : Photon.MonoBehaviour
 
 		if( height >= AutumnVRGameManager.goalHeight )
 		{
-		//	StartCoroutine( gm.ShowGameClearExpression());
+			StartCoroutine( gm.ShowGameClearExpression());
 
 			clearText.gameObject.SetActive (true);
 			clearText.text = "くりあたいむ\n" + ((int)AutumnVRGameManager.gameTimer).ToString () + "びょう";
