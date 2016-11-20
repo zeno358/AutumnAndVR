@@ -118,8 +118,11 @@ public class TwoPlayerTest : Photon.MonoBehaviour
 		myCrew.transform.parent = null;
 
 		bag = PhotonNetwork.Instantiate("BagTest", Vector3.zero, Quaternion.identity, 0);
-		chestnutGenerator = PhotonNetwork.Instantiate("ChestnutGenerator", Vector3.up * 5f, Quaternion.identity, 0);
 
+		if(PhotonNetwork.isMasterClient )
+		{
+			chestnutGenerator = PhotonNetwork.Instantiate("ChestnutGenerator", Vector3.up * 5f, Quaternion.identity, 0);
+		}
 	}
 
 	void UpdateBagPos()

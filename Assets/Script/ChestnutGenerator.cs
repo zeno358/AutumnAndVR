@@ -22,17 +22,12 @@ public class ChestnutGenerator : Photon.MonoBehaviour {
 	/// <summary>
 	/// イガグリ
 	/// </summary>
-	public GameObject Chestnut;
+	public GameObject chestnut;
 
 	AudioSource myAudio;
 
 	void Start()
 	{
-		if( !photonView.isMine )
-		{
-			Destroy( gameObject );
-		}
-
 		instance = this;
 
 		myAudio = GetComponent<AudioSource>();
@@ -55,7 +50,9 @@ public class ChestnutGenerator : Photon.MonoBehaviour {
 
 		if( CheckTimer() )
 		{
+		//	PhotonNetwork.RPC(photonView, "Generate", PhotonTargets.All, false);
 			Generate();
+
 		}
 	}
 
@@ -76,13 +73,18 @@ public class ChestnutGenerator : Photon.MonoBehaviour {
 	/// <summary>
 	/// イガグリを生成
 	/// </summary>
+	[PunRPC]
 	void Generate()
 	{
+		Debug.Log("マスタープレイヤー[ " + PhotonNetwork.player.ID + " ]が栗を生成");
+
 		//　生成位置を決定
 		Vector3 pos = new Vector3(transform.position.x + Random.Range( -diffRange.x, diffRange.x ), transform.position.y, transform.position.z + Random.Range( -diffRange.y, diffRange.y ));
 
 		// photn上に生成
 		PhotonNetwork.Instantiate("Chestnut", pos, Quaternion.identity, 0);
+
+		//Instantiate(chestnut, pos, Quaternion.identity);
 
 		// SEを再生
 		myAudio.Play();

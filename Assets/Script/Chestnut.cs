@@ -15,13 +15,17 @@ public class Chestnut : Photon.MonoBehaviour {
 	/// <summary>
 	/// 落下スピード
 	/// </summary>
-	//float fallingSpeed = 0.15f;
-	float fallingSpeed = 0.05f;
+	public float fallingSpeed = 0.05f;
 
 	/// <summary>
 	/// 回転スピード
 	/// </summary>
-	float rotationSpeed = 0.1f;
+	public float rotationSpeed = 0.1f;
+
+	/// <summary>
+	/// 回転軸
+	/// </summary>
+	Vector3 rotAngle;
 
 	/// <summary>
 	/// 命の長さ秒
@@ -60,11 +64,17 @@ public class Chestnut : Photon.MonoBehaviour {
 
 		Debug.Log("プレイヤーID" + photonView.ownerId.ToString() + "の栗を生成");
 
+
 	}
 
 	// Update is called once per frame
 	void Update () 
 	{
+		if( !PhotonNetwork.isMasterClient )
+		{
+		//	return;
+		}
+
 		UpdatePosition();
 		UpdateRotation();
 		UpdateLifeTimer();
@@ -83,6 +93,7 @@ public class Chestnut : Photon.MonoBehaviour {
 	/// </summary>
 	void UpdateRotation()
 	{
+		
 	}
 
 	/// <summary>
@@ -94,9 +105,13 @@ public class Chestnut : Photon.MonoBehaviour {
 		if( timer >= lifeTime )
 		{
 			harvested = true;
+			//if( PhotonNetwork.isMasterClient )
+			//{
+			//	PhotonNetwork.Destroy(gameObject);
+			//}
 			Destroy(gameObject);
+
 			Debug.Log("プレイヤーID" + photonView.ownerId.ToString() + "の栗を削除");
-			//PhotonView.Destroy( GameObject );
 		}
 	}
 
@@ -104,12 +119,14 @@ public class Chestnut : Photon.MonoBehaviour {
 	/// 収穫される
 	/// </summary>
 	/// <param name="byBag">カゴによる収穫か？</param>
+	[PunRPC]
 	public void Harvest(bool byBag)
 	{
 		if( !AutumnVRGameManager.running )
 		{
-			return;
+		//	return;
 		}
+
 		GameObject effect;
 
 		if(byBag){
