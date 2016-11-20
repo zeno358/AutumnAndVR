@@ -63,6 +63,10 @@ public class MuscleTest : Photon.MonoBehaviour
 
 	public AutumnVRGameManager gm;
 
+	public Transform pos1;
+
+	public Transform pos2;
+
 	enum VoicePat{
 		Delight,	// 歓喜
 		Painful,	// 苦痛
@@ -119,7 +123,7 @@ public class MuscleTest : Photon.MonoBehaviour
 	void Ascend()
 	{
 		if (!AutumnVRGameManager.running) {
-			return;
+		//	return;
 		}
 
 		float val = ascend_value;

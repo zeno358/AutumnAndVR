@@ -18,6 +18,10 @@ public class CrewMoveTest : Photon.MonoBehaviour {
 	[SerializeField]
 	List<GameObject> notNeededForMe;
 
+	MuscleTest myMuscle;
+
+	private Vector3 offsetHeightFromMuscle;
+
 	int count;
 
 	// Use this for initialization
@@ -34,6 +38,20 @@ public class CrewMoveTest : Photon.MonoBehaviour {
 		}
 
 		TwoPlayerTest.crews.Add(this);
+
+		myMuscle = GameObject.Find("Muscle").GetComponent<MuscleTest>();
+
+		int photonViewId = photonView.ownerId;
+		Debug.LogError("playerID = " + photonViewId.ToString());
+
+		Transform t = photonViewId == 1 ? myMuscle.pos1 : myMuscle.pos2;
+
+		transform.SetParent(t);
+		transform.localPosition = Vector3.zero;
+		transform.localRotation = Quaternion.identity;
+		// transform.parent = null;
+
+	//	offsetHeightFromMuscle = transform.position - myMuscle.transform.position;
 	}
 
 	void OnPhotonSerializeView(PhotonStream s, PhotonMessageInfo i)
@@ -50,18 +68,27 @@ public class CrewMoveTest : Photon.MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+
+		UpdatePosition();
+
 		if( !photonView.isMine )
 		{
 			return;
 		}
 
 		GetKeyBoardInput();
+	}
 
+	/// <summary>
+	/// 位置を筋肉から見た定位置に更新
+	/// </summary>
+	void UpdatePosition()
+	{
+	//	transform.position = myMuscle.transform.position + offsetHeightFromMuscle;
 	}
 
 	void GetKeyBoardInput()
 	{
-
 		bool handControl = Input.GetKey(KeyCode.Space);
 
 		var moveX = Input.GetAxisRaw("Horizontal") * speed * Time.deltaTime;
@@ -73,6 +100,8 @@ public class CrewMoveTest : Photon.MonoBehaviour {
 
 		if( Input.GetKeyDown(KeyCode.U) )
 		{
+			Debug.Log("Uが押された プレイヤーID = " + PhotonNetwork.player.ID.ToString());
+
 			PhotonNetwork.RPC(photonView, "AddCount", PhotonTargets.All, false);
 		}
 	}
@@ -82,6 +111,13 @@ public class CrewMoveTest : Photon.MonoBehaviour {
 	{
 		count++;
 		Debug.Log( "クライアント" + PhotonNetwork.player.ID.ToString() + "上の オーナーID" + photonView.ownerId.ToString() + "のカウント=" + count.ToString());
+
+
+		if( myMuscle != null ){
+			myMuscle.AddEnergy(1, this);
+		}else{
+			Debug.Log( "myMuscleがnull" );
+		}
 
 		int sum = 0;
 		TwoPlayerTest.crews.ForEach( c => sum += c.count );

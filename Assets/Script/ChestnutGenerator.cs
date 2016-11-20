@@ -31,6 +31,9 @@ public class ChestnutGenerator : Photon.MonoBehaviour {
 		instance = this;
 
 		myAudio = GetComponent<AudioSource>();
+
+		Transform t = GameObject.Find("GeneratorPos").transform;
+		transform.SetParent(t);
 	}
 
 	// Update is called once per frame

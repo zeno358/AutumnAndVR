@@ -26,6 +26,9 @@ public class TwoPlayerTest : Photon.MonoBehaviour
 	[SerializeField]
 	Transform posGenerator;
 
+	[SerializeField]
+	MuscleTest muscle;
+
 	CrewMoveTest myCrew;
 
 	public static List<CrewMoveTest> crews = new List<CrewMoveTest>();
@@ -109,7 +112,7 @@ public class TwoPlayerTest : Photon.MonoBehaviour
 	void SetCrew()
 	{
 		myCrew = PhotonNetwork.Instantiate("CrewMoveTest", Vector3.zero, Quaternion.identity, 0).GetComponent<CrewMoveTest>();
-
+		/*
 		int playerId = PhotonNetwork.player.ID;
 		Debug.LogError("playerID = " + playerId.ToString());
 
@@ -119,12 +122,13 @@ public class TwoPlayerTest : Photon.MonoBehaviour
 		myCrew.transform.localPosition = Vector3.zero;
 		myCrew.transform.localRotation = Quaternion.identity;
 		myCrew.transform.parent = null;
-
+*/
 		bag = PhotonNetwork.Instantiate("BagTest", Vector3.zero, Quaternion.identity, 0);
 
 		if(PhotonNetwork.isMasterClient )
 		{
 			chestnutGenerator = PhotonNetwork.Instantiate("ChestnutGenerator", posGenerator.position, Quaternion.identity, 0);
+		//	chestnutGenerator.transform.SetParent(posGenerator);
 		}
 	}
 
