@@ -36,7 +36,7 @@ public class Measure : MonoBehaviour {
 		int unitVal = AutumnVRGameManager.measureExpInterval;
 
 		// 近くだけ表示
-		r.enabled = Muscle.height > transform.position.y - unitVal && Muscle.height < transform.position.y + unitVal;
+		r.enabled = MuscleTest.height > transform.position.y - unitVal && MuscleTest.height < transform.position.y + unitVal;
 
 		if (f.gameObject.activeInHierarchy) {
 			f.enabled = r.enabled;
@@ -48,7 +48,7 @@ public class Measure : MonoBehaviour {
 		enablePrev = r.enabled;
 
 		// 到達したら黄色
-		mesh.color = Muscle.height >= transform.position.y ? Color.yellow : Color.red;
+		mesh.color = MuscleTest.height >= transform.position.y ? Color.yellow : Color.red;
 	}
 
 	void FrameIn()
