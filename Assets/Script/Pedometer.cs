@@ -4,10 +4,8 @@ using System.Collections;
 /// <summary>
 /// 位置の変化を取得して値を計測するクラス
 /// </summary>
-public class Pedometer : MonoBehaviour {
-
-	int value;
-
+public class Pedometer : MonoBehaviour
+{
 	/// <summary>
 	/// １フレーム前のポジション
 	/// </summary>
@@ -23,17 +21,16 @@ public class Pedometer : MonoBehaviour {
 	/// </summary>
 	float curveOriginPos;
 
-	[SerializeField]
-	CrewMoveTest master;
+	public CrewMoveTest master;
 
 	// Use this for initialization
 	void Start () {
-		value = 0;
-		curveOriginPos = PrevPosY = transform.position.y;
+		curveOriginPos = PrevPosY = transform.localPosition.y;
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () 
+	{
 		if (!GameManagerTest.running) {
 			return;
 		}
@@ -44,8 +41,10 @@ public class Pedometer : MonoBehaviour {
 
 	void CheckPosAndAddValue()
 	{
-		float posY = transform.position.y;
+		float posY = transform.localPosition.y;
 		float offset = PrevPosY - posY;
+
+		Debug.LogWarning (posY);
 
 		// 折り返しを検出
 		if( offset > 0 != prevOffset > 0 ){
@@ -76,7 +75,5 @@ public class Pedometer : MonoBehaviour {
 			PhotonNetwork.RPC(master.photonView, "AddCount", PhotonTargets.All, false);
 
 		}
-		value++;
-		Debug.Log ( gameObject.name + " : AddValue( " + value.ToString () + " ) " );
 	}
 }
