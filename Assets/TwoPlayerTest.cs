@@ -17,14 +17,9 @@ public class TwoPlayerTest : Photon.MonoBehaviour
 	/// </summary>
 	string roomName = "autumnvr";
 
-	[SerializeField]
-	Transform pos1;
+	public Transform pos1;
 
-	[SerializeField]
-	Transform pos2;
-
-	[SerializeField]
-	MuscleTest muscle;
+	public Transform pos2;
 
 	CrewMoveTest myCrew;
 
@@ -75,11 +70,6 @@ public class TwoPlayerTest : Photon.MonoBehaviour
 		if(  bag != null )
 		{
 			UpdateBagPos();
-		}
-
-		if( PhotonNetwork.room != null )
-		{
-		//	Debug.Log("update ルームのプレイヤー数=" +  PhotonNetwork.room.playerCount.ToString() + " プレイヤーリスト長=" + crews.Count.ToString());
 		}
 	}
 

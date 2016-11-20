@@ -40,9 +40,9 @@ public class ChestnutGenerator : Photon.MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		if( !AutumnVRGameManager.running)
+		if( !GameManagerTest.running)
 		{
-		//	return;
+			return;
 		}
 
 		if( PhotonNetwork.room.playerCount < 2 ){
@@ -87,7 +87,6 @@ public class ChestnutGenerator : Photon.MonoBehaviour {
 
 		// photn上に生成
 		PhotonNetwork.Instantiate("Chestnut", pos, Quaternion.identity, 0);
-
 		//Instantiate(chestnut, pos, Quaternion.identity);
 
 		// SEを再生

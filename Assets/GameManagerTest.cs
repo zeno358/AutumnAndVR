@@ -19,12 +19,14 @@ public class GameManagerTest : MonoBehaviour
 	/// <summary>
 	/// 制限時間
 	/// </summary>
-	public static int timeLimitSec = 120;
+	public int timeLimitSec = 120;
+	public static int _timeLimitSec = 120;
 
 	/// <summary>
 	/// ゴールとみなす高度
 	/// </summary>
-	public static int goalHeight = 200;
+	public int goalHeight = 200;
+	public static int _goalHeight = 200;
 
 	/// <summary>
 	/// 筋肉
@@ -73,9 +75,12 @@ public class GameManagerTest : MonoBehaviour
 
 	void Start()
 	{
-
 		instance = this;
 		_singleMode = singleMode;
+
+		_goalHeight = goalHeight;
+
+		_timeLimitSec = timeLimitSec;
 
 		ResetParametersAndLoadTitleScene();
 	}
@@ -87,7 +92,7 @@ public class GameManagerTest : MonoBehaviour
 	{
 		gameTimer = 0;
 
-		running = false;
+		running = true;
 
 		GameObject b = GameObject.Find ("Bag");
 		if( b != null )
@@ -130,7 +135,7 @@ public class GameManagerTest : MonoBehaviour
 	{
 		gameTimer += Time.deltaTime;
 
-		if( gameTimer >= timeLimitSec )
+		if( gameTimer >= _timeLimitSec )
 		{
 			if(!running)
 			{
@@ -208,13 +213,15 @@ public class GameManagerTest : MonoBehaviour
 	/// </summary>
 	public IEnumerator ShowGameClearExpression()
 	{
-		for (int i = Chestnut.cList.Count-1 ; i >= 0  ; i--) {
-			var c = Chestnut.cList [i];
-			if (c != null) {
-		//		Destroy (c.gameObject);
+		if (Chestnut.cList != null) {
+			for (int i = Chestnut.cList.Count - 1; i >= 0; i--) {
+				var c = Chestnut.cList [i];
+				if (c != null) {
+					Destroy (c.gameObject);
+				}
 			}
+			Chestnut.cList.Clear ();
 		}
-		Chestnut.cList.Clear ();
 
 		Debug.LogError("ゴール！！");
 		running = false;

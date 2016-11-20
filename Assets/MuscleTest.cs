@@ -94,8 +94,8 @@ public class MuscleTest : Photon.MonoBehaviour
 	/// </summary>
 	void Ascend()
 	{
-		if (!AutumnVRGameManager.running) {
-		//	return;
+		if (!GameManagerTest.running) {
+			return;
 		}
 
 		float val = ascend_value;
@@ -110,16 +110,16 @@ public class MuscleTest : Photon.MonoBehaviour
 
 		Debug.Log(height.ToString() + "まで上昇");
 
-		if( height >= AutumnVRGameManager.goalHeight )
+		if( height >= GameManagerTest._goalHeight )
 		{
 			StartCoroutine( gm.ShowGameClearExpression());
 
 			clearText.gameObject.SetActive (true);
-			clearText.text = "くりあたいむ\n" + ((int)AutumnVRGameManager.gameTimer).ToString () + "びょう";
+			clearText.text = "くりあたいむ\n" + ((int)GameManagerTest.gameTimer).ToString () + "びょう";
 		}
 		else
 		{
-			int reachUnit = (int)(height / AutumnVRGameManager.measureExpInterval);
+			int reachUnit = (int)(height / GameManagerTest.measureExpInterval);
 
 			if( reachUnit > reachedHeightUnit )
 			{
