@@ -22,14 +22,12 @@ public class BagTest : Photon.MonoBehaviour
 	/// <summary>
 	/// キャッチ時効果音
 	/// </summary>
-	[SerializeField]
-	AudioClip se_catch;
+	public AudioClip se_catch;
 
 	/// <summary>
 	/// キャッチ時筋肉ボイス
 	/// </summary>
-	[SerializeField]
-	AudioClip vo_catch;
+	public AudioClip vo_catch;
 
 	int catchCount = 0;
 

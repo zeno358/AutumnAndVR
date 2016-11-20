@@ -6,17 +6,25 @@ public class CrewMoveTest : Photon.MonoBehaviour {
 
 	float speed = 2f;
 
-	[SerializeField]
-	Transform hand;
+	public Transform hand;
 
-	[SerializeField]
-	AudioListener listener;
+	public AudioListener listener;
 
-	[SerializeField]
-	List<GameObject> notNeededForOther;
+	/// <summary>
+	/// 自分自身のときに不要
+	/// </summary>
+	public List<GameObject> notNeededObjForMe;
 
-	[SerializeField]
-	List<GameObject> notNeededForMe;
+	/// <summary>
+	/// 相手のときに不要
+	/// </summary>
+	public List<GameObject> notNeededObjForOther;
+	public SteamVR_PlayArea pa;
+	public SteamVR_ControllerManager cm;
+	public SteamVR_Camera sc;
+	public SteamVR_Ears se;
+	public List<SteamVR_TrackedObject> to;
+	public List<Camera> c;
 
 	MuscleTest myMuscle;
 
@@ -28,13 +36,19 @@ public class CrewMoveTest : Photon.MonoBehaviour {
 	void Start () {
 		if( !photonView.isMine )
 		{
-			notNeededForOther.ForEach( g => g.SetActive(false) );
+			notNeededObjForOther.ForEach( g => g.SetActive(false) );
+			to.ForEach( g => g.enabled = false );
+			c.ForEach( g => g.enabled = false );
+			pa.enabled = false;
+			cm.enabled = false;
+			sc.enabled = false;
+			se.enabled = false;
 
 			listener.enabled = false;
 		}
 		else
 		{
-			notNeededForMe.ForEach( g => g.SetActive(false) );
+			notNeededObjForMe.ForEach( g => g.SetActive(false) );
 		}
 
 		TwoPlayerTest.crews.Add(this);
