@@ -59,7 +59,7 @@ public class CrewMoveTest : Photon.MonoBehaviour {
 		myMuscle = GameObject.Find("Muscle").GetComponent<MuscleTest>();
 
 		int photonViewId = photonView.ownerId;
-		Debug.LogError("playerID = " + photonViewId.ToString());
+		Debug.LogError("あたなのプレイヤーIDは[ " + photonViewId.ToString() + " ]");
 
 		Transform t = photonViewId == 1 ? myMuscle.pos1 : myMuscle.pos2;
 
@@ -67,7 +67,7 @@ public class CrewMoveTest : Photon.MonoBehaviour {
 		transform.localPosition = Vector3.zero;
 		transform.localRotation = Quaternion.identity;
 
-	//	photonView.RPC ("SetReady", PhotonTargets.All, false);
+		photonView.RPC ("SetReady", PhotonTargets.All, false);
 	}
 
 	// Update is called once per frame
@@ -86,10 +86,10 @@ public class CrewMoveTest : Photon.MonoBehaviour {
 		var device = SteamVR_Controller.Input((int) rightHand.index);
 
 		if (device.GetTouchDown(SteamVR_Controller.ButtonMask.Trigger)) {
-	//		photonView.RPC ("SetReady", PhotonTargets.All, true);
+			photonView.RPC ("SetReady", PhotonTargets.All, true);
 		}
 		if (device.GetPressDown(SteamVR_Controller.ButtonMask.Trigger)) {
-	//		photonView.RPC ("SetReady", PhotonTargets.All, true);
+			photonView.RPC ("SetReady", PhotonTargets.All, true);
 		}
 
 		////////////////
@@ -133,15 +133,14 @@ public class CrewMoveTest : Photon.MonoBehaviour {
 		TwoPlayerTest.crews.ForEach( c => sum += c.count );
 
 		Debug.Log( "全プレイヤーの合計カウント = " + sum.ToString());
-
 	}
 
-//	[PunRPC]
-//	void SetReady(bool value)
-//	{
-//		Debug.Log ("PhotonViewID[ " + photonView.viewID.ToString () + " ]のreadyを" + value.ToString ());
-//		ready = value;
-//	}
+	[PunRPC]
+	void SetReady(bool value)
+	{
+		Debug.Log ("PhotonViewID[ " + photonView.viewID.ToString () + " ]のreadyを" + value.ToString ());
+		ready = value;
+	}
 
 	public Vector3 handPos
 	{
