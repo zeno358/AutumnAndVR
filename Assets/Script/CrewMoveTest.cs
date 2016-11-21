@@ -33,7 +33,10 @@ public class CrewMoveTest : Photon.MonoBehaviour {
 
 	private Vector3 offsetHeightFromMuscle;
 
-	int count;
+	/// <summary>
+	/// ふみつけカウント
+	/// </summary>
+	public int stompCount { private set; get;}
 
 	// Use this for initialization
 	void Start () {
@@ -83,20 +86,9 @@ public class CrewMoveTest : Photon.MonoBehaviour {
 		
 	void GetInput()
 	{
-		var device = SteamVR_Controller.Input((int) rightHand.index);
-
-		if (device.GetTouchDown(SteamVR_Controller.ButtonMask.Trigger)) {
+		if( Input.GetKeyDown(KeyCode.Space)){
 			photonView.RPC ("SetReady", PhotonTargets.All, true);
 		}
-		if (device.GetPressDown(SteamVR_Controller.ButtonMask.Trigger)) {
-			photonView.RPC ("SetReady", PhotonTargets.All, true);
-		}
-
-		////////////////
-		/// ↓はデバッグ用
-		//////////////// 
-
-		bool handControl = Input.GetKey(KeyCode.Space);
 
 		var moveX = Input.GetAxisRaw("Horizontal") * speed * Time.deltaTime;
 		var moveZ = Input.GetAxisRaw("Vertical") * speed * Time.deltaTime;
@@ -107,21 +99,33 @@ public class CrewMoveTest : Photon.MonoBehaviour {
 		{
 			Debug.Log("Uが押された プレイヤーID = " + PhotonNetwork.player.ID.ToString());
 
-			PhotonNetwork.RPC(photonView, "AddCount", PhotonTargets.All, false);
+			PhotonNetwork.RPC(photonView, "AddStompCount", PhotonTargets.All, false);
 		}
+
+		var device = SteamVR_Controller.Input((int) rightHand.index);
+
+		if( device != null )
+		{			
+			if (device.GetTouchDown(SteamVR_Controller.ButtonMask.Trigger)) {
+				photonView.RPC ("SetReady", PhotonTargets.All, true);
+			}
+			if (device.GetPressDown(SteamVR_Controller.ButtonMask.Trigger)) {
+				photonView.RPC ("SetReady", PhotonTargets.All, true);
+			}
+		}
+
 	}
 
 	[PunRPC]
-	public void AddCount()
+	public void AddStompCount()
 	{
 		if( !GameManagerTest.running )
 		{
 			Debug.Log("ゲームは終了済み。カウント追加は無効");
 		}
 
-		count++;
-		Debug.Log( "クライアント" + PhotonNetwork.player.ID.ToString() + "上の オーナーID" + photonView.ownerId.ToString() + "のカウント=" + count.ToString());
-
+		stompCount++;
+		Debug.Log( "クライアント" + PhotonNetwork.player.ID.ToString() + "上の オーナーID" + photonView.ownerId.ToString() + "のカウント=" + stompCount.ToString());
 
 		if( myMuscle != null ){
 			myMuscle.AddEnergy(1, this);
@@ -130,7 +134,7 @@ public class CrewMoveTest : Photon.MonoBehaviour {
 		}
 
 		int sum = 0;
-		TwoPlayerTest.crews.ForEach( c => sum += c.count );
+		TwoPlayerTest.crews.ForEach( c => sum += c.stompCount );
 
 		Debug.Log( "全プレイヤーの合計カウント = " + sum.ToString());
 	}

@@ -223,7 +223,6 @@ public class MuscleTest : Photon.MonoBehaviour
 		clearText.gameObject.SetActive (false);
 	}
 
-
 	/// <summary>
 	/// 外部から
 	/// 効果音とボイスを再生

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 /// <summary>
 /// ゲーム全体の変数を管理
 /// </summary>
-public class GameManagerTest : MonoBehaviour 
+public class GameManagerTest : Photon.MonoBehaviour 
 {
 	public static GameManagerTest instance;
 
@@ -73,6 +73,7 @@ public class GameManagerTest : MonoBehaviour
 	/// </summary>
 	public static bool inStartingProcess;
 
+	public int chestnutCount = 0;
 
 	/// <summary>
 	/// 高度到達演出が発生する頻度
@@ -97,6 +98,8 @@ public class GameManagerTest : MonoBehaviour
 	public static void ResetParametersAndLoadTitleScene()
 	{
 		gameTimer = 0;
+
+		InfoText.instance.curMode = InfoText.Mode.BeforeStart;
 
 		running = false;
 		inStartingProcess = false;
@@ -150,8 +153,6 @@ public class GameManagerTest : MonoBehaviour
 			{
 				return;
 			}
-			running = false;
-
 			StartCoroutine( ShowTimeOverExpression() );
 		}
 	}
@@ -187,11 +188,9 @@ public class GameManagerTest : MonoBehaviour
 		// 筋肉ボイス
 		muscle.PlaySe(vo_start);
 
-		yield return new WaitForSeconds(1f);
+		yield return new WaitForSeconds(3f);
 
 		// 文字演出
-
-		// 全プレイヤーが準備できるまで待つ
 
 		// BGM再生
 		muscle.SetBGM(true);
@@ -204,11 +203,16 @@ public class GameManagerTest : MonoBehaviour
 	/// </summary>
 	private IEnumerator ShowTimeOverExpression()
 	{
+		float wait = 3f;
+
+		InfoText.instance.SetWait(wait);
+		InfoText.instance.curMode = InfoText.Mode.GameOver;
+		running = false;
+
 		if (Chestnut.cList != null) {
 			for (int i = Chestnut.cList.Count - 1; i >= 0; i--) {
 				var c = Chestnut.cList [i];
 				if (c != null) {
-
 					Destroy (c.gameObject);
 				}
 			}
@@ -221,24 +225,28 @@ public class GameManagerTest : MonoBehaviour
 		// BGM停止
 		muscle.SetBGM(false);
 
-		// 効果音
-		muscle.PlaySe(se_failed);
-
 		// 筋肉ボイス
 		muscle.PlaySe(vo_failed);
 
-		yield return new WaitForSeconds(1f);
 
-		// 文字演出
+		// 筋肉の額に文字演出
 		muscle.DisplayReachedHeight();
+
+		// 一泊待機
+		yield return new WaitForSeconds(wait);
+
+		// 効果音
+		muscle.PlaySe(se_failed);
 
 		yield return new WaitForSeconds(5f);
 
+		// 入力を待機
 		yield return WaitInput();
 
 		// タイトルに戻る
 		ResetParametersAndLoadTitleScene();
 	}
+
 	/// <summary>
 	/// ゲームクリア演出
 	/// </summary>
@@ -255,6 +263,11 @@ public class GameManagerTest : MonoBehaviour
 		}
 
 		Debug.LogError("ゴール！！");
+
+		float wait = 3f;
+
+		InfoText.instance.SetWait(wait);
+		InfoText.instance.curMode = InfoText.Mode.GameClear;
 		running = false;
 
 		// BGM停止
@@ -263,10 +276,7 @@ public class GameManagerTest : MonoBehaviour
 		// 効果音
 		muscle.PlaySe(se_clear);
 
-		yield return new WaitForSeconds(1.5f);
-
-		// 文字演出
-		yield return new WaitForSeconds(1.5f);
+		yield return new WaitForSeconds(wait);
 
 		// 筋肉ボイス
 		muscle.PlaySe(vo_clear);
@@ -308,5 +318,11 @@ public class GameManagerTest : MonoBehaviour
 			// ctrl + Q で強制タイトル遷移
 			ResetParametersAndLoadTitleScene();
 		}
+	}
+
+	[PunRPC]
+	void AddChestnutCount()
+	{
+		chestnutCount++;
 	}
 }

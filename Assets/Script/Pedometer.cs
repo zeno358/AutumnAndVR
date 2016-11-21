@@ -69,9 +69,8 @@ public class Pedometer : MonoBehaviour
 	void AddValue()
 	{
 		if (master != null) {
-			//master.AddCount ();
-			PhotonNetwork.RPC(master.photonView, "AddCount", PhotonTargets.All, false);
-
+			//master.AddStompCount ();
+			PhotonNetwork.RPC(master.photonView, "AddStompCount", PhotonTargets.All, false);
 		}
 	}
 }

@@ -89,6 +89,8 @@ public class BagTest : Photon.MonoBehaviour
 				// ローカルのみで良い
 				catchCount++;
 
+				//PhotonNetwork.RPC( GameManagerTest.instance.photonView, "AddChestnutCount", PhotonTargets.All, false, 1);
+
 				// 効果音
 				GetComponent<AudioSource>().PlayOneShot(se_catch);
 

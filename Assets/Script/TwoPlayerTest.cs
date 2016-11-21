@@ -92,4 +92,3 @@ public class TwoPlayerTest : Photon.MonoBehaviour
 		bag.transform.position = bagPos;
 	}
 }
-

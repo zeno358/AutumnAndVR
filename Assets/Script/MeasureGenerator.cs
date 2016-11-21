@@ -44,7 +44,6 @@ public class MeasureGenerator : MonoBehaviour {
 			g.name = str;
 			m.SetText (str); 
 			m.EnableFlag (top);
-
 		}
 	}
 }

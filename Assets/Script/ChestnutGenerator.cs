@@ -6,8 +6,6 @@ using System.Collections;
 /// </summary>
 public class ChestnutGenerator : Photon.MonoBehaviour {
 
-	static ChestnutGenerator instance;
-
 	/// <summary>
 	/// 生成頻度
 	/// </summary>
@@ -28,8 +26,6 @@ public class ChestnutGenerator : Photon.MonoBehaviour {
 
 	void Start()
 	{
-		instance = this;
-
 		myAudio = GetComponent<AudioSource>();
 
 		Transform t = GameObject.Find("GeneratorPos").transform;
@@ -56,7 +52,6 @@ public class ChestnutGenerator : Photon.MonoBehaviour {
 		{
 		//	PhotonNetwork.RPC(photonView, "Generate", PhotonTargets.All, false);
 			Generate();
-
 		}
 	}
 
