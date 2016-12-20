@@ -36,7 +36,7 @@ public class ChestnutGenerator : Photon.MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		if( !GameManagerTest.running)
+		if( !GameManager.instance.running)
 		{
 			return;
 		}

@@ -24,22 +24,22 @@ public class Measure : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		int unitVal = GameManagerTest.measureExpInterval;
+		int unitVal = GameManager.instance.measureExpInterval;
 
 		// 近くだけ表示
-		meshRenderer.enabled = MuscleTest.height > transform.position.y - unitVal && MuscleTest.height < transform.position.y + unitVal;
+		meshRenderer.enabled = Muscle.height > transform.position.y - unitVal && Muscle.height < transform.position.y + unitVal;
 
 		if (flag.gameObject.activeInHierarchy) {
 			flag.enabled = meshRenderer.enabled;
 		}
 
-		if (!enablePrev && meshRenderer.enabled && GameManagerTest.running) {
+		if (!enablePrev && meshRenderer.enabled && GameManager.instance.running) {
 			FrameIn ();
 		}
 		enablePrev = meshRenderer.enabled;
 
 		// 到達したら黄色
-		textMesh.color = MuscleTest.height >= transform.position.y ? Color.yellow : Color.red;
+		textMesh.color = Muscle.height >= transform.position.y ? Color.yellow : Color.red;
 	}
 
 	void FrameIn()

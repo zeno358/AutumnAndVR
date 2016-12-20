@@ -21,7 +21,7 @@ public class Pedometer : MonoBehaviour
 	/// </summary>
 	float curveOriginPos;
 
-	public CrewMoveTest master;
+	public CrewMove master;
 
 	// Use this for initialization
 	void Start () {
@@ -31,7 +31,7 @@ public class Pedometer : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		if (!GameManagerTest.running) {
+		if (!GameManager.instance.running) {
 			return;
 		}
 		CheckPosAndAddValue ();

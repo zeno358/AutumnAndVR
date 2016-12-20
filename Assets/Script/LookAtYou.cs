@@ -15,7 +15,7 @@ public class LookAtYou : MonoBehaviour {
 	IEnumerator FindTarget()
 	{
 		do{
-			bag = GameObject.Find ("BagTest(Clone)");
+			bag = GameObject.Find ("BagMove(Clone)");
 
 			yield return new WaitForSeconds(1);
 		}while(bag == null);

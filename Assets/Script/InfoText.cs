@@ -28,14 +28,6 @@ public class InfoText : Photon.MonoBehaviour {
 
 	public static InfoText instance;
 
-	public enum Mode{
-		BeforeStart,
-		GameClear,
-		GameOver
-	}
-
-	public Mode curMode;
-
 	public TextMesh mesh;
 
 	public MeshRenderer textRenderer;
@@ -73,7 +65,7 @@ public class InfoText : Photon.MonoBehaviour {
 
 		while(true)
 		{
-			if(TwoPlayerTest.crews == null || TwoPlayerTest.crews.Count <= 0)
+			if(MultiPlayerManager.crews == null || MultiPlayerManager.crews.Count <= 0)
 			{
 				yield return null;	
 			}
@@ -83,9 +75,9 @@ public class InfoText : Photon.MonoBehaviour {
 			}
 		}
 
-		CrewMoveTest target = null;
+		CrewMove target = null;
 
-		foreach( CrewMoveTest c in TwoPlayerTest.crews)
+		foreach( CrewMove c in MultiPlayerManager.crews)
 		{
 			if( c.photonView.isMine )
 			{
@@ -121,7 +113,7 @@ public class InfoText : Photon.MonoBehaviour {
 	/// </summary>
 	void UpdateText()
 	{
-		if (GameManagerTest.running || wait > 0) {
+		if (GameManager.instance.running || wait > 0) {
 			textRenderer.enabled = false;
 			return;
 		}
@@ -129,21 +121,21 @@ public class InfoText : Photon.MonoBehaviour {
 
 		string str = "";
 
-		switch( curMode )
+		switch( GameManager.instance.curStatus )
 		{
-		case Mode.BeforeStart:
+		case GameManager.Status.BeforeStart:
 			int playerNum = PhotonNetwork.room.playerCount;
-			if(  playerNum < TwoPlayerTest.playerNumNeeded )
+			if(  playerNum < MultiPlayerManager.playerNumNeeded )
 			{
-				str = "プレイヤーのさんか\nをたいきちゅう ( " + playerNum.ToString() + " / " + TwoPlayerTest.playerNumNeeded + " )";
+				str = "プレイヤーのさんか\nをたいきちゅう ( " + playerNum.ToString() + " / " + MultiPlayerManager.playerNumNeeded + " )";
 			}
 			else
 			{
 				bool ready1p = false;
 				bool ready2p = false;
-				for( int i=0 ; i< TwoPlayerTest.crews.Count ; i++ )
+				for( int i=0 ; i< MultiPlayerManager.crews.Count ; i++ )
 				{
-					CrewMoveTest c = TwoPlayerTest.crews[i];
+					CrewMove c = MultiPlayerManager.crews[i];
 					if ( c.photonView.ownerId == 1 )
 					{
 						ready1p = c.ready;
@@ -156,14 +148,14 @@ public class InfoText : Photon.MonoBehaviour {
 				str = "プレイヤーのじゅんびを\nたいきちゅう ( 1P " + (ready1p ? "◯" : "×") + " / 2P " + (ready2p ? "◯" : "×") + " )"; 
 			}
 			break;
-		case Mode.GameClear:
-			int clearTime = ((int)GameManagerTest.gameTimer);
-			int chestnutCount = GameManagerTest.instance.chestnutCount;
+		case GameManager.Status.GameClear:
+			int clearTime = ((int)GameManager.instance.gameTimer);
+			int chestnutCount = GameManager.instance.chestnutCount;
 			int myStomp = 0;
 			int otherStomp = 0;
-			for( int i=0 ; i< TwoPlayerTest.crews.Count ; i++ )
+			for( int i=0 ; i< MultiPlayerManager.crews.Count ; i++ )
 			{
-				CrewMoveTest c = TwoPlayerTest.crews[i];
+				CrewMove c = MultiPlayerManager.crews[i];
 				if ( c.photonView.isMine )
 				{
 					myStomp = c.stompCount;
@@ -176,15 +168,15 @@ public class InfoText : Photon.MonoBehaviour {
 
 			int totalStomp = myStomp + otherStomp;
 
-			str = "くりあたいむ\n" + clearTime.ToString () + 
+			str = "くりあたいむ\n" + clearTime.ToString () + "びょう" +
 			//	"びょう\n\nひろったくりのかず " + chestnutCount.ToString() + "こ" +
-				"\nあなたのふみつけかいすう " + myStomp.ToString() + " かい" +
-				"\nともだちのふみつけかいすう " + otherStomp.ToString() + " かい";
+				"\n\nあなたは " + myStomp.ToString() + " ふみ" +
+				"\nともだちは " + otherStomp.ToString() + " ふみ";
 			break;
 
-		case Mode.GameOver:
-			int height = (int)MuscleTest.height;
-			int diff = GameManagerTest._goalHeight - height;
+		case GameManager.Status.GameOver:
+			int height = (int)Muscle.height;
+			int diff = GameManager.instance._goalHeight - height;
 
 			str = "たいむおーばー\nとうたつこうど " + height.ToString() + "めーとる\n\nごーるまであと" + diff.ToString() + "めーとる";
 

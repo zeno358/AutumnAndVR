@@ -25,9 +25,9 @@ public class MeasureGenerator : MonoBehaviour {
 	private void GenerateMeasure()
 	{
 		// 設置数を定義
-		int count = GameManagerTest._goalHeight / GameManagerTest.measureExpInterval;
+		int count = GameManager.instance._goalHeight / GameManager.instance.measureExpInterval;
 
-		count += GameManagerTest._goalHeight / GameManagerTest.measureExpInterval == 0 ?  1 : 2;
+		count += GameManager.instance._goalHeight / GameManager.instance.measureExpInterval == 0 ?  1 : 2;
 
 		for(int i=0 ; i < count ; i++)
 		{
@@ -35,7 +35,7 @@ public class MeasureGenerator : MonoBehaviour {
 
 			var g = Instantiate(measure);
 			g.transform.SetParent(transform);
-			float h = (top) ? GameManagerTest._goalHeight : GameManagerTest.measureExpInterval * i;
+			float h = (top) ? GameManager.instance._goalHeight : GameManager.instance.measureExpInterval * i;
 			g.transform.localPosition = Vector3.up * h;
 			g.transform.localRotation = Quaternion.Euler(0,-90f,0);
 
