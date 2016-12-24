@@ -77,6 +77,7 @@ public class InfoText : Photon.MonoBehaviour {
 
 		CrewMove target = null;
 
+		// 自分が操作するプレイヤーを取得
 		foreach( CrewMove c in MultiPlayerManager.crews)
 		{
 			if( c.photonView.isMine )
@@ -86,7 +87,7 @@ public class InfoText : Photon.MonoBehaviour {
 			}	
 		}
 
-		// テキストなのでプレイヤーに背中を向ける
+		// テキストなのでプレイヤーに背中を向ける（ = テキストが読める角度にする）
 		Vector3 dir = transform.position - target.eye.transform.position;
 		Quaternion q = Quaternion.LookRotation( dir );
 		transform.rotation = q;
@@ -113,6 +114,7 @@ public class InfoText : Photon.MonoBehaviour {
 	/// </summary>
 	void UpdateText()
 	{
+		// ゲーム中は非表示
 		if (GameManager.instance.running || wait > 0) {
 			textRenderer.enabled = false;
 			return;
@@ -124,6 +126,7 @@ public class InfoText : Photon.MonoBehaviour {
 		switch( GameManager.instance.curStatus )
 		{
 		case GameManager.Status.BeforeStart:
+			// ゲーム開始前
 			int playerNum = PhotonNetwork.room.playerCount;
 			if(  playerNum < MultiPlayerManager.playerNumNeeded )
 			{
@@ -149,6 +152,7 @@ public class InfoText : Photon.MonoBehaviour {
 			}
 			break;
 		case GameManager.Status.GameClear:
+			// ゲームクリア時
 			int clearTime = ((int)GameManager.instance.gameTimer);
 			int chestnutCount = GameManager.instance.chestnutCount;
 			int myStomp = 0;
@@ -175,15 +179,14 @@ public class InfoText : Photon.MonoBehaviour {
 			break;
 
 		case GameManager.Status.GameOver:
+			// ゲームオーバー時
 			int height = (int)Muscle.height;
 			int diff = GameManager.instance.goalHeight - height;
 
 			str = "たいむおーばー\nとうたつこうど " + height.ToString() + "めーとる\n\nごーるまであと" + diff.ToString() + "めーとる";
 
-
 			break;
 		}
-
 
 		mesh.text = str;
 	}

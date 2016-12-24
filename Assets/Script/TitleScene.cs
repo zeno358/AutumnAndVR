@@ -34,17 +34,17 @@ public class TitleScene : Photon.MonoBehaviour {
 		do {
 			g = GameObject.Find("Controller (right)");
 
-			if(g == null)
+			if( g != null )
 			{
-				Debug.LogWarning("VRコントローラの取得に失敗。" + tryInterval.ToString() + "秒後に再トライします");
-			}
-			else
-			{
-				Debug.LogWarning("VRコントローラの取得に成功");
+				break;
 			}
 
+			Debug.LogWarning("VRコントローラの取得に失敗。" + tryInterval.ToString() + "秒後に再トライします");
+
 			yield return new WaitForSeconds(tryInterval);
-		} while(true);
+		}while(true);
+
+		Debug.LogWarning("VRコントローラの取得に成功");
 
 		trackedObject = g.GetComponent<SteamVR_TrackedObject>();
 	}
