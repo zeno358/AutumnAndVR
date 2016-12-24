@@ -25,19 +25,16 @@ public class GameManager : Photon.MonoBehaviour
 	/// シングルモード
 	/// </summary>
 	public bool singleMode = false;
-	public bool _singleMode;
 
 	/// <summary>
 	/// 制限時間
 	/// </summary>
 	public int timeLimitSec = 120;
-	public int _timeLimitSec = 120;
 
 	/// <summary>
 	/// ゴールとみなす高度
 	/// </summary>
 	public int goalHeight = 200;
-	public int _goalHeight = 200;
 
 	/// <summary>
 	/// 筋肉
@@ -94,11 +91,6 @@ public class GameManager : Photon.MonoBehaviour
 	void Start()
 	{
 		instance = this;
-		_singleMode = singleMode;
-
-		_goalHeight = goalHeight;
-
-		_timeLimitSec = timeLimitSec;
 
 		ResetParametersAndLoadTitleScene();
 	}
@@ -158,7 +150,7 @@ public class GameManager : Photon.MonoBehaviour
 	{
 		gameTimer += Time.deltaTime;
 
-		if( gameTimer >= _timeLimitSec )
+		if( gameTimer >= timeLimitSec )
 		{
 			if(!running)
 			{

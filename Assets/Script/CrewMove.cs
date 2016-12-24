@@ -62,7 +62,7 @@ public class CrewMove : Photon.MonoBehaviour {
 		myMuscle = GameObject.Find("Muscle").GetComponent<Muscle>();
 
 		int photonViewId = photonView.ownerId;
-		Debug.LogError("あたなのプレイヤーIDは[ " + photonViewId.ToString() + " ]");
+		Debug.LogError("あなたのプレイヤーIDは[ " + photonViewId.ToString() + " ]");
 
 		Transform t = photonViewId == 1 ? myMuscle.pos1 : myMuscle.pos2;
 

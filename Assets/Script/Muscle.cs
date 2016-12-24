@@ -113,7 +113,7 @@ public class Muscle : Photon.MonoBehaviour
 
 		Debug.Log(height.ToString() + "まで上昇");
 
-		if( height >= GameManager.instance._goalHeight )
+		if( height >= GameManager.instance.goalHeight )
 		{
 			StartCoroutine( gm.ShowGameClearExpression());
 

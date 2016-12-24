@@ -23,7 +23,7 @@ public class TimeLimitText : MonoBehaviour
 		}
 
 		//残り時間計算
-		float diff = GameManager.instance._timeLimitSec - GameManager.instance.gameTimer;
+		float diff = GameManager.instance.timeLimitSec - GameManager.instance.gameTimer;
 		int val = (int)Mathf.Floor(diff);
 
 		// 文字色更新
